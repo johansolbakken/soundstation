@@ -1,0 +1,3 @@
+[submodule "soundstation/vendor/fmt"]
+	path = soundstation/vendor/fmt
+	url = git@github.com:fmtlib/fmt.git
