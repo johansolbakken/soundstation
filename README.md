@@ -13,4 +13,4 @@ cd soundstation
 ./soundstation
 ~~~
 
-![](images/v1.png)
+![](images/v2.png)
