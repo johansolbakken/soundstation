@@ -37,6 +37,8 @@ namespace SoundStation
 
         AudioFileID m_file = nullptr;
         AudioQueueRef m_audioQueue = nullptr;
-        AudioQueueBufferRef m_audioQueueBuffers[3]; // You can adjust the buffer count as needed
+        const int kBufferSize = 4096;
+        static constexpr int kBufferCount = 3;
+        AudioQueueBufferRef m_audioQueueBuffers[kBufferCount]; // You can adjust the buffer count as needed
     };
 }
