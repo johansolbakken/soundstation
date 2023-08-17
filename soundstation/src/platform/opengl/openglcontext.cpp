@@ -12,5 +12,7 @@ namespace SoundStation
         glfwMakeContextCurrent(glfwGetCurrentContext());
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         SS_ASSERT(status, "Failed to initialize Glad!");
+
+        glEnable(GL_BLEND);
     }
 }

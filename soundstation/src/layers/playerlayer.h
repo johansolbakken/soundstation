@@ -2,7 +2,7 @@
 
 #include "core/layer.h"
 
-#include "renderer/texture.h"
+#include "core/image.h"
 
 namespace SoundStation
 {
@@ -21,6 +21,8 @@ namespace SoundStation
         bool m_playing = false;
         float m_cursor = 0.0;
 
-        std::shared_ptr<Texture> m_texture = nullptr;
+        Image m_noteImage;
+        Image m_playImage;
+        Image m_pauseImage;
     };
 }
