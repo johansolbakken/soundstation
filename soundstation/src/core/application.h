@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/layerstack.h"
+
 namespace SoundStation
 {
     class Application
@@ -12,5 +14,6 @@ namespace SoundStation
 
     private:
         bool m_running = true;
+        LayerStack m_layerStack;
     };
 }
