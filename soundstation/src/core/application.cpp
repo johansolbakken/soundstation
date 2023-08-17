@@ -53,6 +53,8 @@ namespace SoundStation
             }
 
             m_imguiLayer->begin();
+            
+            ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
             for (Layer *layer : m_layerStack)
             {
