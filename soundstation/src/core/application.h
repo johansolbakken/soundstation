@@ -13,7 +13,11 @@ namespace SoundStation
         Application();
         ~Application();
 
+        static Application& instance();
+
         void run();
+
+        std::shared_ptr<Window> window() { return m_window; }
 
     private:
         bool m_running = true;
