@@ -21,6 +21,8 @@ add_executable(soundstation
 
     src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp
     src/platform/opengl/openglrenderapi.h src/platform/opengl/openglrenderapi.cpp
+
+    src/layers/playerlayer.h src/layers/playerlayer.cpp
     
     src/imgui/buildimgui.cpp
     src/imgui/imguilayer.h src/imgui/imguilayer.cpp)

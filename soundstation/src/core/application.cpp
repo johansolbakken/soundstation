@@ -7,6 +7,8 @@
 
 #include <imgui.h>
 
+#include "layers/playerlayer.h"
+
 namespace SoundStation
 {
     static Application *s_instance = nullptr;
@@ -20,6 +22,8 @@ namespace SoundStation
 
         m_imguiLayer = new ImGuiLayer();
         m_layerStack.pushOverlay(m_imguiLayer);
+
+        m_layerStack.pushLayer(new PlayerLayer());
 
         Renderer::init();
 
@@ -50,9 +54,10 @@ namespace SoundStation
 
             m_imguiLayer->begin();
 
-            ImGui::Begin("Test");
-            ImGui::Text("Hello World!");
-            ImGui::End();
+            for (Layer *layer : m_layerStack)
+            {
+                layer->onUIRender();
+            }
 
             m_imguiLayer->end();
 

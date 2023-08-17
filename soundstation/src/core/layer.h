@@ -13,6 +13,7 @@ namespace SoundStation
         virtual void onAttach() {}
         virtual void onDetach() {}
         virtual void onUpdate() {}
+        virtual void onUIRender() {}
 
     private:
         std::string m_name;
