@@ -18,6 +18,6 @@ namespace SoundStation
     private:
         bool m_running = true;
         LayerStack m_layerStack;
-        std::unique_ptr<Window> m_window = nullptr;
+        std::shared_ptr<Window> m_window = nullptr;
     };
 }

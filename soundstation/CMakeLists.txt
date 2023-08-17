@@ -14,15 +14,21 @@ add_executable(soundstation
     src/core/application.h src/core/application.cpp
     src/core/layer.h src/core/layer.cpp
     src/core/layerstack.h src/core/layerstack.cpp
-    src/core/window.h src/core/window.cpp)
+    src/core/window.h src/core/window.cpp
+    
+    src/renderer/renderer.h src/renderer/renderer.cpp
+    
+    src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp)
 
 target_include_directories(soundstation 
     PUBLIC 
         src 
         vendor/fmt/include 
-        vendor/glfw/include)
+        vendor/glfw/include
+        vendor/glad/include)
 
 target_link_libraries(soundstation 
     PUBLIC 
         fmt::fmt 
-        glfw)
+        glfw
+        glad)

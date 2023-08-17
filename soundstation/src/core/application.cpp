@@ -2,11 +2,15 @@
 
 #include "core/log.h"
 
+#include "renderer/renderer.h"
+
 namespace SoundStation
 {
     Application::Application()
     {
-        m_window = std::make_unique<Window>(WindowSpecification{"SoundStation", 1280, 720});
+        m_window = std::make_shared<Window>(WindowSpecification{"SoundStation", 1280, 720});
+
+        Renderer::init();
 
         SS_LOG_INFO("SoundStation is awake!");
     }
