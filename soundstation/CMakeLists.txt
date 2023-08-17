@@ -6,6 +6,11 @@ project(soundstation)
 
 set(CMAKE_CXX_STANDARD 23)
 
+if(APPLE)
+    set(PLATFORM_SOURCE src/platform/macos/macosaudio.h src/platform/macos/macosaudio.mm)
+    set(PLATFORM_LIBS "-framework CoreAudio" "-framework AudioToolbox" "-framework AudioUnit" "-framework CoreServices")
+endif()
+
 add_executable(soundstation 
     src/main.cpp
     
@@ -28,6 +33,7 @@ add_executable(soundstation
     src/platform/opengl/opengltexture.h src/platform/opengl/opengltexture.cpp
     src/platform/opengl/openglshader.h src/platform/opengl/openglshader.cpp
     src/platform/opengl/openglframebuffer.h src/platform/opengl/openglframebuffer.cpp
+    ${PLATFORM_SOURCE}
 
     src/layers/playerlayer.h src/layers/playerlayer.cpp
     
@@ -52,6 +58,7 @@ target_link_libraries(soundstation
         glad
         imgui
         stb
+        ${PLATFORM_LIBS}
         )
 
 # copy assets folder to build directory

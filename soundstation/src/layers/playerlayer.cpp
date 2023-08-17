@@ -10,7 +10,8 @@ namespace SoundStation
         : Layer("PlayerLayer"),
           m_noteImage("assets/images/note.jpeg"),
           m_playImage("assets/images/play.png"),
-          m_pauseImage("assets/images/pause.png")
+          m_pauseImage("assets/images/pause.png"),
+          m_audio(Audio::create("assets/sound/Lizza Bizzaz.aif"))
     {
     }
 
