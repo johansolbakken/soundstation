@@ -7,3 +7,6 @@
 [submodule "soundstation/vendor/imgui"]
 	path = soundstation/vendor/imgui
 	url = git@github.com:ocornut/imgui.git
+[submodule "soundstation/vendor/glm"]
+	path = soundstation/vendor/glm
+	url = git@github.com:g-truc/glm.git

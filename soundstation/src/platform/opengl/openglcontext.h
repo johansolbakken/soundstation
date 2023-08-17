@@ -6,6 +6,5 @@ namespace SoundStation
     {
     public:
         static void init();
-        static void swapBuffers();
     };
 }
