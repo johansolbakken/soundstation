@@ -18,17 +18,24 @@ add_executable(soundstation
     
     src/renderer/renderer.h src/renderer/renderer.cpp
     
-    src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp)
+    src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp
+    
+    src/imgui/buildimgui.cpp
+    src/imgui/imguilayer.h src/imgui/imguilayer.cpp)
 
 target_include_directories(soundstation 
     PUBLIC 
         src 
         vendor/fmt/include 
         vendor/glfw/include
-        vendor/glad/include)
+        vendor/glad/include
+        vendor/imgui
+        vendor/imgui/backends)
 
 target_link_libraries(soundstation 
     PUBLIC 
         fmt::fmt 
         glfw
-        glad)
+        glad
+        imgui
+        )

@@ -21,6 +21,11 @@ namespace SoundStation
 
         void onUpdate();
 
+        void* nativeWindow() const { return m_window; }
+
+        uint32_t width() const { return m_spec.width; }
+        uint32_t height() const { return m_spec.height; }
+
     private:
         GLFWwindow *m_window;
         WindowSpecification m_spec;

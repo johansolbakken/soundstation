@@ -4,3 +4,6 @@
 [submodule "soundstation/vendor/glfw"]
 	path = soundstation/vendor/glfw
 	url = git@github.com:glfw/glfw.git
+[submodule "soundstation/vendor/imgui"]
+	path = soundstation/vendor/imgui
+	url = git@github.com:ocornut/imgui.git
