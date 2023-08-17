@@ -18,9 +18,11 @@ add_executable(soundstation
     
     src/renderer/renderer.h src/renderer/renderer.cpp
     src/renderer/rendercommand.h src/renderer/rendercommand.cpp
+    src/renderer/texture.h 
 
     src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp
     src/platform/opengl/openglrenderapi.h src/platform/opengl/openglrenderapi.cpp
+    src/platform/opengl/opengltexture.h src/platform/opengl/opengltexture.cpp
 
     src/layers/playerlayer.h src/layers/playerlayer.cpp
     
@@ -35,7 +37,8 @@ target_include_directories(soundstation
         vendor/glad/include
         vendor/imgui
         vendor/imgui/backends
-        vendor/glm)
+        vendor/glm
+        vendor/stb)
 
 target_link_libraries(soundstation 
     PUBLIC 
@@ -43,4 +46,10 @@ target_link_libraries(soundstation
         glfw
         glad
         imgui
+        stb
         )
+
+# copy assets folder to build directory
+add_custom_command(TARGET soundstation POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/soundstation/assets $<TARGET_FILE_DIR:soundstation>/assets)

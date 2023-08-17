@@ -2,6 +2,8 @@
 
 #include "core/layer.h"
 
+#include "renderer/texture.h"
+
 namespace SoundStation
 {
     class PlayerLayer : public Layer
@@ -16,7 +18,9 @@ namespace SoundStation
         void onUIRender() override;
 
     private:
-        bool m_playing = true;
+        bool m_playing = false;
         float m_cursor = 0.0;
+
+        std::shared_ptr<Texture> m_texture = nullptr;
     };
 }

@@ -20,12 +20,12 @@ namespace SoundStation
 
         m_window = std::make_shared<Window>(WindowSpecification{"SoundStation", 1280, 720});
 
+        Renderer::init();
+
         m_imguiLayer = new ImGuiLayer();
         m_layerStack.pushOverlay(m_imguiLayer);
 
         m_layerStack.pushLayer(new PlayerLayer());
-
-        Renderer::init();
 
         SS_LOG_INFO("SoundStation is awake!");
     }
@@ -53,7 +53,7 @@ namespace SoundStation
             }
 
             m_imguiLayer->begin();
-            
+
             ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
             for (Layer *layer : m_layerStack)
