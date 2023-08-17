@@ -1,8 +1,8 @@
-#include "core/assert.h"
+#include "core/application.h"
 
 int main()
 {
-    SS_ASSERT(1 == 2, "1 == 2");
-
+    SoundStation::Application app;
+    app.run();
     return 0;
 }
