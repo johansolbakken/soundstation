@@ -34,6 +34,8 @@ namespace SoundStation {
         auto audioQueueOutputCallback = [](void* inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer) {
             MacOSAudio* audio = (MacOSAudio*)inUserData;
             audio->update();
+
+            SS_LOG_INFO("Audio queue output callback");
         };
 
         result = AudioQueueNewOutput(&format, audioQueueOutputCallback, this, nullptr, nullptr, 0, &(this->m_audioQueue));
@@ -86,7 +88,7 @@ namespace SoundStation {
         for (int i = 0; i < kBufferCount; ++i) {
             // Read audio packet data from the file and copy it into the buffer
             UInt32 numPackets = kBufferSize; // Adjust as needed
-            UInt32 numBytes = 0; // Placeholder for the number of bytes read
+            UInt32 numBytes = m_audioQueueBuffers[i]->mAudioDataBytesCapacity; // Placeholder for the number of bytes read
 
             // Dummy packet descriptions array (not used)
             AudioStreamPacketDescription packetDescriptions[numPackets];
@@ -100,15 +102,58 @@ namespace SoundStation {
                     case kAudioFileUnsupportedFileTypeError:
                         SS_LOG_ERROR("Unsupported file type");
                         break;
+                    case kAudioFileUnsupportedDataFormatError:
+                        SS_LOG_ERROR("Unsupported data format");
+                        break;
+                    case kAudioFileUnsupportedPropertyError:
+                        SS_LOG_ERROR("Unsupported property");
+                        break;
+                    case kAudioFileBadPropertySizeError:
+                        SS_LOG_ERROR("Bad property size");
+                        break;
+                    case kAudioFilePermissionsError:
+                        SS_LOG_ERROR("File permissions error");
+                        break;
+                    case kAudioFileNotOptimizedError:
+                        SS_LOG_ERROR("File not optimized");
+                        break;
+                    case kAudioFileInvalidChunkError:
+                        SS_LOG_ERROR("Invalid chunk");
+                        break;
+                    case kAudioFileDoesNotAllow64BitDataSizeError:
+                        SS_LOG_ERROR("64-bit data size not allowed");
+                        break;
+                    case kAudioFileInvalidPacketOffsetError:
+                        SS_LOG_ERROR("Invalid packet offset");
+                        break;
+                    case kAudioFileInvalidFileError:
+                        SS_LOG_ERROR("Invalid file");
+                        break;
+                    case kAudioFileOperationNotSupportedError:
+                        SS_LOG_ERROR("Operation not supported");
+                        break;
+                    case kAudioFileNotOpenError:
+                        SS_LOG_ERROR("File not open");
+                        break;
+                    case kAudioFileEndOfFileError:
+                        SS_LOG_ERROR("End of file");
+                        break;
+                    case kAudioFilePositionError:
+                        SS_LOG_ERROR("Invalid file position");
+                        break;
+                    case kAudioFileFileNotFoundError:
+                        SS_LOG_ERROR("File not found");
+                        break;
                     case kAudioFileUnspecifiedError:
                         SS_LOG_ERROR("Unspecified error");
                         break;
                     default:
-                        SS_LOG_ERROR(fmt::format("Failed to read audio file packet data. Was {}", result));
+                        SS_LOG_ERROR(fmt::format("Unknown error code: {}", result));
                         break;
                 }
                 // Additional error handling steps if needed
             }
+
 
             // Enqueue the buffer into the audio queue
             result = AudioQueueEnqueueBuffer(m_audioQueue, m_audioQueueBuffers[i], 0, nullptr);
