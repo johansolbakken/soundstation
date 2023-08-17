@@ -5,6 +5,8 @@
 
 #include "core/assert.h"
 
+#include "platform/opengl/openglerror.h"
+
 namespace SoundStation
 {
     void OpenGLContext::init()
@@ -13,6 +15,6 @@ namespace SoundStation
         int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         SS_ASSERT(status, "Failed to initialize Glad!");
 
-        glEnable(GL_BLEND);
+        GL_CALL(glEnable(GL_BLEND));
     }
 }

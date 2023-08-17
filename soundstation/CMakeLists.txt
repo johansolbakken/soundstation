@@ -20,10 +20,12 @@ add_executable(soundstation
     src/renderer/renderer.h src/renderer/renderer.cpp
     src/renderer/rendercommand.h src/renderer/rendercommand.cpp
     src/renderer/texture.h 
+    src/renderer/shader.h
 
     src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp
     src/platform/opengl/openglrenderapi.h src/platform/opengl/openglrenderapi.cpp
     src/platform/opengl/opengltexture.h src/platform/opengl/opengltexture.cpp
+    src/platform/opengl/openglshader.h src/platform/opengl/openglshader.cpp
 
     src/layers/playerlayer.h src/layers/playerlayer.cpp
     

@@ -14,6 +14,7 @@ namespace SoundStation
           m_playImage("assets/images/play.png"),
           m_pauseImage("assets/images/pause.png")
     {
+        m_shader = Shader::create("assets/shaders/texture.vert", "assets/shaders/texture.frag");
     }
 
     PlayerLayer::~PlayerLayer()

@@ -5,35 +5,37 @@
 
 #include "core/assert.h"
 
+#include "platform/opengl/openglerror.h"
+
 namespace SoundStation
 {
     OpenGLTexture::OpenGLTexture()
     {
-        glGenTextures(1, &m_rendererID);
+        GL_CALL(glGenTextures(1, &m_rendererID));
 
-        glBindTexture(GL_TEXTURE_2D, m_rendererID);
+        GL_CALL(glBindTexture(GL_TEXTURE_2D, m_rendererID));
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+        GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
     }
 
     OpenGLTexture::~OpenGLTexture()
     {
-        glDeleteTextures(1, &m_rendererID);
+        GL_CALL(glDeleteTextures(1, &m_rendererID));
     }
 
     void OpenGLTexture::bind()
     {
-        glBindTexture(GL_TEXTURE_2D, m_rendererID);
-        glActiveTexture(GL_TEXTURE0);
+        GL_CALL(glBindTexture(GL_TEXTURE_2D, m_rendererID));
+        GL_CALL(glActiveTexture(GL_TEXTURE0));
     }
 
     void OpenGLTexture::unbind()
     {
-        glBindTexture(GL_TEXTURE_2D, 0);
+        GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     void OpenGLTexture::load(const std::string &path)
@@ -56,9 +58,9 @@ namespace SoundStation
             m_width = width;
             m_height = height;
 
-            glBindTexture(GL_TEXTURE_2D, m_rendererID);
-            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
+            GL_CALL(glBindTexture(GL_TEXTURE_2D, m_rendererID));
+            GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data));
+            GL_CALL(glGenerateMipmap(GL_TEXTURE_2D));
 
             stbi_image_free(data);
         }

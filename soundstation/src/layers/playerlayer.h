@@ -4,6 +4,8 @@
 
 #include "core/image.h"
 
+#include "renderer/shader.h"
+
 namespace SoundStation
 {
     class PlayerLayer : public Layer
@@ -24,5 +26,7 @@ namespace SoundStation
         Image m_noteImage;
         Image m_playImage;
         Image m_pauseImage;
+
+        std::shared_ptr<Shader> m_shader = nullptr;
     };
 }
