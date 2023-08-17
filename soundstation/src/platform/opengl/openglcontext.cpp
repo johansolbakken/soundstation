@@ -9,6 +9,8 @@
 
 namespace SoundStation
 {
+    static uint32_t s_globalVAO = 0;
+
     void OpenGLContext::init()
     {
         glfwMakeContextCurrent(glfwGetCurrentContext());
@@ -16,5 +18,17 @@ namespace SoundStation
         SS_ASSERT(status, "Failed to initialize Glad!");
 
         GL_CALL(glEnable(GL_BLEND));
+
+        GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+        GL_CALL(glEnable(GL_DEPTH_TEST));
+
+        GL_CALL(glGenVertexArrays(1, &s_globalVAO));
+        GL_CALL(glBindVertexArray(s_globalVAO));
+    }
+
+    void OpenGLContext::shutdown()
+    {
+        GL_CALL(glDeleteVertexArrays(1, &s_globalVAO));
     }
 }

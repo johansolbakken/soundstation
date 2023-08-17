@@ -96,6 +96,17 @@ namespace SoundStation
         GL_CALL(glUseProgram(0));
     }
 
+    void OpenGLShader::setInt(const std::string &name, int value)
+    {
+        auto location = glGetUniformLocation(m_rendererID, name.c_str());
+        if (location == -1)
+        {
+            SS_LOG_WARN(fmt::format("Uniform {} does not exist", name));
+            return;
+        }
+        GL_CALL(glUniform1i(location, value));
+    }
+
     std::shared_ptr<Shader> Shader::create(const std::string &vertexSrc, const std::string &fragmentSrc)
     {
         return std::make_shared<OpenGLShader>(vertexSrc, fragmentSrc);

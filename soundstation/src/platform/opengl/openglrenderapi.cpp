@@ -18,4 +18,9 @@ namespace SoundStation
     {
         GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     }
+
+    void OpenGLRenderAPI::drawArrays(uint32_t count)
+    {
+        GL_CALL(glDrawArrays(GL_TRIANGLES, 0, count));
+    }
 }

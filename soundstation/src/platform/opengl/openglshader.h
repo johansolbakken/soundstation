@@ -13,6 +13,8 @@ namespace SoundStation
         void bind() override;
         void unbind() override;
 
+        void setInt(const std::string &name, int value) override;
+
     private:
         uint32_t m_rendererID;
     };

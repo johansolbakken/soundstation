@@ -13,4 +13,9 @@ namespace SoundStation
     {
         OpenGLRenderAPI::clear();
     }
+
+    void RenderCommand::drawArrays(uint32_t count)
+    {
+        OpenGLRenderAPI::drawArrays(count);
+    }
 }

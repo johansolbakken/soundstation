@@ -32,6 +32,7 @@ namespace SoundStation
 
     Application::~Application()
     {
+        Renderer::shutdown();
     }
 
     Application &Application::instance()

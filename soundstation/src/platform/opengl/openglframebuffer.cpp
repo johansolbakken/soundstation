@@ -22,27 +22,30 @@ namespace SoundStation
         GL_CALL(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
         GL_CALL(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_depthAttachment));
 
+        GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        SS_ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
+
         GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
-    OpenGLFramebuffer::~OpenGLFramebuffer() override
+    OpenGLFramebuffer::~OpenGLFramebuffer()
     {
         GL_CALL(glDeleteFramebuffers(1, &m_rendererID));
         GL_CALL(glDeleteTextures(1, &m_colorAttachment));
         GL_CALL(glDeleteRenderbuffers(1, &m_depthAttachment));
     }
 
-    void OpenGLFramebuffer::bind() override
+    void OpenGLFramebuffer::bind()
     {
         GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, m_rendererID));
     }
 
-    void OpenGLFramebuffer::unbind() override
+    void OpenGLFramebuffer::unbind()
     {
         GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
-    void OpenGLFramebuffer::resize(uint32_t width, uint32_t height) override
+    void OpenGLFramebuffer::resize(uint32_t width, uint32_t height)
     {
         m_width = width;
         m_height = height;
@@ -52,6 +55,11 @@ namespace SoundStation
 
         GL_CALL(glBindRenderbuffer(GL_RENDERBUFFER, m_depthAttachment));
         GL_CALL(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
+
+        GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        SS_ASSERT(status == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
+
+        GL_CALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     std::shared_ptr<Framebuffer> Framebuffer::create(uint32_t width, uint32_t height)

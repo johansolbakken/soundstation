@@ -29,8 +29,8 @@ namespace SoundStation
 
     void OpenGLTexture::bind()
     {
-        GL_CALL(glBindTexture(GL_TEXTURE_2D, m_rendererID));
         GL_CALL(glActiveTexture(GL_TEXTURE0));
+        GL_CALL(glBindTexture(GL_TEXTURE_2D, m_rendererID));
     }
 
     void OpenGLTexture::unbind()
@@ -42,31 +42,40 @@ namespace SoundStation
     {
         int width, height, channels;
         stbi_set_flip_vertically_on_load(1);
-        unsigned char *data = stbi_load(path.c_str(), &width, &height, &channels, 1);
+        unsigned char *data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 
         if (data)
         {
-            SS_LOG_DEBUG(fmt::format("Loaded texture: {}x{}x{}", width, height, channels));
             GLenum format = 0;
+            GLenum internalFormat = 0;
             if (channels == 1)
+            {
                 format = GL_RED;
+                internalFormat = GL_RED;
+            }
             else if (channels == 3)
+            {
                 format = GL_RGB;
+                internalFormat = GL_RGB8;
+            }
             else if (channels == 4)
+            {
                 format = GL_RGBA;
+                internalFormat = GL_RGBA8;
+            }
 
             m_width = width;
             m_height = height;
 
             GL_CALL(glBindTexture(GL_TEXTURE_2D, m_rendererID));
-            GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data));
+            GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, data));
             GL_CALL(glGenerateMipmap(GL_TEXTURE_2D));
 
             stbi_image_free(data);
         }
         else
         {
-            SS_ASSERT(false, "Failed to load texture");
+            SS_LOG_ERROR(fmt::format("Failed to load texture: {}", path));
         }
     }
 

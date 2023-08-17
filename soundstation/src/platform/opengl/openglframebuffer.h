@@ -1,10 +1,10 @@
 #pragma once
 
-#include <memory>
+#include "renderer/framebuffer.h"
 
 namespace SoundStation
 {
-    class OpenGLFramebuffer
+    class OpenGLFramebuffer : public Framebuffer
     {
     public:
         OpenGLFramebuffer(uint32_t width, uint32_t height);
