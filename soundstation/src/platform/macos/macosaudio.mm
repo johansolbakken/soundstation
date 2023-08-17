@@ -35,14 +35,12 @@ namespace SoundStation {
     }
 
     void MacOSAudio::play() {
+        m_playing = true;
 
     }
+    
     void MacOSAudio::pause() {
-
-    }
-    void MacOSAudio::stop() {
-  
-        
+        m_playing = false;
     }
 
     void MacOSAudio::update() {

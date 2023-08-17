@@ -29,10 +29,7 @@ namespace SoundStation
 
     void PlayerLayer::onUpdate()
     {
-        if (m_playing)
-        {
-            m_cursor += 0.1f;
-        }
+        m_audio->update();
     }
 
     void PlayerLayer::onUIRender()
@@ -50,7 +47,8 @@ namespace SoundStation
 
         ImGui::PushItemWidth(-1);
 
-        if (ImGui::SliderFloat("##Current", &m_cursor, 0.0f, 100.0f))
+        float cursor = m_audio->position();
+        if (ImGui::SliderFloat("##Current", &cursor, 0.0f, m_audio->duration()))
         {
         }
 
@@ -66,6 +64,14 @@ namespace SoundStation
         if (ImGui::ImageButton(reinterpret_cast<void *>(m_playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId()), {buttonWidth, buttonWidth}))
         {
             m_playing = !m_playing;
+            if (m_playing)
+            {
+                m_audio->play();
+            }
+            else
+            {
+                m_audio->pause();
+            }
         }
 
         ImGui::End();

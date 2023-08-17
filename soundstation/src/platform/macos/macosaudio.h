@@ -17,7 +17,6 @@ namespace SoundStation
 
         void play() override;
         void pause() override;
-        void stop() override;
 
         void update() override;
 

@@ -12,7 +12,6 @@ namespace SoundStation
 
         virtual void play() = 0;
         virtual void pause() = 0;
-        virtual void stop() = 0;
 
         virtual void update() = 0;
 
