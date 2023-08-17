@@ -1,6 +1,9 @@
 #pragma once
 
 #include "core/layerstack.h"
+#include "core/window.h"
+
+#include <memory>
 
 namespace SoundStation
 {
@@ -15,5 +18,6 @@ namespace SoundStation
     private:
         bool m_running = true;
         LayerStack m_layerStack;
+        std::unique_ptr<Window> m_window = nullptr;
     };
 }

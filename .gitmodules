@@ -1,3 +1,6 @@
 [submodule "soundstation/vendor/fmt"]
 	path = soundstation/vendor/fmt
 	url = git@github.com:fmtlib/fmt.git
+[submodule "soundstation/vendor/glfw"]
+	path = soundstation/vendor/glfw
+	url = git@github.com:glfw/glfw.git
