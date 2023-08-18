@@ -13,6 +13,21 @@ namespace SoundStation
           m_pauseImage("assets/images/pause.png"),
           m_audio(Audio::create("assets/sound/Lizza Bizzaz.aif"))
     {
+        float duration = 5.0f; // seconds
+        float sampleRate = 41000.0f;
+        float frequency = 440.0f;
+        float amplitude = 0.5f;
+        size_t numSamples = static_cast<size_t>(duration * sampleRate);
+        float *data = new float[numSamples * 2];
+        for (size_t i = 0; i < numSamples; i++)
+        {
+            float t = static_cast<float>(i) / sampleRate;
+            data[i * 2] = amplitude * sin(2.0f * M_PI * frequency * t);
+            data[i * 2 + 1] = amplitude * sin(2.0f * M_PI * frequency * t);
+        }
+        
+        m_audioBuffer = std::make_shared<AudioBuffer>(data, sampleRate, AudioBufferFormat::Float32Bit, 2);
+        m_audioDevice = AudioDevice::create();
     }
 
     PlayerLayer::~PlayerLayer()
@@ -34,6 +49,13 @@ namespace SoundStation
 
     void PlayerLayer::onUIRender()
     {
+        ImGui::Begin("Audio Device");
+        ImGui::Text("Name: %s", m_audioDevice->name().c_str());
+        ImGui::Text("Sample Rate: %f", m_audioDevice->sampleRate());
+        ImGui::Text("Channels: %zu", m_audioDevice->channels());
+        ImGui::Text("Buffer Size: %f", m_audioDevice->bufferSize());
+        ImGui::End();
+
         // begin with fixed size
         ImGui::Begin("Player", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 

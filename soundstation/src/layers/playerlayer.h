@@ -5,6 +5,8 @@
 #include "core/image.h"
 
 #include "audio/audio.h"
+#include "audio/audiobuffer.h"
+#include "audio/audiodevice.h"
 
 namespace SoundStation
 {
@@ -28,5 +30,7 @@ namespace SoundStation
         Image m_pauseImage;
 
         std::shared_ptr<Audio> m_audio = nullptr;
+        std::shared_ptr<AudioBuffer> m_audioBuffer = nullptr;
+        std::shared_ptr<AudioDevice> m_audioDevice = nullptr;
     };
 }
