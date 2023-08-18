@@ -8,8 +8,8 @@ namespace SoundStation
     class Time
     {
     public:
-        static float systemTimeSeconds();
-        static float systemTimeMilliseconds();
+        static size_t systemTimeSeconds();
+        static size_t systemTimeMilliseconds();
     };
 
     class Timestep

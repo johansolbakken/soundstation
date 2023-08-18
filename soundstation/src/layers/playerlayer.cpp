@@ -47,7 +47,7 @@ namespace SoundStation
     void PlayerLayer::onUpdate(Timestep step)
     {
         m_audio->update();
-        m_audioDevice->update();
+        m_audioDevice->update(step);
     }
 
     void PlayerLayer::onUIRender()

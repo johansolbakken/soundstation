@@ -48,8 +48,8 @@ namespace SoundStation
     {
         while (m_running)
         {
-            float current = Time::systemTimeMilliseconds();
-            Timestep timestep = current - m_lastTime;
+            size_t current = Time::systemTimeMilliseconds();
+            Timestep timestep = (current - m_lastTime) * 0.001f;
             m_lastTime = current;
 
             RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});

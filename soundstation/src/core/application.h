@@ -27,6 +27,6 @@ namespace SoundStation
         LayerStack m_layerStack;
         std::shared_ptr<Window> m_window = nullptr;
         ImGuiLayer *m_imguiLayer = nullptr;
-        float m_lastTime = 0.0f;
+        size_t m_lastTime = 0;
     };
 }

@@ -10,7 +10,7 @@ namespace SoundStation
         MacOSAudioDevice();
         ~MacOSAudioDevice() override;
         void setAudioBuffer(const std::shared_ptr<AudioBuffer> &audioBuffer) override;
-        void update() override;
+        void update(Timestep timestep) override;
 
         const std::string &name() const override { return m_name; }
         float sampleRate() const override { return m_sampleRate; }

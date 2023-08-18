@@ -4,13 +4,13 @@
 
 namespace SoundStation
 {
-    float Time::systemTimeSeconds()
+    size_t Time::systemTimeSeconds()
     {
-        return std::chrono::duration_cast<std::chrono::duration<float>>(std::chrono::system_clock::now().time_since_epoch()).count();
+        return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     }
 
-    float Time::systemTimeMilliseconds()
+    size_t Time::systemTimeMilliseconds()
     {
-        return std::chrono::duration_cast<std::chrono::duration<float, std::milli>>(std::chrono::system_clock::now().time_since_epoch()).count();
+        return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     }
 }

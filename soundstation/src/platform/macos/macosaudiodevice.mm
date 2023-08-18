@@ -85,12 +85,10 @@ namespace SoundStation {
         m_audioBuffer = audioBuffer;
     }
     
-    void MacOSAudioDevice::update() {
+    void MacOSAudioDevice::update(Timestep delta) {
         if (m_audioBuffer == nullptr) {
             return;
         }
-
-        
     }
 
     std::shared_ptr<AudioDevice> AudioDevice::create() {
