@@ -8,6 +8,7 @@
 #include <imgui.h>
 
 #include "layers/playerlayer.h"
+#include "layers/audiodevicemanagerlayer.h"
 
 namespace SoundStation
 {
@@ -26,6 +27,7 @@ namespace SoundStation
         m_layerStack.pushOverlay(m_imguiLayer);
 
         m_layerStack.pushLayer(new PlayerLayer());
+        m_layerStack.pushLayer(new AudioDeviceManagerLayer());
 
         SS_LOG_INFO("SoundStation is awake!");
     }

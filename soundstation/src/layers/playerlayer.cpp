@@ -49,13 +49,6 @@ namespace SoundStation
 
     void PlayerLayer::onUIRender()
     {
-        ImGui::Begin("Audio Device");
-        ImGui::Text("Name: %s", m_audioDevice->name().c_str());
-        ImGui::Text("Sample Rate: %f", m_audioDevice->sampleRate());
-        ImGui::Text("Channels: %zu", m_audioDevice->channels());
-        ImGui::Text("Buffer Size: %f", m_audioDevice->bufferSize());
-        ImGui::End();
-
         // begin with fixed size
         ImGui::Begin("Player", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
