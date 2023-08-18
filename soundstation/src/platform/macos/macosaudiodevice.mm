@@ -10,6 +10,7 @@ namespace SoundStation {
         AudioObjectPropertyAddress propertyAddress = {
             kAudioHardwarePropertyDevices,
             kAudioObjectPropertyScopeGlobal,
+            kAudioObjectPropertyElementMain
         };
 
         UInt32 dataSize = 0;
@@ -71,24 +72,7 @@ namespace SoundStation {
         m_bufferSize = bufferSize;
 
         // get the default output device's number of channels
-        propertyAddress.mSelector = kAudioDevicePropertyStreamConfiguration;
-        AudioBufferList *bufferList;
-        dataSize = 0;
-        status = AudioObjectGetPropertyDataSize(defaultDeviceID, &propertyAddress, 0, NULL, &dataSize);
-        if (status != noErr) {
-            SS_LOG_ERROR("Failed to get default audio device buffer list size");
-            return;
-        }
-
-        bufferList = (AudioBufferList *)malloc(dataSize);
-        status = AudioObjectGetPropertyData(defaultDeviceID, &propertyAddress, 0, NULL, &dataSize, bufferList);
-        if (status != noErr) {
-            SS_LOG_ERROR("Failed to get default audio device buffer list");
-            return;
-        }
-
-        m_channels = bufferList->mNumberBuffers;
-        free(bufferList);
+        // todo()
 
         delete[] deviceIDs;
     }
