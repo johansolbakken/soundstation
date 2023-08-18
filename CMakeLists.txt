@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory(soundstation)
 
-add_subdirectory(sound440)
+add_subdirectory(tests)

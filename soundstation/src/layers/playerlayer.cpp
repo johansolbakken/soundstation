@@ -50,6 +50,7 @@ namespace SoundStation
     void PlayerLayer::onUIRender()
     {
         // begin with fixed size
+        ImGui::SetNextWindowSize({300, 400});
         ImGui::Begin("Player", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
 
         // ImGui::Text("Sanity!");
