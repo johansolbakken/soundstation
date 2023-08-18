@@ -86,7 +86,11 @@ namespace SoundStation {
     }
     
     void MacOSAudioDevice::update() {
+        if (m_audioBuffer == nullptr) {
+            return;
+        }
 
+        
     }
 
     std::shared_ptr<AudioDevice> AudioDevice::create() {

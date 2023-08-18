@@ -62,7 +62,7 @@ namespace SoundStation
     {
     }
 
-    void ImGuiLayer::onUpdate()
+    void ImGuiLayer::onUpdate(Timestep step)
     {
     }
 

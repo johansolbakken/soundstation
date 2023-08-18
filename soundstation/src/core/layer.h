@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "core/time.h"
+
 namespace SoundStation
 {
     class Layer
@@ -12,7 +14,7 @@ namespace SoundStation
 
         virtual void onAttach() {}
         virtual void onDetach() {}
-        virtual void onUpdate() {}
+        virtual void onUpdate(Timestep delta) {}
         virtual void onUIRender() {}
 
     private:

@@ -2,6 +2,7 @@
 
 #include "core/log.h"
 #include "core/assert.h"
+#include "core/time.h"
 
 #include "renderer/renderer.h"
 
@@ -47,12 +48,16 @@ namespace SoundStation
     {
         while (m_running)
         {
+            float current = Time::systemTimeMilliseconds();
+            Timestep timestep = current - m_lastTime;
+            m_lastTime = current;
+
             RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
             RenderCommand::clear();
 
             for (Layer *layer : m_layerStack)
             {
-                layer->onUpdate();
+                layer->onUpdate(timestep);
             }
 
             m_imguiLayer->begin();

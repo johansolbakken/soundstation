@@ -18,7 +18,7 @@ namespace SoundStation
     {
     }
 
-    void AudioDeviceManagerLayer::onUpdate()
+    void AudioDeviceManagerLayer::onUpdate(Timestep step)
     {
     }
 

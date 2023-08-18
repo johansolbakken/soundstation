@@ -10,7 +10,7 @@ namespace SoundStation {
 
         void onAttach() override;
         void onDetach() override;
-        void onUpdate() override;
+        void onUpdate(Timestep step) override;
 
         void begin();
         void end();

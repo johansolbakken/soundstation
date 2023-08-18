@@ -23,6 +23,7 @@ add_executable(soundstation
     src/core/layerstack.h src/core/layerstack.cpp
     src/core/window.h src/core/window.cpp
     src/core/image.h src/core/image.cpp
+    src/core/time.h src/core/time.cpp
     
     src/renderer/renderer.h src/renderer/renderer.cpp
     src/renderer/rendercommand.h src/renderer/rendercommand.cpp
