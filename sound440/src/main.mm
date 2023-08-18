@@ -1,5 +1,6 @@
 #include <Foundation/Foundation.h>
 #include <AudioToolbox/AudioToolbox.h>
+#include <math.h>
 
 static OSStatus playbackCallback(void *inRefCon,
                                  AudioUnitRenderActionFlags *ioActionFlags,
@@ -10,16 +11,21 @@ static OSStatus playbackCallback(void *inRefCon,
     
     const double amplitude = 0.5;
     const double sampleRate = 44100.0;
-    const double frequency = 440.0;
+    const double frequency = 8000.0;
     
     double theta = 0.0;
     double thetaIncrement = 2.0 * M_PI * frequency / sampleRate;
+    
+    // Calculate the number of samples to generate per callback
+    double samplesPerCallback = inNumberFrames * thetaIncrement / (2.0 * M_PI);
     
     for (UInt32 frame = 0; frame < inNumberFrames; ++frame) {
         const double sample = amplitude * sin(theta);
         
         for (UInt32 channel = 0; channel < ioData->mNumberBuffers; ++channel) {
-            ((float *)ioData->mBuffers[channel].mData)[frame] = (float)sample;
+            for (UInt32 sampleIndex = 0; sampleIndex < samplesPerCallback; ++sampleIndex) {
+                ((float *)ioData->mBuffers[channel].mData)[frame * (UInt32)samplesPerCallback + sampleIndex] = (float)sample;
+            }
         }
         
         theta += thetaIncrement;
@@ -30,7 +36,6 @@ static OSStatus playbackCallback(void *inRefCon,
     
     return noErr;
 }
-
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -59,7 +64,10 @@ int main(int argc, const char * argv[]) {
         AudioStreamBasicDescription streamFormat;
         streamFormat.mSampleRate = 44100.0;
         streamFormat.mFormatID = kAudioFormatLinearPCM;
-        streamFormat.mFormatFlags = kAudioFormatFlagsNativeFloatPacked | kAudioFormatFlagIsNonInterleaved;
+        
+        AudioFormatFlags formatFlags = kAudioFormatFlagsNativeFloatPacked | kAudioFormatFlagIsNonInterleaved;
+        streamFormat.mFormatFlags = formatFlags;
+        
         streamFormat.mFramesPerPacket = 1;
         streamFormat.mChannelsPerFrame = 1;
         streamFormat.mBitsPerChannel = sizeof(float) * 8;
