@@ -19,6 +19,9 @@ namespace SoundStation
         size_t channels() const override { return m_channels; }
         float bufferSize() const override { return m_bufferSize; }
 
+    protected:
+        static OSStatus AudioRenderCallback(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, const AudioTimeStamp *inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList *ioData);
+
     private:
         std::shared_ptr<AudioBuffer> m_audioBuffer = nullptr;
 
@@ -27,6 +30,8 @@ namespace SoundStation
         size_t m_channels = 0;
         float m_bufferSize = 0;
 
+        uint32_t m_currentFrame = 0;
         AudioDeviceID m_deviceID = 0;
+        AudioComponentInstance m_audioUnit = nullptr;
     };
 }

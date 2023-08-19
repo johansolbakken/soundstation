@@ -31,7 +31,6 @@ namespace SoundStation
         m_audioBuffer = std::make_shared<AudioBuffer>(data, numSamples * 2, sampleRate, AudioBufferFormat::Float32Bit, 2);
 
         m_audioDevice = AudioDevice::create();
-        m_audioDevice->setAudioBuffer(m_audioBuffer);
     }
 
     PlayerLayer::~PlayerLayer()
@@ -88,10 +87,12 @@ namespace SoundStation
             if (m_playing)
             {
                 // m_audio->play();
+                m_audioDevice->setAudioBuffer(m_audioBuffer);
             }
             else
             {
                 // m_audio->pause();
+                m_audioDevice->setAudioBuffer(nullptr);
             }
         }
 
