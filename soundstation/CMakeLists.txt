@@ -34,6 +34,7 @@ add_executable(soundstation
     src/audio/audio.h
     src/audio/audiobuffer.h src/audio/audiobuffer.cpp
     src/audio/audiodevice.h
+    src/audio/audiofilewriter.h src/audio/audiofilewriter.cpp
 
     src/platform/opengl/openglcontext.h src/platform/opengl/openglcontext.cpp
     src/platform/opengl/openglrenderapi.h src/platform/opengl/openglrenderapi.cpp
