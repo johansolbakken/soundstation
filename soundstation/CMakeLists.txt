@@ -8,7 +8,6 @@ set(CMAKE_CXX_STANDARD 23)
 
 if(APPLE)
     set(PLATFORM_SOURCE 
-        src/platform/macos/macosaudio.h src/platform/macos/macosaudio.mm
         src/platform/macos/macosaudiodevice.h src/platform/macos/macosaudiodevice.mm)
     set(PLATFORM_LIBS "-framework CoreAudio" "-framework AudioToolbox" "-framework AudioUnit" "-framework CoreServices")
 endif()
@@ -31,7 +30,7 @@ add_executable(soundstation
     src/renderer/shader.h
     src/renderer/framebuffer.h
     
-    src/audio/audio.h
+    src/audio/audiofile.h src/audio/audiofile.cpp
     src/audio/audiobuffer.h src/audio/audiobuffer.cpp
     src/audio/audiodevice.h
     src/audio/audiofilewriter.h src/audio/audiofilewriter.cpp

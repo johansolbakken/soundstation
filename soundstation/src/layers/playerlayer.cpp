@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include "core/assert.h"
+#include "core/application.h"
 
 #include "audio/audiofilewriter.h"
 
@@ -12,12 +13,8 @@ namespace SoundStation
         : Layer("PlayerLayer"),
           m_noteImage("assets/images/note.jpeg"),
           m_playImage("assets/images/play.png"),
-          m_pauseImage("assets/images/pause.png"),
-          m_audio(Audio::create("assets/sound/Lizza Bizzaz.aif"))
+          m_pauseImage("assets/images/pause.png")
     {
-        m_audioBuffer = AudioFileWriter::read("assets/sound/Lizza Bizzaz.aif");
-
-        m_audioDevice = AudioDevice::create();
     }
 
     PlayerLayer::~PlayerLayer()
@@ -34,8 +31,7 @@ namespace SoundStation
 
     void PlayerLayer::onUpdate(Timestep step)
     {
-        m_audio->update();
-        m_audioDevice->update(step);
+        // m_audioDevice->update(step);
     }
 
     void PlayerLayer::onUIRender()
@@ -54,10 +50,10 @@ namespace SoundStation
 
         ImGui::PushItemWidth(-1);
 
-        float cursor = m_audio->position();
-        if (ImGui::SliderFloat("##Current", &cursor, 0.0f, m_audio->duration()))
+        // float cursor = m_audio->position();
+        /*if (ImGui::SliderFloat("##Current", &cursor, 0.0f, m_audio->duration()))
         {
-        }
+        }*/
 
         ImGui::PopItemWidth();
 
@@ -68,23 +64,17 @@ namespace SoundStation
         float buttonXPos = (viewportWidth - buttonWidth) / 2.0f;
         ImGui::SetCursorPosX(buttonXPos);
 
-        if (ImGui::ImageButton(reinterpret_cast<void *>(m_playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId()), {buttonWidth, buttonWidth}))
+        if (ImGui::ImageButton(reinterpret_cast<void *>(m_playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId()), {buttonWidth, buttonWidth}) && m_audioFile != nullptr)
         {
             m_playing = !m_playing;
             if (m_playing)
             {
-                // m_audio->play();
-                m_audioDevice->setAudioBuffer(m_audioBuffer);
+                Application::instance().currentAudioDevice()->setAudioBuffer(m_audioFile->audioBuffer());
             }
             else
             {
-                // m_audio->pause();
-                m_audioDevice->setAudioBuffer(nullptr);
+                Application::instance().currentAudioDevice()->setAudioBuffer(nullptr);
             }
-        }
-
-        if (ImGui::Button("Write buffer to file")) {
-            AudioFileWriter::write("test.aif", m_audioBuffer, AudioFileFormat::Aiff);
         }
 
         ImGui::End();

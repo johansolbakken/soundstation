@@ -28,10 +28,12 @@ namespace SoundStation
 
         m_imguiLayer = new ImGuiLayer();
         m_layerStack.pushOverlay(m_imguiLayer);
-        
+
         m_layerStack.pushLayer(new ToolbarLayer());
+        m_audioDeviceManagerLayer = new AudioDeviceManagerLayer();
+        m_layerStack.pushLayer(m_audioDeviceManagerLayer);
+
         m_layerStack.pushLayer(new PlayerLayer());
-        m_layerStack.pushLayer(new AudioDeviceManagerLayer());
         m_layerStack.pushLayer(new FileReaderWriterLayer());
 
         SS_LOG_INFO("SoundStation is awake!");

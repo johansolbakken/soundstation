@@ -15,6 +15,8 @@ namespace SoundStation {
         void onUpdate(Timestep step) override;
         void onUIRender() override;
 
+        std::shared_ptr<AudioDevice> getAudioDevice() const { return m_audioDevice; }
+
     private:
         std::shared_ptr<AudioDevice> m_audioDevice = nullptr;
     };
