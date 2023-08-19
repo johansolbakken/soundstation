@@ -10,6 +10,10 @@
 #include <GLFW/glfw3.h>
 
 #include "core/application.h"
+#include "core/log.h"
+
+#include <filesystem>
+#include <fstream>
 
 namespace SoundStation
 {
@@ -60,6 +64,7 @@ namespace SoundStation
 
     void ImGuiLayer::onDetach()
     {
+        
     }
 
     void ImGuiLayer::onUpdate(Timestep step)

@@ -11,6 +11,7 @@
 #include "layers/playerlayer.h"
 #include "layers/audiodevicemanagerlayer.h"
 #include "layers/filereaderwriterlayer.h"
+#include "layers/toolbarlayer.h"
 
 namespace SoundStation
 {
@@ -27,7 +28,8 @@ namespace SoundStation
 
         m_imguiLayer = new ImGuiLayer();
         m_layerStack.pushOverlay(m_imguiLayer);
-
+        
+        m_layerStack.pushLayer(new ToolbarLayer());
         m_layerStack.pushLayer(new PlayerLayer());
         m_layerStack.pushLayer(new AudioDeviceManagerLayer());
         m_layerStack.pushLayer(new FileReaderWriterLayer());
