@@ -10,3 +10,6 @@
 [submodule "soundstation/vendor/glm"]
 	path = soundstation/vendor/glm
 	url = git@github.com:g-truc/glm.git
+[submodule "soundstation/vendor/libsndfile"]
+	path = soundstation/vendor/libsndfile
+	url = git@github.com:libsndfile/libsndfile.git

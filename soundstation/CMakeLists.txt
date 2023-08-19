@@ -58,7 +58,8 @@ target_include_directories(soundstation
         vendor/imgui
         vendor/imgui/backends
         vendor/glm
-        vendor/stb)
+        vendor/stb
+        vendor/libsndfile/include)
 
 target_link_libraries(soundstation 
     PUBLIC 
@@ -67,6 +68,7 @@ target_link_libraries(soundstation
         glad
         imgui
         stb
+        sndfile
         ${PLATFORM_LIBS}
         )
 

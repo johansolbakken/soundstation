@@ -4,6 +4,8 @@
 
 #include "core/assert.h"
 
+#include "audio/audiofilewriter.h"
+
 namespace SoundStation
 {
     PlayerLayer::PlayerLayer()
@@ -91,6 +93,10 @@ namespace SoundStation
             {
                 // m_audio->pause();
             }
+        }
+
+        if (ImGui::Button("Write buffer to file")) {
+            AudioFileWriter::write("test.aif", m_audioBuffer, AudioFileFormat::Aiff);
         }
 
         ImGui::End();
