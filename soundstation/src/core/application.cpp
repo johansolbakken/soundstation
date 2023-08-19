@@ -28,13 +28,17 @@ namespace SoundStation
 
         m_imguiLayer = new ImGuiLayer();
         m_layerStack.pushOverlay(m_imguiLayer);
+        m_imguiLayer->onAttach();
 
-        m_layerStack.pushLayer(new ToolbarLayer());
+        // system layers
+        pushLayer(new ToolbarLayer());
+        
         m_audioDeviceManagerLayer = new AudioDeviceManagerLayer();
-        m_layerStack.pushLayer(m_audioDeviceManagerLayer);
+        pushLayer(m_audioDeviceManagerLayer);
 
-        m_layerStack.pushLayer(new PlayerLayer());
-        m_layerStack.pushLayer(new FileReaderWriterLayer());
+        pushLayer(new PlayerLayer());
+        pushLayer(new FileReaderWriterLayer());
+        // system layers
 
         SS_LOG_INFO("SoundStation is awake!");
     }
@@ -85,4 +89,9 @@ namespace SoundStation
     {
         m_running = false;
     }
+
+     void Application::pushLayer(Layer *layer) {
+        m_layerStack.pushLayer(layer);
+        layer->onAttach();
+     }
 }

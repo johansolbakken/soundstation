@@ -27,6 +27,8 @@ namespace SoundStation
 
         std::shared_ptr<AudioDevice> currentAudioDevice() const { return m_audioDeviceManagerLayer->getAudioDevice(); }
 
+        void pushLayer(Layer *layer);
+
     private:
         bool m_running = true;
         LayerStack m_layerStack;

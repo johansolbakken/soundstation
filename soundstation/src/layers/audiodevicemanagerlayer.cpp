@@ -66,17 +66,13 @@ namespace SoundStation
             std::string id = device.second + std::to_string(device.first);
             std::string deviceName = device.second.c_str();
 
-            SS_LOG_DEBUG(fmt::format("Device: {}", deviceName));
-
             ImGui::PushID(id.c_str());
 
             if (ImGui::Selectable(deviceName.c_str(), m_selectedOutputDevice == device.first))
             {
                 // Update the selected device when it's clicked
                 m_selectedOutputDevice = device.first;
-                deviceSelected = true; // Set the flag to true
-
-                SS_LOG_DEBUG(fmt::format("Selected device: {}", deviceName));
+                deviceSelected = true;
             }
             ImGui::PopID();
         }
