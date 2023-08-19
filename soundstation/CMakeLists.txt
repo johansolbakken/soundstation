@@ -45,6 +45,7 @@ add_executable(soundstation
 
     src/layers/playerlayer.h src/layers/playerlayer.cpp
     src/layers/audiodevicemanagerlayer.h src/layers/audiodevicemanagerlayer.cpp
+    src/layers/filereaderwriterlayer.h src/layers/filereaderwriterlayer.cpp
     
     src/imgui/buildimgui.cpp
     src/imgui/imguilayer.h src/imgui/imguilayer.cpp)

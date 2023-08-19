@@ -10,6 +10,7 @@
 
 #include "layers/playerlayer.h"
 #include "layers/audiodevicemanagerlayer.h"
+#include "layers/filereaderwriterlayer.h"
 
 namespace SoundStation
 {
@@ -29,6 +30,7 @@ namespace SoundStation
 
         m_layerStack.pushLayer(new PlayerLayer());
         m_layerStack.pushLayer(new AudioDeviceManagerLayer());
+        m_layerStack.pushLayer(new FileReaderWriterLayer());
 
         SS_LOG_INFO("SoundStation is awake!");
     }

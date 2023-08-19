@@ -42,5 +42,6 @@ namespace SoundStation
     {
     public:
         static void write(const std::string &filename, const std::shared_ptr<AudioBuffer> &buffer, AudioFileFormat format);
+        static std::shared_ptr<AudioBuffer> read(const std::string &filename);
     };
 }
