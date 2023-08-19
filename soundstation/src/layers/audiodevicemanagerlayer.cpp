@@ -10,10 +10,11 @@ namespace SoundStation
         : Layer("Audio Device Manager")
     {
         m_audioDeviceList = AudioDeviceList::create();
-    }   
+    }
 
     void AudioDeviceManagerLayer::onAttach()
     {
+        m_audioDeviceList->onUpdate();
     }
 
     void AudioDeviceManagerLayer::onDetach()
@@ -26,7 +27,8 @@ namespace SoundStation
 
     void AudioDeviceManagerLayer::onUIRender()
     {
-        if (m_audioDevice != nullptr) {
+        if (m_audioDevice != nullptr)
+        {
             ImGui::Begin("Audio Device");
             ImGui::Text("Name: %s", m_audioDevice->name().c_str());
             ImGui::Text("Sample Rate: %f", m_audioDevice->sampleRate());
@@ -36,6 +38,19 @@ namespace SoundStation
         }
 
         ImGui::Begin("Audio Device Manager");
+
+        if (m_activeOutputDevice != -1)
+        {
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 0.0f, 1.0));
+            ImGui::Text("Output Device: %s", m_activeOutputDeviceName.c_str());
+            ImGui::PopStyleColor();
+        }
+        else
+        {
+            ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0));
+            ImGui::Text("Output Device: None");
+            ImGui::PopStyleColor();
+        }
 
         ImGui::Text("Available Output Devices:");
         ImGui::Separator();
@@ -54,6 +69,7 @@ namespace SoundStation
             SS_LOG_DEBUG(fmt::format("Device: {}", deviceName));
 
             ImGui::PushID(id.c_str());
+
             if (ImGui::Selectable(deviceName.c_str(), m_selectedOutputDevice == device.first))
             {
                 // Update the selected device when it's clicked
@@ -65,13 +81,15 @@ namespace SoundStation
             ImGui::PopID();
         }
 
-        // Show a message if no device is selected
-        if (!deviceSelected)
+        // only clickable if devices are available
+
+        if (ImGui::Button("Select"))
         {
-            ImGui::Text("Please select a device.");
+            m_activeOutputDevice = m_selectedOutputDevice;
+            m_activeOutputDeviceName = outputDevices[m_activeOutputDevice];
         }
 
-        if(ImGui::Button("Refresh"))
+        if (ImGui::Button("Refresh"))
         {
             m_audioDeviceList->onUpdate();
         }
