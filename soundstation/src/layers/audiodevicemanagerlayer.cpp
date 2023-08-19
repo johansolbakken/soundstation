@@ -9,7 +9,7 @@ namespace SoundStation
     AudioDeviceManagerLayer::AudioDeviceManagerLayer()
         : Layer("Audio Device Manager")
     {
-        m_audioDevice = AudioDevice::create();
+        //m_audioDevice = AudioDevice::create();
 
         m_availableDevices[0] = "Default";
         m_availableDevices[1] = "Default";
@@ -29,12 +29,14 @@ namespace SoundStation
 
     void AudioDeviceManagerLayer::onUIRender()
     {
-        ImGui::Begin("Audio Device");
-        ImGui::Text("Name: %s", m_audioDevice->name().c_str());
-        ImGui::Text("Sample Rate: %f", m_audioDevice->sampleRate());
-        ImGui::Text("Channels: %zu", m_audioDevice->channels());
-        ImGui::Text("Buffer Size: %f", m_audioDevice->bufferSize());
-        ImGui::End();
+        if (m_audioDevice != nullptr) {
+            ImGui::Begin("Audio Device");
+            ImGui::Text("Name: %s", m_audioDevice->name().c_str());
+            ImGui::Text("Sample Rate: %f", m_audioDevice->sampleRate());
+            ImGui::Text("Channels: %zu", m_audioDevice->channels());
+            ImGui::Text("Buffer Size: %f", m_audioDevice->bufferSize());
+            ImGui::End();
+        }
 
         ImGui::Begin("Audio Device Manager");
 
@@ -47,10 +49,13 @@ namespace SoundStation
         for (auto &device : m_availableDevices)
         {
             // Use an identifier for each selectable item to avoid conflicts
-            const char *deviceName = device.second.c_str();
+            std::string id = device.second + std::to_string(device.first);
+            std::string deviceName = device.second.c_str();
 
-            ImGui::PushID(deviceName + device.first);
-            if (ImGui::Selectable(deviceName, m_selectedDevice == device.first))
+            SS_LOG_DEBUG(fmt::format("Device: {}", deviceName));
+
+            ImGui::PushID(id.c_str());
+            if (ImGui::Selectable(deviceName.c_str(), m_selectedDevice == device.first))
             {
                 // Update the selected device when it's clicked
                 m_selectedDevice = device.first;
