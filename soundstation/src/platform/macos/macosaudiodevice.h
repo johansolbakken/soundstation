@@ -22,7 +22,6 @@ namespace SoundStation
     protected:
         static OSStatus AudioRenderCallback(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, const AudioTimeStamp *inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList *ioData);
 
-    private:
         std::shared_ptr<AudioBuffer> m_audioBuffer = nullptr;
 
         std::string m_name = "Uninitialized";

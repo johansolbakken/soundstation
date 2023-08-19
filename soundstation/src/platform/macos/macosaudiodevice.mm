@@ -3,6 +3,7 @@
 #include <AudioToolbox/AudioToolbox.h>
 
 #include "core/log.h"
+#include "core/assert.h"
 
 namespace SoundStation {
 
@@ -13,37 +14,36 @@ namespace SoundStation {
                              UInt32 inNumberFrames,
                              AudioBufferList* ioData) {
         MacOSAudioDevice* audioDevice = static_cast<MacOSAudioDevice*>(inRefCon);
-        float* outputBuffer = static_cast<float*>(ioData->mBuffers[0].mData);
+        float* outputBufferLeft = static_cast<float*>(ioData->mBuffers[0].mData);
+        float* outputBufferRight = static_cast<float*>(ioData->mBuffers[1].mData);
 
         if (audioDevice->m_audioBuffer == nullptr) {
             audioDevice->m_currentFrame = 0;
+
+            for (UInt32 frame = 0; frame < inNumberFrames; ++frame) {
+                outputBufferLeft[frame] = 0.0f; // Left channel
+                outputBufferRight[frame] = 0.0f; // Right channel
+            }
+
             return noErr;
         }
 
         size_t channels = audioDevice->m_audioBuffer->channels();
         auto data = reinterpret_cast<const float(*)[2]>(audioDevice->m_audioBuffer->data());
         float sampleRate = audioDevice->m_audioBuffer->sampleRate();
-        AudioBufferFormat format = audioDevice->m_audioBuffer->format();
 
-        if (audioDevice->m_currentFrame >= audioDevice->m_audioBuffer->size()) {
-            return noErr;
-        }
+        SS_ASSERT(ioData->mNumberBuffers == 2, "Expected 2 buffers");
 
-        SS_LOG_DEBUG(fmt::format("Playing audio buffer at cursor: {}", audioDevice->m_currentFrame));
-
-        for (int i = 0; i < inNumberFrames; i++) {
-            for (int j = 0; j < channels; j++) {
-                float sample = data[audioDevice->m_currentFrame][j];
-                if (format == AudioBufferFormat::Float32Bit) {
-                    sample *= 0.5f;
-                }
-                outputBuffer[i * channels + j] = sample;
-            }
+        for (UInt32 frame = 0; frame < inNumberFrames; ++frame) {
+            const float* sample = data[audioDevice->m_currentFrame];
+            outputBufferLeft[frame] = sample[0];
+            outputBufferRight[frame] = sample[1];
             audioDevice->m_currentFrame++;
         }
 
         return noErr;
     }
+
 
     MacOSAudioDevice::MacOSAudioDevice() {
         // get a list of all the audio devices
