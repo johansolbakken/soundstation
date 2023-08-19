@@ -4,6 +4,9 @@
 
 #include "audio/audiodevice.h"
 
+#include <string>
+#include <map>
+
 namespace SoundStation {
     class AudioDeviceManagerLayer : public Layer {
     public:
@@ -19,5 +22,7 @@ namespace SoundStation {
 
     private:
         std::shared_ptr<AudioDevice> m_audioDevice = nullptr;
+        std::map<uint32_t,std::string> m_availableDevices;
+        uint32_t m_selectedDevice = -1;
     };
 }
