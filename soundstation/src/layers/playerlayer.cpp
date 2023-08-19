@@ -15,20 +15,7 @@ namespace SoundStation
           m_pauseImage("assets/images/pause.png"),
           m_audio(Audio::create("assets/sound/Lizza Bizzaz.aif"))
     {
-        float duration = 5.0f; // seconds
-        float sampleRate = 41000.0f;
-        float frequency = 440.0f;
-        float amplitude = 0.5f;
-        size_t numSamples = static_cast<size_t>(duration * sampleRate);
-        float *data = new float[numSamples * 2];
-        for (size_t i = 0; i < numSamples; i++)
-        {
-            float t = static_cast<float>(i) / sampleRate;
-            data[i * 2] = amplitude * sin(2.0f * M_PI * frequency * t);
-            data[i * 2 + 1] = amplitude * sin(2.0f * M_PI * frequency * t);
-        }
-
-        m_audioBuffer = std::make_shared<AudioBuffer>(data, numSamples * 2, sampleRate, AudioBufferFormat::Float32Bit, 2);
+        m_audioBuffer = AudioFileWriter::read("assets/sound/Lizza Bizzaz.aif");
 
         m_audioDevice = AudioDevice::create();
     }
