@@ -92,33 +92,9 @@ namespace SoundStation {
         static int cursor = 0;
 
         size_t channels = m_audioBuffer->channels();
-        auto data = reinterpret_cast<float(*)[2]>(m_audioBuffer->data());
+        auto data = reinterpret_cast<const float(*)[2]>(m_audioBuffer->data());
         float sampleRate = m_audioBuffer->sampleRate();
         AudioBufferFormat format = m_audioBuffer->format();
-        
-        // read from the audio buffer and write to the output device
-        AudioBufferList bufferList;
-        bufferList.mNumberBuffers = channels;
-        for (int i = 0; i < channels; i++) {
-            bufferList.mBuffers[i].mNumberChannels = 1;
-            bufferList.mBuffers[i].mDataByteSize = m_bufferSize * sizeof(float);
-            bufferList.mBuffers[i].mData = data[cursor];
-        }
-
-        AudioTimeStamp timeStamp;
-        memset(&timeStamp, 0, sizeof(AudioTimeStamp));
-/*
-        OSStatus status = AudioDeviceWrite(m_deviceID, &timeStamp, &bufferList);
-        if (status != noErr) {
-            SS_LOG_ERROR("Failed to write to audio device");
-            return;
-        }
-*/
-        cursor += m_bufferSize;
-
-        if (cursor >= m_audioBuffer->size()) {
-            cursor = 0;
-        }
     }
 
     std::shared_ptr<AudioDevice> AudioDevice::create() {

@@ -27,16 +27,11 @@ namespace SoundStation
 
         void setData(float *data) { m_data = data; }
 
-        float *data() { return m_data; }
-        float sampleRate() { return m_sampleRate; }
-        AudioBufferFormat format() { return m_format; }
-        size_t channels() { return m_channels; }
-        size_t size() { return m_size; }
-
-        // static std::shared_ptr<AudioBuffer> create(float *data, float sampleRate, AudioBufferFormat format, size_t channels, );
-
-        // need size of data
-
+        const float *data() const { return m_data; }
+        float sampleRate() const { return m_sampleRate; }
+        AudioBufferFormat format() const { return m_format; }
+        size_t channels() const { return m_channels; }
+        size_t size() const { return m_size; }
 
     private:
         float *m_data = nullptr;

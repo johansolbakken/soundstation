@@ -10,6 +10,6 @@ namespace SoundStation
 
     AudioBuffer::~AudioBuffer()
     {
-        
+        delete[] m_data;
     }
 }
