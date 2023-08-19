@@ -30,9 +30,8 @@ namespace SoundStation {
 
         // get the default output device
         propertyAddress.mSelector = kAudioHardwarePropertyDefaultOutputDevice;
-        AudioDeviceID defaultDeviceID;
         dataSize = sizeof(AudioDeviceID);
-        status = AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &dataSize, &defaultDeviceID);
+        status = AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &dataSize, &m_deviceID);
         if (status != noErr) {
             SS_LOG_ERROR("Failed to get default audio device");
             return;
@@ -42,7 +41,7 @@ namespace SoundStation {
         propertyAddress.mSelector = kAudioDevicePropertyDeviceNameCFString;
         CFStringRef deviceName;
         dataSize = sizeof(CFStringRef);
-        status = AudioObjectGetPropertyData(defaultDeviceID, &propertyAddress, 0, NULL, &dataSize, &deviceName);
+        status = AudioObjectGetPropertyData(m_deviceID, &propertyAddress, 0, NULL, &dataSize, &deviceName);
         if (status != noErr) {
             SS_LOG_ERROR("Failed to get default audio device name");
             return;
@@ -53,7 +52,7 @@ namespace SoundStation {
         propertyAddress.mSelector = kAudioDevicePropertyNominalSampleRate;
         Float64 sampleRate;
         dataSize = sizeof(Float64);
-        status = AudioObjectGetPropertyData(defaultDeviceID, &propertyAddress, 0, NULL, &dataSize, &sampleRate);
+        status = AudioObjectGetPropertyData(m_deviceID, &propertyAddress, 0, NULL, &dataSize, &sampleRate);
         if (status != noErr) {
             SS_LOG_ERROR("Failed to get default audio device sample rate");
             return;
@@ -64,7 +63,7 @@ namespace SoundStation {
         propertyAddress.mSelector = kAudioDevicePropertyBufferFrameSize;
         UInt32 bufferSize;
         dataSize = sizeof(UInt32);
-        status = AudioObjectGetPropertyData(defaultDeviceID, &propertyAddress, 0, NULL, &dataSize, &bufferSize);
+        status = AudioObjectGetPropertyData(m_deviceID, &propertyAddress, 0, NULL, &dataSize, &bufferSize);
         if (status != noErr) {
             SS_LOG_ERROR("Failed to get default audio device buffer size");
             return;
@@ -88,6 +87,37 @@ namespace SoundStation {
     void MacOSAudioDevice::update(Timestep delta) {
         if (m_audioBuffer == nullptr) {
             return;
+        }
+
+        static int cursor = 0;
+
+        size_t channels = m_audioBuffer->channels();
+        auto data = reinterpret_cast<float(*)[2]>(m_audioBuffer->data());
+        float sampleRate = m_audioBuffer->sampleRate();
+        AudioBufferFormat format = m_audioBuffer->format();
+        
+        // read from the audio buffer and write to the output device
+        AudioBufferList bufferList;
+        bufferList.mNumberBuffers = channels;
+        for (int i = 0; i < channels; i++) {
+            bufferList.mBuffers[i].mNumberChannels = 1;
+            bufferList.mBuffers[i].mDataByteSize = m_bufferSize * sizeof(float);
+            bufferList.mBuffers[i].mData = data[cursor];
+        }
+
+        AudioTimeStamp timeStamp;
+        memset(&timeStamp, 0, sizeof(AudioTimeStamp));
+/*
+        OSStatus status = AudioDeviceWrite(m_deviceID, &timeStamp, &bufferList);
+        if (status != noErr) {
+            SS_LOG_ERROR("Failed to write to audio device");
+            return;
+        }
+*/
+        cursor += m_bufferSize;
+
+        if (cursor >= m_audioBuffer->size()) {
+            cursor = 0;
         }
     }
 

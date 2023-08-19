@@ -2,6 +2,8 @@
 
 #include "audio/audiodevice.h"
 
+#include <AudioToolbox/AudioToolbox.h>
+
 namespace SoundStation
 {
     class MacOSAudioDevice : public AudioDevice
@@ -24,5 +26,7 @@ namespace SoundStation
         float m_sampleRate = 0;
         size_t m_channels = 0;
         float m_bufferSize = 0;
+
+        AudioDeviceID m_deviceID = 0;
     };
 }

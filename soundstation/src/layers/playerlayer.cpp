@@ -25,9 +25,9 @@ namespace SoundStation
             data[i * 2] = amplitude * sin(2.0f * M_PI * frequency * t);
             data[i * 2 + 1] = amplitude * sin(2.0f * M_PI * frequency * t);
         }
-        
-        m_audioBuffer = std::make_shared<AudioBuffer>(data, sampleRate, AudioBufferFormat::Float32Bit, 2);
-        
+
+        m_audioBuffer = std::make_shared<AudioBuffer>(data, numSamples * 2, sampleRate, AudioBufferFormat::Float32Bit, 2);
+
         m_audioDevice = AudioDevice::create();
         m_audioDevice->setAudioBuffer(m_audioBuffer);
     }
@@ -85,11 +85,11 @@ namespace SoundStation
             m_playing = !m_playing;
             if (m_playing)
             {
-                //m_audio->play();
+                // m_audio->play();
             }
             else
             {
-                //m_audio->pause();
+                // m_audio->pause();
             }
         }
 
