@@ -3,9 +3,7 @@
 #include "core/layer.h"
 
 #include "audio/audiodevice.h"
-
-#include <string>
-#include <map>
+#include "audio/audiodevicelist.h"
 
 namespace SoundStation {
     class AudioDeviceManagerLayer : public Layer {
@@ -22,7 +20,7 @@ namespace SoundStation {
 
     private:
         std::shared_ptr<AudioDevice> m_audioDevice = nullptr;
-        std::map<uint32_t,std::string> m_availableDevices;
-        uint32_t m_selectedDevice = -1;
+        std::shared_ptr<AudioDeviceList> m_audioDeviceList = nullptr;
+        uint32_t m_selectedOutputDevice = -1;
     };
 }
