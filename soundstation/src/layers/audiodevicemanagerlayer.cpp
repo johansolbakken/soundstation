@@ -83,6 +83,8 @@ namespace SoundStation
         {
             m_activeOutputDevice = m_selectedOutputDevice;
             m_activeOutputDeviceName = outputDevices[m_activeOutputDevice];
+            m_audioDevice = nullptr;
+            m_audioDevice = AudioDevice::create(m_activeOutputDevice);
         }
 
         if (ImGui::Button("Refresh"))

@@ -45,70 +45,80 @@ namespace SoundStation {
     }
 
 
-    MacOSAudioDevice::MacOSAudioDevice() {
-        // get a list of all the audio devices
+    MacOSAudioDevice::MacOSAudioDevice(uint32_t deviceId) {
         AudioObjectPropertyAddress propertyAddress = {
             kAudioHardwarePropertyDevices,
             kAudioObjectPropertyScopeGlobal,
             kAudioObjectPropertyElementMain
         };
 
+        AudioDeviceID deviceID = deviceId;
+
+        // check if device id is valid
         UInt32 dataSize = 0;
         OSStatus status = AudioObjectGetPropertyDataSize(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &dataSize);
         if (status != noErr) {
-            SS_LOG_ERROR("Failed to get audio device list size");
+            SS_LOG_ERROR("Failed to get audio device count");
             return;
         }
 
         UInt32 deviceCount = dataSize / sizeof(AudioDeviceID);
-        AudioDeviceID *deviceIDs = new AudioDeviceID[dataSize];
+        AudioDeviceID *deviceIDs = new AudioDeviceID[deviceCount];
         status = AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &dataSize, deviceIDs);
         if (status != noErr) {
-            SS_LOG_ERROR("Failed to get audio device list");
+            SS_LOG_ERROR("Failed to get audio device ids");
             return;
         }
 
-        // get the default output device
-        propertyAddress.mSelector = kAudioHardwarePropertyDefaultOutputDevice;
-        dataSize = sizeof(AudioDeviceID);
-        status = AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, NULL, &dataSize, &m_deviceID);
-        if (status != noErr) {
-            SS_LOG_ERROR("Failed to get default audio device");
+        bool found = false;
+        for (UInt32 i = 0; i < deviceCount; ++i) {
+            if (deviceIDs[i] != deviceID) {
+                continue;
+            }
+
+            found = true;
+        }
+
+        if (!found) {
+            SS_LOG_ERROR("Invalid audio device id");
             return;
         }
 
-        // get the default output device's name
+        // Get the device name
         propertyAddress.mSelector = kAudioDevicePropertyDeviceNameCFString;
-        CFStringRef deviceName;
-        dataSize = sizeof(CFStringRef);
-        status = AudioObjectGetPropertyData(m_deviceID, &propertyAddress, 0, NULL, &dataSize, &deviceName);
+        CFStringRef deviceName = nullptr;
+        dataSize = sizeof(deviceName);
+        status = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nullptr, &dataSize, &deviceName);
         if (status != noErr) {
-            SS_LOG_ERROR("Failed to get default audio device name");
+            SS_LOG_ERROR("Failed to get audio device name");
             return;
         }
         m_name = CFStringGetCStringPtr(deviceName, kCFStringEncodingUTF8);
 
-        // get the default output device's sample rate
+        // Get the sample rate
         propertyAddress.mSelector = kAudioDevicePropertyNominalSampleRate;
-        Float64 sampleRate;
-        dataSize = sizeof(Float64);
-        status = AudioObjectGetPropertyData(m_deviceID, &propertyAddress, 0, NULL, &dataSize, &sampleRate);
+        Float64 sampleRate = 0;
+        dataSize = sizeof(sampleRate);
+        status = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nullptr, &dataSize, &sampleRate);
         if (status != noErr) {
-            SS_LOG_ERROR("Failed to get default audio device sample rate");
+            SS_LOG_ERROR("Failed to get audio device sample rate");
             return;
         }
         m_sampleRate = sampleRate;
-
-        // get the default output device's buffer size
+        
+        // Get the buffer size
         propertyAddress.mSelector = kAudioDevicePropertyBufferFrameSize;
-        UInt32 bufferSize;
-        dataSize = sizeof(UInt32);
-        status = AudioObjectGetPropertyData(m_deviceID, &propertyAddress, 0, NULL, &dataSize, &bufferSize);
+        UInt32 bufferSize = 0;
+        dataSize = sizeof(bufferSize);
+        status = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nullptr, &dataSize, &bufferSize);
         if (status != noErr) {
-            SS_LOG_ERROR("Failed to get default audio device buffer size");
+            SS_LOG_ERROR("Failed to get audio device buffer size");
             return;
         }
         m_bufferSize = bufferSize;
+        
+        // Get the number of channels
+        // todo(johan)
 
         // Create an audio unit
         AudioComponentDescription componentDescription;
@@ -125,8 +135,6 @@ namespace SoundStation {
             return;
         }
 
-
-        // Set the format to 32 bit float, linear PCM
         AudioStreamBasicDescription streamDescription;
         streamDescription.mSampleRate = m_sampleRate;
         streamDescription.mFormatID = kAudioFormatLinearPCM;
@@ -185,7 +193,7 @@ namespace SoundStation {
         }
     }
 
-    std::shared_ptr<AudioDevice> AudioDevice::create() {
-        return std::make_shared<MacOSAudioDevice>();
+    std::shared_ptr<AudioDevice> AudioDevice::create(uint32_t deviceId) {
+        return std::make_shared<MacOSAudioDevice>(deviceId);
     }
 }

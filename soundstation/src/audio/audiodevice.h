@@ -19,6 +19,6 @@ namespace SoundStation {
         virtual size_t channels() const = 0;
         virtual float bufferSize() const = 0;
 
-        static std::shared_ptr<AudioDevice> create();
+        static std::shared_ptr<AudioDevice> create(uint32_t);
     };
 }

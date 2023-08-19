@@ -9,7 +9,7 @@ namespace SoundStation
     class MacOSAudioDevice : public AudioDevice
     {
     public:
-        MacOSAudioDevice();
+        MacOSAudioDevice(uint32_t deviceID);
         ~MacOSAudioDevice() override;
         void setAudioBuffer(const std::shared_ptr<AudioBuffer> &audioBuffer) override;
         void update(Timestep timestep) override;
