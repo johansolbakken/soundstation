@@ -66,15 +66,54 @@ namespace SoundStation
 
         if (ImGui::ImageButton(reinterpret_cast<void *>(m_playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId()), {buttonWidth, buttonWidth}) && m_audioFile != nullptr)
         {
-            m_playing = !m_playing;
-            if (m_playing)
+            if (Application::instance().currentAudioDevice() != nullptr)
             {
-                Application::instance().currentAudioDevice()->setAudioBuffer(m_audioFile->audioBuffer());
+                m_playing = !m_playing;
+                if (m_playing)
+                {
+                    Application::instance().currentAudioDevice()->setAudioBuffer(m_audioFile->audioBuffer());
+                }
+                else
+                {
+                    Application::instance().currentAudioDevice()->setAudioBuffer(nullptr);
+                }
             }
-            else
+        }
+
+        static bool m_showLoadAudioFileModal = false;
+        if (m_showLoadAudioFileModal)
+        {
+            ImGui::OpenPopup("Load Audio File");
+            m_showLoadAudioFileModal = false;
+        }
+        if (ImGui::Button("Load Audio File"))
+        {
+            m_showLoadAudioFileModal = true;
+        }
+
+        if (ImGui::BeginPopupModal("Load Audio File", nullptr, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            static char m_filePath[256] = {0};
+            ImGui::InputText("File Path", m_filePath, 256);
+
+            if (ImGui::Button("Load"))
             {
-                Application::instance().currentAudioDevice()->setAudioBuffer(nullptr);
+                SS_LOG_INFO(fmt::format("Loading audio file: {}", m_filePath));
+                m_audioFile = std::make_shared<AudioFile>(m_filePath);
+                m_playing = false;
+                m_showLoadAudioFileModal = false;
+                ImGui::CloseCurrentPopup();
             }
+
+            ImGui::SameLine();
+
+            if (ImGui::Button("Cancel"))
+            {
+                m_showLoadAudioFileModal = false;
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::EndPopup();
         }
 
         ImGui::End();
