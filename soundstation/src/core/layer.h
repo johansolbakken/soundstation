@@ -17,6 +17,8 @@ namespace SoundStation
         virtual void onUpdate(Timestep delta) {}
         virtual void onUIRender() {}
 
+        const std::string& name() const { return m_name; }
+
     private:
         std::string m_name;
     };

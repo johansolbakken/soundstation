@@ -12,4 +12,8 @@ namespace SoundStation {
     AudioFile::~AudioFile()
     {
     }
+
+    std::shared_ptr<AudioFile> AudioFile::create(const std::string &filename) {
+        return std::make_shared<AudioFile>(filename);
+    }
 }

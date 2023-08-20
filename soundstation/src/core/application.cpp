@@ -12,6 +12,7 @@
 #include "layers/audiodevicemanagerlayer.h"
 #include "layers/filereaderwriterlayer.h"
 #include "layers/toolbarlayer.h"
+#include "layers/audiolibrarylayer.h"
 
 namespace SoundStation
 {
@@ -32,12 +33,13 @@ namespace SoundStation
 
         // system layers
         pushLayer(new ToolbarLayer());
-        
+
         m_audioDeviceManagerLayer = new AudioDeviceManagerLayer();
         pushLayer(m_audioDeviceManagerLayer);
 
         pushLayer(new PlayerLayer());
         pushLayer(new FileReaderWriterLayer());
+        pushLayer(new AudioLibraryLayer());
         // system layers
 
         SS_LOG_INFO("SoundStation is awake!");
@@ -90,8 +92,22 @@ namespace SoundStation
         m_running = false;
     }
 
-     void Application::pushLayer(Layer *layer) {
+    void Application::pushLayer(Layer *layer)
+    {
         m_layerStack.pushLayer(layer);
         layer->onAttach();
-     }
+    }
+
+    Layer * Application::getLayer(const std::string &name)
+    {
+        for (auto*layer : m_layerStack)
+        {
+            if (layer->name() == name)
+            {
+                return layer;
+            }
+        }
+
+        return nullptr;
+    }
 }

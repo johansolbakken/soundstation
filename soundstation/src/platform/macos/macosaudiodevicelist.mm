@@ -68,8 +68,8 @@ namespace SoundStation {
 
                 std::string cDeviceName =  buffer;
 
-                if (cDeviceName == "") {
-                    cDeviceName = "System Default";
+                if (cDeviceName.empty()) {
+                    continue;
                 }
 
                 enum class Direction : uint32_t {

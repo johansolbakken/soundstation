@@ -29,6 +29,8 @@ namespace SoundStation
 
         void pushLayer(Layer *layer);
 
+        Layer* getLayer(const std::string& name);
+
     private:
         bool m_running = true;
         LayerStack m_layerStack;
