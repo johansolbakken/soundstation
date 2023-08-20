@@ -14,6 +14,7 @@ namespace SoundStation
         void unbind() override;
 
         void setInt(const std::string &name, int value) override;
+        void setMat4(const std::string& name, const glm::mat4& value) override;
 
     private:
         uint32_t m_rendererID;

@@ -7,6 +7,8 @@
 #include <fstream>
 #include <filesystem>
 
+#include <glm/gtc/type_ptr.hpp>
+
 namespace SoundStation
 {
     OpenGLShader::OpenGLShader(const std::string &vertexFile, const std::string &fragmentFile)
@@ -105,6 +107,16 @@ namespace SoundStation
             return;
         }
         GL_CALL(glUniform1i(location, value));
+    }
+
+    void OpenGLShader::setMat4(const std::string& name, const glm::mat4& value) {
+        auto location = glGetUniformLocation(m_rendererID, name.c_str());
+        if (location == -1)
+        {
+            SS_LOG_WARN(fmt::format("Uniform {} does not exist", name));
+            return;
+        }
+        GL_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value)));
     }
 
     std::shared_ptr<Shader> Shader::create(const std::string &vertexSrc, const std::string &fragmentSrc)

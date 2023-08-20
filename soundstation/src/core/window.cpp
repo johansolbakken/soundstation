@@ -19,6 +19,9 @@ namespace SoundStation
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
+        bool showMenuBar = spec.showMenuBar;
+        glfwWindowHint(GLFW_DECORATED, showMenuBar ? GLFW_TRUE : GLFW_FALSE);
+
         m_window = glfwCreateWindow(int(m_spec.width), int(m_spec.height), m_spec.title.c_str(), nullptr, nullptr);
         SS_ASSERT(m_window, "Failed to create window!");
 
@@ -26,9 +29,8 @@ namespace SoundStation
 
         SS_LOG_INFO(fmt::format("Created window: {} ({}, {})", m_spec.title, m_spec.width, m_spec.height));
 
-        glfwSetWindowCloseCallback(m_window, [](GLFWwindow *window) {
-            Application::instance().close();
-        });
+        glfwSetWindowCloseCallback(m_window, [](GLFWwindow *window)
+                                   { Application::instance().close(); });
     }
 
     Window::~Window()

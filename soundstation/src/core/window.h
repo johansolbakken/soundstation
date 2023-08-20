@@ -11,6 +11,7 @@ namespace SoundStation
         std::string title;
         uint32_t width;
         uint32_t height;
+        bool showMenuBar = true;
     };
 
     class Window
@@ -21,7 +22,7 @@ namespace SoundStation
 
         void onUpdate();
 
-        void* nativeWindow() const { return m_window; }
+        void *nativeWindow() const { return m_window; }
 
         uint32_t width() const { return m_spec.width; }
         uint32_t height() const { return m_spec.height; }

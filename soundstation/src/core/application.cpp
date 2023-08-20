@@ -3,6 +3,7 @@
 #include "core/log.h"
 #include "core/assert.h"
 #include "core/time.h"
+#include "core/splash.h"
 
 #include "renderer/renderer.h"
 
@@ -23,6 +24,10 @@ namespace SoundStation
     {
         SS_ASSERT(!s_instance, "Application instance already exists!");
         s_instance = this;
+
+        {
+            SplashScreen splash;
+        }
 
         m_window = std::make_shared<Window>(WindowSpecification{"SoundStation", 1280, 720});
 
