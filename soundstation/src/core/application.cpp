@@ -49,12 +49,12 @@ namespace SoundStation
         // system layers
         pushLayer(new ToolbarLayer());
 
+        pushLayer(new AudioLibraryLayer());
         m_audioDeviceManagerLayer = new AudioDeviceManagerLayer();
         pushLayer(m_audioDeviceManagerLayer);
 
         pushLayer(new PlayerLayer());
         pushLayer(new FileReaderWriterLayer());
-        pushLayer(new AudioLibraryLayer());
         pushLayer(new MenuBarLayer());
         // system layers
 

@@ -35,6 +35,8 @@ namespace SoundStation
         size_t frames() const { return m_size / m_channels; }
         double duration() const { return double(m_size) / double(m_sampleRate) / double(m_channels); }
 
+        std::shared_ptr<AudioBuffer> convertSampleRate(float newSampleRate) const;
+
     private:
         float *m_data = nullptr;
         size_t m_size = 0;

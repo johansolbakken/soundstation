@@ -94,4 +94,11 @@ namespace SoundStation{
 
         ImGui::End();
     }
+
+    void AudioLibraryLayer::onNewSampleRate(float sampleRate) {
+        for (auto& file : m_audioFiles) {
+            auto newBuffer = file->audioBuffer()->convertSampleRate(sampleRate);
+            file->setAudioBuffer(newBuffer);
+        }
+    }
 }

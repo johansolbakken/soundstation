@@ -20,6 +20,8 @@ namespace SoundStation {
             void onUIRender() override;
 
             std::vector<std::shared_ptr<AudioFile>> audioFiles() const { return m_audioFiles; }
+            
+            void onNewSampleRate(float sampleRate);
     
         private:
             std::vector<std::shared_ptr<AudioFile>> m_audioFiles;
