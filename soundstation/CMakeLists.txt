@@ -87,7 +87,28 @@ target_link_libraries(soundstation
         ${PLATFORM_LIBS}
         )
 
+if(APPLE)
+    set_target_properties(soundstation PROPERTIES
+        MACOSX_BUNDLE TRUE
+        MACOSX_BUNDLE_DISPLAY_NAME "Sound Station"
+        MACOSX_BUNDLE_BUNDLE_NAME "Sound Station"
+        MACOSX_BUNDLE_BUNDLE_VERSION "1.0"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "com.johansolbakken.soundstation"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "1.0"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0"
+        MACOSX_BUNDLE_COPYRIGHT "Johan Solbakken"
+        MACOSX_BUNDLE_ICON_FILE "assets/images/AppIcon.icns"
+        )
+
+    file(COPY ${CMAKE_SOURCE_DIR}/soundstation/assets DESTINATION ${CMAKE_BINARY_DIR}/soundstation/soundstation.app/Contents/Resources)
+
+    install(TARGETS soundstation DESTINATION /Applications)
+
+else()
+
 # copy assets folder to build directory
 add_custom_command(TARGET soundstation POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/soundstation/assets $<TARGET_FILE_DIR:soundstation>/assets)
+
+endif()
