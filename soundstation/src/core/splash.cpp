@@ -84,7 +84,10 @@ namespace SoundStation
                 ImGui::SetNextWindowPos(ImVec2(windowX + 20, windowY + 250));
 
                 ImGui::Begin("Splash Screen", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoBackground);
+                
+                ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
                 ImGui::Text("SoundStation");
+                ImGui::PopFont();
                 ImGui::Text("Version 0.0.1");
                 ImGui::End();
 

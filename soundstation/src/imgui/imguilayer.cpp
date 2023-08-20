@@ -35,6 +35,9 @@ namespace SoundStation
         ImGui::StyleColorsDark();
         // ImGui::StyleColorsClassic();
 
+        io.Fonts->AddFontFromFileTTF("assets/fonts/Roboto/Roboto-Medium.ttf", 24.0f);
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/Roboto/Roboto-Regular.ttf", 16.0f);
+
         // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
         ImGuiStyle &style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
@@ -64,7 +67,6 @@ namespace SoundStation
 
     void ImGuiLayer::onDetach()
     {
-        
     }
 
     void ImGuiLayer::onUpdate(Timestep step)
