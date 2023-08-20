@@ -67,6 +67,8 @@ namespace SoundStation
 
                 RenderCommand::drawArrays(6);
 
+                // Draw text
+
                 m_window->onUpdate();
             }
         }
