@@ -20,7 +20,11 @@ namespace SoundStation
         float bufferSize() const override { return m_bufferSize; }
 
         uint32_t id() const override { return m_deviceID; }
-        uint32_t cursor() const override { return m_currentFrame; }
+        uint32_t currentFrame() const override { return m_currentFrame; }
+        void incrementCurrentFrame() { m_currentFrame++; }
+        void setCurrentFrame(uint32_t frame) { m_currentFrame = frame; }
+
+        void seek(uint32_t frame) override { m_currentFrame = frame; }
 
     protected:
         static OSStatus AudioRenderCallback(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, const AudioTimeStamp *inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList *ioData);

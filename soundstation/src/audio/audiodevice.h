@@ -20,7 +20,8 @@ namespace SoundStation {
         virtual float bufferSize() const = 0;
 
         virtual uint32_t id() const = 0;
-        virtual uint32_t cursor() const = 0;
+        virtual uint32_t currentFrame() const = 0;
+        virtual void seek(uint32_t frame) = 0;
         
         static std::shared_ptr<AudioDevice> create(uint32_t);
     };

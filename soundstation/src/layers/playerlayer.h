@@ -23,7 +23,8 @@ namespace SoundStation
 
     private:
         bool m_playing = false;
-        float m_cursor = 0.0;
+        bool m_seeking = false;
+        double m_seekPosition = 0.0;
 
         Image m_noteImage;
         Image m_playImage;

@@ -7,6 +7,8 @@
 
 #include "audio/audiofilewriter.h"
 
+#include <sstream>
+
 namespace SoundStation
 {
     PlayerLayer::PlayerLayer()
@@ -15,6 +17,20 @@ namespace SoundStation
           m_playImage("assets/images/play.png"),
           m_pauseImage("assets/images/pause.png")
     {
+    }
+
+    std::string minSecString(float seconds)
+    {
+        int minutes = int(seconds / 60.0f);
+        int secs = int(seconds - minutes * 60.0f);
+        std::stringstream ss;
+        if (minutes < 10)
+            ss << "0";
+        ss << minutes << ":";
+        if (secs < 10)
+            ss << "0";
+        ss << secs;
+        return ss.str();
     }
 
     void PlayerLayer::onUIRender()
@@ -31,22 +47,42 @@ namespace SoundStation
         if (m_audioFile != nullptr)
         {
             ImGui::Text("File: %s", m_audioFile->filename().c_str());
-            auto duration = m_audioFile->duration();
-            auto minutes = int(duration / 60.0f);
-            auto seconds = int(duration - minutes * 60.0f);
-            ImGui::Text("Duration: %02d:%02d", minutes, seconds);
         }
         else
         {
             ImGui::Text("No file selected");
         }
 
-        /*ImGui::PushItemWidth(-1);
-        float cursor = m_audio->position();
-        if (ImGui::SliderFloat("##Current", &cursor, 0.0f, m_audio->duration()))
+        ImGui::PushItemWidth(-1);
+        float cursor = 0.0;
+        float duration = 0.0;
+        auto audioDevice = Application::instance().currentAudioDevice();
+        if (audioDevice && m_audioFile != nullptr)
+            cursor = audioDevice->currentFrame() / m_audioFile->sampleRate();
+        if (m_audioFile != nullptr)
+            duration = m_audioFile->duration();
+
+        int cursorMinutes = int(cursor / 60.0f);
+        int cursorSeconds = int(cursor - cursorMinutes * 60.0f);
+        int durationMinutes = int(duration / 60.0f);
+        int durationSeconds = int(duration - durationMinutes * 60.0f);
+        std::string timeString = minSecString(cursor) + " / " + minSecString(duration);
+
+        float newCursor = cursor;
+        if (ImGui::SliderFloat("##Current", &newCursor, 0, duration, timeString.c_str()))
         {
+            m_seeking = true;
+            m_seekPosition = newCursor;
         }
-        ImGui::PopItemWidth();*/
+        else if (m_seeking)
+        {
+            if (audioDevice)
+            {
+                audioDevice->seek(m_seekPosition * m_audioFile->sampleRate());
+            }
+            m_seeking = false;
+        }
+        ImGui::PopItemWidth();
 
         float buttonWidth = 30.0f;
         m_playImage.resize(buttonWidth, buttonWidth);

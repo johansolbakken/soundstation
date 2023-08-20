@@ -16,6 +16,8 @@ namespace SoundStation
 
         const std::string& filename() const { return m_filename; }
         double duration() const { return m_buffer->duration(); }
+        size_t channels() const { return m_buffer->channels(); }
+        float sampleRate() const { return m_buffer->sampleRate(); }
 
         static std::shared_ptr<AudioFile> create(const std::string &filename);
 
