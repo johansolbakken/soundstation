@@ -178,7 +178,9 @@ namespace SoundStation {
     }
     
     MacOSAudioDevice::~MacOSAudioDevice() {
-
+        AudioOutputUnitStop(m_audioUnit);
+        AudioUnitUninitialize(m_audioUnit);
+        AudioComponentInstanceDispose(m_audioUnit);
     }
     
     void MacOSAudioDevice::setAudioBuffer(const std::shared_ptr<AudioBuffer> &audioBuffer) {

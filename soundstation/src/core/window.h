@@ -27,6 +27,11 @@ namespace SoundStation
         uint32_t width() const { return m_spec.width; }
         uint32_t height() const { return m_spec.height; }
 
+        void show();
+
+        static void initSubsystem();
+        static void shutdownSubsystem();
+
     private:
         GLFWwindow *m_window;
         WindowSpecification m_spec;

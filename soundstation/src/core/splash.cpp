@@ -6,12 +6,27 @@
 #include "renderer/texture.h"
 #include "renderer/shader.h"
 
+#include "audio/audiodevicelist.h"
+#include "audio/audiodevice.h"
+#include "audio/audiofile.h"
+
 #include <glm/gtc/matrix_transform.hpp>
+
+#include <vector>
 
 namespace SoundStation
 {
     SplashScreen::SplashScreen()
     {
+        auto audioDeviceList = AudioDeviceList::create();
+        audioDeviceList->onUpdate();
+        auto audioDevice = AudioDevice::create(audioDeviceList->defaultOutputDeviceId());
+
+        std::vector<std::shared_ptr<AudioFile>> audioFiles = {
+            //AudioFile::create("assets/sound/comboplease.mp3"),
+            //AudioFile::create("assets/sound/informasjones.mp3"),
+        };
+
         WindowSpecification spec;
         spec.title = "Splash Screen";
         spec.width = 300;
@@ -19,6 +34,7 @@ namespace SoundStation
         spec.showMenuBar = false;
 
         m_window = std::make_unique<Window>(spec);
+        m_window->show();
 
         Renderer::init();
 

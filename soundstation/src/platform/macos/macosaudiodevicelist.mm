@@ -90,6 +90,21 @@ namespace SoundStation {
         delete[] deviceIDs;
      }
 
+     uint32_t MacOSAudioDeviceList::defaultOutputDeviceId() const {
+            AudioObjectPropertyAddress propertyAddress = {
+                kAudioHardwarePropertyDefaultOutputDevice,
+                kAudioObjectPropertyScopeGlobal,
+                kAudioObjectPropertyElementMain
+            };
+    
+            AudioDeviceID deviceID = 0;
+            UInt32 dataSize = sizeof(deviceID);
+            OSStatus status = AudioObjectGetPropertyData(kAudioObjectSystemObject, &propertyAddress, 0, nullptr, &dataSize, &deviceID);
+            SS_ASSERT(status == noErr, "Failed to get default output device id");
+    
+            return uint32_t(deviceID);
+     }
+
      std::shared_ptr<AudioDeviceList> AudioDeviceList::create() {
          return std::make_shared<MacOSAudioDeviceList>();
      }

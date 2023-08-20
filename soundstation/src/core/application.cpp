@@ -25,12 +25,13 @@ namespace SoundStation
         SS_ASSERT(!s_instance, "Application instance already exists!");
         s_instance = this;
 
+        Window::initSubsystem();
+        
         {
             SplashScreen splash;
         }
 
         m_window = std::make_shared<Window>(WindowSpecification{"SoundStation", 1280, 720});
-
         Renderer::init();
 
         m_imguiLayer = new ImGuiLayer();
@@ -55,6 +56,7 @@ namespace SoundStation
     Application::~Application()
     {
         Renderer::shutdown();
+        Window::shutdownSubsystem();
     }
 
     Application &Application::instance()
@@ -65,6 +67,8 @@ namespace SoundStation
 
     void Application::run()
     {
+        m_window->show();
+
         while (m_running)
         {
             size_t current = Time::systemTimeMilliseconds();

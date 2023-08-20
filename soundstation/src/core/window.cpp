@@ -11,9 +11,6 @@ namespace SoundStation
     Window::Window(const WindowSpecification &spec)
         : m_spec(spec)
     {
-        int status = glfwInit();
-        SS_ASSERT(status, "Failed to initialize GLFW!");
-
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -23,6 +20,7 @@ namespace SoundStation
         glfwWindowHint(GLFW_DECORATED, showMenuBar ? GLFW_TRUE : GLFW_FALSE);
 
         m_window = glfwCreateWindow(int(m_spec.width), int(m_spec.height), m_spec.title.c_str(), nullptr, nullptr);
+        glfwHideWindow(m_window);
         SS_ASSERT(m_window, "Failed to create window!");
 
         glfwMakeContextCurrent(m_window);
@@ -36,12 +34,27 @@ namespace SoundStation
     Window::~Window()
     {
         glfwDestroyWindow(m_window);
-        glfwTerminate();
     }
 
     void Window::onUpdate()
     {
         glfwPollEvents();
         glfwSwapBuffers(m_window);
+    }
+
+    void Window::show()
+    {
+        glfwShowWindow(m_window);
+    }
+
+    void Window::initSubsystem()
+    {
+        int status = glfwInit();
+        SS_ASSERT(status, "Failed to initialize GLFW!");
+    }
+
+    void Window::shutdownSubsystem()
+    {
+        glfwTerminate();
     }
 }
