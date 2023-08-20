@@ -13,3 +13,6 @@
 [submodule "soundstation/vendor/libsndfile"]
 	path = soundstation/vendor/libsndfile
 	url = git@github.com:libsndfile/libsndfile.git
+[submodule "soundstation/vendor/json"]
+	path = soundstation/vendor/json
+	url = git@github.com:nlohmann/json.git

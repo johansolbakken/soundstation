@@ -18,6 +18,8 @@ namespace SoundStation {
             void onDetach() override;
             void onUpdate(Timestep t) override;
             void onUIRender() override;
+
+            std::vector<std::shared_ptr<AudioFile>> audioFiles() const { return m_audioFiles; }
     
         private:
             std::vector<std::shared_ptr<AudioFile>> m_audioFiles;

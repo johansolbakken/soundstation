@@ -13,6 +13,7 @@
 #include "layers/filereaderwriterlayer.h"
 #include "layers/toolbarlayer.h"
 #include "layers/audiolibrarylayer.h"
+#include "layers/menubarlayer.h"
 
 namespace SoundStation
 {
@@ -40,6 +41,7 @@ namespace SoundStation
         pushLayer(new PlayerLayer());
         pushLayer(new FileReaderWriterLayer());
         pushLayer(new AudioLibraryLayer());
+        pushLayer(new MenuBarLayer());
         // system layers
 
         SS_LOG_INFO("SoundStation is awake!");
@@ -98,7 +100,7 @@ namespace SoundStation
         layer->onAttach();
     }
 
-    Layer * Application::getLayer(const std::string &name)
+    Layer *Application::getLayer(const std::string &name)
     {
         for (auto layer : m_layerStack)
         {

@@ -3,6 +3,7 @@ add_subdirectory(glfw)
 add_subdirectory(glad)
 add_subdirectory(stb)
 add_subdirectory(libsndfile)
+add_subdirectory(json)
 
 add_library(imgui
     imgui/imgui.cpp

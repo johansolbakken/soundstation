@@ -49,6 +49,9 @@ add_executable(soundstation
     src/layers/filereaderwriterlayer.h src/layers/filereaderwriterlayer.cpp
     src/layers/toolbarlayer.h src/layers/toolbarlayer.cpp
     src/layers/audiolibrarylayer.h src/layers/audiolibrarylayer.cpp
+    src/layers/menubarlayer.h src/layers/menubarlayer.cpp
+
+    src/serializer/serializer.h src/serializer/serializer.cpp
     
     src/imgui/buildimgui.cpp
     src/imgui/imguilayer.h src/imgui/imguilayer.cpp)
@@ -63,7 +66,8 @@ target_include_directories(soundstation
         vendor/imgui/backends
         vendor/glm
         vendor/stb
-        vendor/libsndfile/include)
+        vendor/libsndfile/include
+        vendor/json/include)
 
 target_link_libraries(soundstation 
     PUBLIC 
@@ -73,6 +77,7 @@ target_link_libraries(soundstation
         imgui
         stb
         sndfile
+        nlohmann_json::nlohmann_json
         ${PLATFORM_LIBS}
         )
 
