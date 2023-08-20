@@ -7,7 +7,7 @@
 namespace SoundStation
 {
     AudioDeviceManagerLayer::AudioDeviceManagerLayer()
-        : Layer("Audio Device Manager")
+        : Layer("AudioDeviceManagerLayer")
     {
         m_audioDeviceList = AudioDeviceList::create();
     }

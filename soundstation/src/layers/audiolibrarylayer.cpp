@@ -17,6 +17,7 @@ namespace SoundStation{
     void AudioLibraryLayer::onAttach()
     {
         m_audioFiles.push_back(AudioFile::create("assets/sound/Lizza Bizzaz.aif"));
+        m_audioFiles.push_back(AudioFile::create("assets/sound/informasjones.mp3"));
     }
 
     void AudioLibraryLayer::onDetach()

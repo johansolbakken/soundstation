@@ -17,16 +17,15 @@ namespace SoundStation {
         float* outputBufferLeft = static_cast<float*>(ioData->mBuffers[0].mData);
         float* outputBufferRight = static_cast<float*>(ioData->mBuffers[1].mData);
 
-        if (audioDevice->m_audioBuffer == nullptr) {
-            audioDevice->m_currentFrame = 0;
-
+        if (audioDevice->m_audioBuffer == nullptr || audioDevice->m_currentFrame >= audioDevice->m_audioBuffer->frames()) {
+            
             for (UInt32 frame = 0; frame < inNumberFrames; ++frame) {
                 outputBufferLeft[frame] = 0.0f; // Left channel
                 outputBufferRight[frame] = 0.0f; // Right channel
             }
 
             return noErr;
-        }
+        }   
 
         size_t channels = audioDevice->m_audioBuffer->channels();
         auto data = reinterpret_cast<const float(*)[2]>(audioDevice->m_audioBuffer->data());
@@ -35,6 +34,12 @@ namespace SoundStation {
         SS_ASSERT(ioData->mNumberBuffers == 2, "Expected 2 buffers");
 
         for (UInt32 frame = 0; frame < inNumberFrames; ++frame) {
+            if (audioDevice->m_currentFrame >= audioDevice->m_audioBuffer->frames()) {
+                outputBufferLeft[frame] = 0.0f; // Left channel
+                outputBufferRight[frame] = 0.0f; // Right channel
+                continue;
+            }
+
             const float* sample = data[audioDevice->m_currentFrame];
             outputBufferLeft[frame] = sample[0];
             outputBufferRight[frame] = sample[1];

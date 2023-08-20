@@ -21,8 +21,7 @@ namespace SoundStation
             size_t size,
             float sampleRate,
             AudioBufferFormat format,
-            size_t channels
-        );
+            size_t channels);
         ~AudioBuffer();
 
         void setData(float *data) { m_data = data; }
@@ -33,6 +32,7 @@ namespace SoundStation
         size_t channels() const { return m_channels; }
         size_t size() const { return m_size; }
 
+        size_t frames() const { return m_size / m_channels; }
         double duration() const { return double(m_size) / double(m_sampleRate) / double(m_channels); }
 
     private:

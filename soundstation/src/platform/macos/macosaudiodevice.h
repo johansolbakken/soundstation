@@ -19,6 +19,9 @@ namespace SoundStation
         size_t channels() const override { return m_channels; }
         float bufferSize() const override { return m_bufferSize; }
 
+        uint32_t id() const override { return m_deviceID; }
+        uint32_t cursor() const override { return m_currentFrame; }
+
     protected:
         static OSStatus AudioRenderCallback(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, const AudioTimeStamp *inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList *ioData);
 
