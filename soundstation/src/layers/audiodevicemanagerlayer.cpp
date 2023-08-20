@@ -15,20 +15,8 @@ namespace SoundStation
     void AudioDeviceManagerLayer::onAttach()
     {
         m_audioDeviceList->onUpdate();
-        // temporary
-        bool foundSony = false;
-        for (auto &device : m_audioDeviceList->outputDevices())
-        {
-            if (device.second.find("Sony") != std::string::npos)
-            {
-                foundSony = true;
-                break;
-            }
-        }
-        if (foundSony)
-            selectOutputDevice(m_audioDeviceList->defaultOutputDeviceId());
-        // temporary
-        // selectOutputDevice(m_audioDeviceList->defaultOutputDeviceId());
+        SS_LOG_INFO(fmt::format("Default Output Device: {}", m_audioDeviceList->defaultOutputDeviceId()));
+        selectOutputDevice(m_audioDeviceList->defaultOutputDeviceId());
     }
 
     void AudioDeviceManagerLayer::onDetach()

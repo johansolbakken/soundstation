@@ -7,7 +7,7 @@ namespace SoundStation
 
     enum class AudioBufferFormat
     {
-        Signed16Bit,
+        Signed16Bit,	
         Signed24Bit,
         Signed32Bit,
         Float32Bit

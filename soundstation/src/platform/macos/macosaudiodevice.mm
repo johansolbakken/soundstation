@@ -111,7 +111,18 @@ namespace SoundStation {
             SS_LOG_ERROR("Failed to get audio device name");
             return;
         }
-        m_name = CFStringGetCStringPtr(deviceName, kCFStringEncodingUTF8);
+        CFIndex length = CFStringGetLength(deviceName);
+        char buffer[length + 1];
+        memset(buffer, 0, sizeof(buffer));
+        CFStringGetCString(deviceName, buffer, sizeof(buffer), kCFStringEncodingUTF8);
+
+        std::string cDeviceName =  buffer;
+        m_name = cDeviceName;
+
+        if (cDeviceName.empty()) {
+            // most likely laptop speakers
+            m_name = "Built-in Output";
+        }
 
         // Get the sample rate
         propertyAddress.mSelector = kAudioDevicePropertyNominalSampleRate;

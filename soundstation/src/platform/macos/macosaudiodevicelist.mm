@@ -68,18 +68,22 @@ namespace SoundStation {
 
                 std::string cDeviceName =  buffer;
 
-                if (cDeviceName.empty()) {
-                    continue;
-                }
-
                 enum class Direction : uint32_t {
                     Output = 0,
                     Input = 1,
                 };
 
                 if (uint32_t(direction) == uint32_t(Direction::Input)) {
+                    if (cDeviceName.empty()) {
+                        // most likely laptop microphone
+                        cDeviceName = "Built-in Input";
+                    }
                     m_inputDevices[cDeviceId] = cDeviceName;
                 } else if (uint32_t(direction) == uint32_t(Direction::Output)) {
+                    if (cDeviceName.empty()) {
+                        // most likely laptop speakers
+                        cDeviceName = "Built-in Output";
+                    }
                     m_outputDevices[cDeviceId] = cDeviceName;
                 }
             }
