@@ -32,6 +32,7 @@ add_executable(soundstation
     src/renderer/shader.h
     src/renderer/framebuffer.h
     src/renderer/textrenderer.h src/renderer/textrenderer.cpp
+    src/renderer/buffer.h
     
     src/audio/audiofile.h src/audio/audiofile.cpp
     src/audio/audiobuffer.h src/audio/audiobuffer.cpp
@@ -44,6 +45,7 @@ add_executable(soundstation
     src/platform/opengl/opengltexture.h src/platform/opengl/opengltexture.cpp
     src/platform/opengl/openglshader.h src/platform/opengl/openglshader.cpp
     src/platform/opengl/openglframebuffer.h src/platform/opengl/openglframebuffer.cpp
+    src/platform/opengl/openglbuffer.h src/platform/opengl/openglbuffer.cpp
     ${PLATFORM_SOURCE}
 
     src/layers/playerlayer.h src/layers/playerlayer.cpp
