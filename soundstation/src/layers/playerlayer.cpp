@@ -90,16 +90,14 @@ namespace SoundStation
 
         float buttonXPos = (viewportWidth - buttonWidth) / 2.0f;
         ImGui::SetCursorPosX(buttonXPos);
-        auto texture = m_playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId();
+        auto playing = audioDevice && audioDevice->isPlaying();
+        auto texture = playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId();
         if (ImGui::ImageButton(reinterpret_cast<void *>(texture), {buttonWidth, buttonWidth}) && m_audioFile != nullptr)
         {
-            if (Application::instance().currentAudioDevice() != nullptr)
-            {
-                if (!m_playing)
-                    play();
-                else
-                    pause();
-            }
+            if (playing)
+                pause();
+            else
+                play();
         }
 
         ImGui::End();
@@ -107,29 +105,27 @@ namespace SoundStation
 
     void PlayerLayer::setAudioFile(const std::shared_ptr<AudioFile> &file)
     {
-        if (m_playing)
-            pause();
-        m_audioFile = file;
+        auto audioDevice = Application::instance().currentAudioDevice();
+        if (audioDevice)
+        {
+            if (audioDevice->isPlaying())
+                audioDevice->stop();
+            audioDevice->setAudioBuffer(file->audioBuffer());
+            m_audioFile = file;
+        }
     }
 
     void PlayerLayer::play()
     {
         auto audioDevice = Application::instance().currentAudioDevice();
         if (audioDevice)
-        {
-            audioDevice->setAudioBuffer(m_audioFile->audioBuffer());
-        }
-        m_playing = true;
+            audioDevice->play();
     }
 
     void PlayerLayer::pause()
     {
-
         auto audioDevice = Application::instance().currentAudioDevice();
         if (audioDevice)
-        {
-            audioDevice->setAudioBuffer(nullptr);
-        }
-        m_playing = false;
+            audioDevice->pause();
     }
 }

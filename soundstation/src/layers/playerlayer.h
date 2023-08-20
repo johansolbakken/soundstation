@@ -22,7 +22,6 @@ namespace SoundStation
         void pause();
 
     private:
-        bool m_playing = false;
         bool m_seeking = false;
         double m_seekPosition = 0.0;
 

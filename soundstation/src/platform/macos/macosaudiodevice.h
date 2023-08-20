@@ -26,6 +26,11 @@ namespace SoundStation
 
         void seek(uint32_t frame) override { m_currentFrame = frame; }
 
+        bool isPlaying() const override { return m_playing; }
+        void play() override { m_playing = true; }
+        void pause() override { m_playing = false; }
+        void stop() override { m_playing = false; m_currentFrame = 0; }
+
     protected:
         static OSStatus AudioRenderCallback(void *inRefCon, AudioUnitRenderActionFlags *ioActionFlags, const AudioTimeStamp *inTimeStamp, UInt32 inBusNumber, UInt32 inNumberFrames, AudioBufferList *ioData);
 
@@ -39,5 +44,7 @@ namespace SoundStation
         uint32_t m_currentFrame = 0;
         AudioDeviceID m_deviceID = 0;
         AudioComponentInstance m_audioUnit = nullptr;
+
+        bool m_playing = false;
     };
 }

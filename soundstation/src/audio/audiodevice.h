@@ -22,6 +22,11 @@ namespace SoundStation {
         virtual uint32_t id() const = 0;
         virtual uint32_t currentFrame() const = 0;
         virtual void seek(uint32_t frame) = 0;
+
+        virtual bool isPlaying() const = 0;
+        virtual void play() = 0;
+        virtual void pause() = 0;
+        virtual void stop() = 0;
         
         static std::shared_ptr<AudioDevice> create(uint32_t);
     };
