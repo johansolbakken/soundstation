@@ -156,7 +156,7 @@ namespace SoundStation {
         AudioStreamBasicDescription streamDescription;
         streamDescription.mSampleRate = m_sampleRate;
         streamDescription.mFormatID = kAudioFormatLinearPCM;
-        streamDescription.mFormatFlags = kAudioFormatFlagsNativeFloatPacked | kAudioFormatFlagIsNonInterleaved;
+        streamDescription.mFormatFlags = uint32_t(kAudioFormatFlagsNativeFloatPacked) | uint32_t(kAudioFormatFlagIsNonInterleaved);
         streamDescription.mBytesPerPacket = sizeof(float);
         streamDescription.mFramesPerPacket = 1;
         streamDescription.mBytesPerFrame = sizeof(float);
