@@ -8,6 +8,7 @@
 
 #include "layers/audiolibrarylayer.h"
 #include "layers/audiodevicemanagerlayer.h"
+#include "layers/filereaderwriterlayer.h"
 
 namespace SoundStation
 {
@@ -70,6 +71,20 @@ namespace SoundStation
                     if (audioDeviceManager)
                     {
                         audioDeviceManager->showAudioDeviceManager(true);
+                    }
+                }
+
+                ImGui::EndMenu();
+            }
+
+            if (ImGui::BeginMenu("Tools"))
+            {
+                if (ImGui::MenuItem("File Reader Writer"))
+                {
+                    auto fileReaderWriter = static_cast<FileReaderWriterLayer *>(Application::instance().getLayer("FileReaderWriterLayer"));
+                    if (fileReaderWriter)
+                    {
+                        fileReaderWriter->show();
                     }
                 }
 

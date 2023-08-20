@@ -20,10 +20,14 @@ namespace SoundStation
         void onUpdate(Timestep t) override;
         void onUIRender() override;
 
+        void show() { m_open = true; }
+
     private:
         std::shared_ptr<AudioBuffer> m_buffer;
         char m_filename[1024];
         std::string m_errorString;
+
+        bool m_open = false;
     };
 
 }

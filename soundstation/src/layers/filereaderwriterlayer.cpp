@@ -13,22 +13,25 @@ namespace SoundStation
     {
         memset(m_filename, 0, 1024);
     }
-    
+
     void FileReaderWriterLayer::onAttach()
     {
     }
-    
+
     void FileReaderWriterLayer::onDetach()
     {
     }
-    
+
     void FileReaderWriterLayer::onUpdate(Timestep t)
     {
     }
 
     void FileReaderWriterLayer::onUIRender()
     {
-        ImGui::Begin("FileReaderWriterLayer");
+        if (!m_open)
+            return;
+
+        ImGui::Begin("FileReaderWriterLayer", &m_open);
         ImGui::InputText("Filename", m_filename, 1024);
         ImGui::Text("Has file: %s", (m_buffer != nullptr) ? "yes" : "no");
 
