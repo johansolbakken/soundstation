@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-namespace SoundStation {
+namespace SoundStation
+{
     ToolbarLayer::ToolbarLayer()
         : Layer("ToolbarLayer"),
           m_playImage("assets/images/play.png"),
@@ -34,9 +35,5 @@ namespace SoundStation {
         }
         ImGui::PopStyleColor();
         ImGui::End();
-
-        // dock toolbar to top
-        ImGui::SetNextWindowDockID(0, ImGuiCond_Always);
-
     }
 }
