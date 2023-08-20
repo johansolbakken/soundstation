@@ -23,4 +23,9 @@ namespace SoundStation
     {
         GL_CALL(glDrawArrays(GL_TRIANGLES, 0, count));
     }
+
+    void OpenGLRenderAPI::drawIndexed(uint32_t count)
+    {
+        GL_CALL(glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr));
+    }
 }

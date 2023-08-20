@@ -11,5 +11,6 @@ namespace SoundStation
         static void clear();
         
         static void drawArrays(uint32_t count);
+        static void drawIndexed(uint32_t count);
     };
 }

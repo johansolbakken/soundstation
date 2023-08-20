@@ -5,6 +5,7 @@
 #include "renderer/renderer.h"
 #include "renderer/texture.h"
 #include "renderer/shader.h"
+#include "renderer/buffer.h"
 
 #include "audio/audiodevicelist.h"
 #include "audio/audiodevice.h"
@@ -61,28 +62,29 @@ namespace SoundStation
                 RenderCommand::clear();
 
                 // Draw ogerface
-                ogre->bind();
                 shader->bind();
+                ogre->bind();
                 shader->setInt("tex", 0);
                 shader->setMat4("projection", imageProj);
                 RenderCommand::drawArrays(6);
 
-                {
-                    std::string title = "Sound Station";
-                    float fontSize = 36.0f;
-                    glm::vec3 color = {1.0f, 1.0f, 1.0f};
-                    glm::vec2 position = {0.0f, 0.0f};
-                    TextRenderer::drawText(title, fontSize, color, position);
-                }
+                /*
+                                {
+                                    std::string title = "Sound Station";
+                                    float fontSize = 36.0f;
+                                    glm::vec3 color = {1.0f, 1.0f, 1.0f};
+                                    glm::vec2 position = {0.0f, 0.0f};
+                                    TextRenderer::drawText(title, fontSize, color, position);
+                                }
 
-                {
-                    std::string version = "v.0.0.1";
-                    float fontSize = 24.0f;
-                    glm::vec3 color = {0.6f, 0.6f, 0.6f};
-                    glm::vec2 position = {0.0f, -0.2f};
-                    TextRenderer::drawText(version, fontSize, color, position);
-                }
-                // Draw text
+                                {
+                                    std::string version = "v.0.0.1";
+                                    float fontSize = 24.0f;
+                                    glm::vec3 color = {0.6f, 0.6f, 0.6f};
+                                    glm::vec2 position = {0.0f, -0.2f};
+                                    TextRenderer::drawText(version, fontSize, color, position);
+                                }*/
+                //TextRenderer::drawText("A", 48.0f, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
 
                 m_window->onUpdate();
             }

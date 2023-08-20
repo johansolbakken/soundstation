@@ -3,6 +3,7 @@
 #include "renderer/shader.h"
 #include "renderer/texture.h"
 #include "renderer/rendercommand.h"
+#include "renderer/buffer.h"
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -78,10 +79,29 @@ namespace SoundStation
             float w = face->glyph->bitmap.width * fontSize;
             float h = face->glyph->bitmap.rows * fontSize;
 
+            float vertices[6][3 + 2] = {
+                {x, y + h, 0.0f, 0.0f, 0.0f},
+                {x, y, 0.0f, 0.0f, 1.0f},
+                {x + w, y, 0.0f, 1.0f, 1.0f},
+
+                {x, y + h, 0.0f, 0.0f, 0.0f},
+                {x + w, y, 0.0f, 1.0f, 1.0f},
+                {x + w, y + h, 0.0f, 1.0f, 0.0f}
+            };
+
+            BufferLayout layout = {{{BufferDataType::Float3}, {BufferDataType::Float2}}};
+
+            auto vertexBuffer = Buffer::create(BufferType::Vertex);
+            vertexBuffer->bind();
+            vertexBuffer->setData(vertices, sizeof(vertices));
+            vertexBuffer->setLayout(layout);
+
             texture->bind();
             s_data->textShader->setInt("u_texture", 0);
 
             RenderCommand::drawArrays(6);
+
+            vertexBuffer->unbind();
         }
     }
 }
