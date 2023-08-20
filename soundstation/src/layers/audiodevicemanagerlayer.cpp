@@ -94,11 +94,5 @@ namespace SoundStation
         m_activeOutputDevice = id;
         m_activeOutputDeviceName = outputDevices[id];
         m_audioDevice = AudioDevice::create(id);
-
-        auto audioLibraryLayer = static_cast<AudioLibraryLayer *>(Application::instance().getLayer("AudioLibraryLayer"));
-        if (audioLibraryLayer)
-            audioLibraryLayer->onNewSampleRate(m_audioDevice->sampleRate());
-        else
-            SS_LOG_ERROR("Could not find AudioLibraryLayer");
     }
 }

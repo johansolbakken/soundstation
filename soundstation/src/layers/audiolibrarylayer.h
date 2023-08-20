@@ -21,9 +21,8 @@ namespace SoundStation {
 
             std::vector<std::shared_ptr<AudioFile>> audioFiles() const { return m_audioFiles; }
             
-            void onNewSampleRate(float sampleRate);
-    
         private:
+            uint32_t m_cachedSampleRate = 0;
             std::vector<std::shared_ptr<AudioFile>> m_audioFiles;
         };
 }

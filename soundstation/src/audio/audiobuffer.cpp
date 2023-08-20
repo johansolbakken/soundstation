@@ -17,7 +17,15 @@ namespace SoundStation
     std::shared_ptr<AudioBuffer> AudioBuffer::convertSampleRate(float newSampleRate) const
     {
         if (m_sampleRate == newSampleRate)
-            return std::make_shared<AudioBuffer>(*this);
+        {
+            float *data = new float[m_size];
+            size_t size = m_size;
+            float sampleRate = m_sampleRate;
+            AudioBufferFormat format = m_format;
+            size_t channels = m_channels;
+            memcpy(data, m_data, m_size * sizeof(float));
+            return std::make_shared<AudioBuffer>(data, size, sampleRate, format, channels);
+        }
 
         SS_LOG_INFO(fmt::format("Converting sample rate from {} to {}", m_sampleRate, newSampleRate));
 

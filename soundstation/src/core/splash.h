@@ -4,7 +4,6 @@
 
 namespace SoundStation
 {
-
     class SplashScreen
     {
     public:
@@ -16,5 +15,4 @@ namespace SoundStation
     private:
         std::shared_ptr<Window> m_window;
     };
-
 }
