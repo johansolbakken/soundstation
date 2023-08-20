@@ -12,6 +12,7 @@ namespace SoundStation
         uint32_t width;
         uint32_t height;
         bool showMenuBar = true;
+        bool maximized = false;
     };
 
     class Window

@@ -26,14 +26,20 @@ namespace SoundStation
         s_instance = this;
 
         Window::initSubsystem();
-        
+
         {
             SplashScreen splash;
             m_window = splash.window();
             splash.run();
         }
 
-        m_window = std::make_shared<Window>(WindowSpecification{"SoundStation", 1280, 720});
+        WindowSpecification spec;
+        spec.title = "Sound Station";
+        spec.width = 1280;
+        spec.height = 720;
+        spec.maximized = true;
+        m_window = std::make_shared<Window>(spec);
+
         Renderer::init();
 
         m_imguiLayer = new ImGuiLayer();

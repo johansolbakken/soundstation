@@ -21,6 +21,10 @@ namespace SoundStation
 
         m_window = glfwCreateWindow(int(m_spec.width), int(m_spec.height), m_spec.title.c_str(), nullptr, nullptr);
         glfwHideWindow(m_window);
+        if (spec.maximized)
+        {
+            glfwMaximizeWindow(m_window);
+        }
         SS_ASSERT(m_window, "Failed to create window!");
 
         glfwMakeContextCurrent(m_window);
