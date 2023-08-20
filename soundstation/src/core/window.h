@@ -26,6 +26,8 @@ namespace SoundStation
 
         uint32_t width() const { return m_spec.width; }
         uint32_t height() const { return m_spec.height; }
+        float x() const;
+        float y() const;
 
         void show();
 

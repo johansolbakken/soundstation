@@ -47,6 +47,18 @@ namespace SoundStation
         glfwShowWindow(m_window);
     }
 
+    float Window::x() const {
+        int x;
+        glfwGetWindowPos(m_window, &x, nullptr);
+        return float(x);
+    }
+
+    float Window::y() const {
+        int y;
+        glfwGetWindowPos(m_window, nullptr, &y);
+        return float(y);
+    }
+
     void Window::initSubsystem()
     {
         int status = glfwInit();

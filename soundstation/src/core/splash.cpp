@@ -5,7 +5,6 @@
 #include "renderer/renderer.h"
 #include "renderer/texture.h"
 #include "renderer/shader.h"
-#include "renderer/buffer.h"
 
 #include "audio/audiodevicelist.h"
 #include "audio/audiodevice.h"
@@ -14,6 +13,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
+
+#include <imgui.h>
+#include "imgui/imguilayer.h"
 
 #include <stdlib.h>
 
@@ -36,13 +38,17 @@ namespace SoundStation
         spec.height = 400;
         spec.showMenuBar = false;
 
-        m_window = std::make_unique<Window>(spec);
+        m_window = std::make_shared<Window>(spec);
         m_window->show();
+    }
+
+    void SplashScreen::run()
+    {
 
         Renderer::init();
 
         {
-            float aspectRatio = float(spec.width) / float(spec.height);
+            float aspectRatio = float(m_window->width()) / float(m_window->height());
             float scale = 0.4;
             glm::mat4 imageProj = glm::mat4(1.0f);
             imageProj = glm::translate(imageProj, glm::vec3(0.0f, 0.3f, 0.0f));
@@ -54,6 +60,8 @@ namespace SoundStation
             auto shader = Shader::create("assets/shaders/texture.vert", "assets/shaders/texture.frag");
 
             // audioDevice->setAudioBuffer(audioFiles[rand() % audioFiles.size()]->audioBuffer());
+
+            ImGuiLayer layer;
 
             auto startTime = Time::systemTimeSeconds();
             while (Time::systemTimeSeconds() - startTime < 3.0f)
@@ -68,23 +76,19 @@ namespace SoundStation
                 shader->setMat4("projection", imageProj);
                 RenderCommand::drawArrays(6);
 
-                /*
-                                {
-                                    std::string title = "Sound Station";
-                                    float fontSize = 36.0f;
-                                    glm::vec3 color = {1.0f, 1.0f, 1.0f};
-                                    glm::vec2 position = {0.0f, 0.0f};
-                                    TextRenderer::drawText(title, fontSize, color, position);
-                                }
+                float windowX = m_window->x();
+                float windowY = m_window->y();
 
-                                {
-                                    std::string version = "v.0.0.1";
-                                    float fontSize = 24.0f;
-                                    glm::vec3 color = {0.6f, 0.6f, 0.6f};
-                                    glm::vec2 position = {0.0f, -0.2f};
-                                    TextRenderer::drawText(version, fontSize, color, position);
-                                }*/
-                //TextRenderer::drawText("A", 48.0f, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f});
+                layer.begin();
+
+                ImGui::SetNextWindowPos(ImVec2(windowX + 20, windowY + 250));
+
+                ImGui::Begin("Splash Screen", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoBackground);
+                ImGui::Text("SoundStation");
+                ImGui::Text("Version 0.0.1");
+                ImGui::End();
+
+                layer.end();
 
                 m_window->onUpdate();
             }

@@ -9,9 +9,12 @@ namespace SoundStation
     {
     public:
         SplashScreen();
+        void run();
+
+        std::shared_ptr<Window> window() const { return m_window; }
 
     private:
-        std::unique_ptr<Window> m_window;
+        std::shared_ptr<Window> m_window;
     };
 
 }
