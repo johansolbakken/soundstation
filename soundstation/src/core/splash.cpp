@@ -14,6 +14,8 @@
 
 #include <vector>
 
+#include <stdlib.h>
+
 namespace SoundStation
 {
     SplashScreen::SplashScreen()
@@ -23,8 +25,8 @@ namespace SoundStation
         auto audioDevice = AudioDevice::create(audioDeviceList->defaultOutputDeviceId());
 
         std::vector<std::shared_ptr<AudioFile>> audioFiles = {
-            //AudioFile::create("assets/sound/comboplease.mp3"),
-            //AudioFile::create("assets/sound/informasjones.mp3"),
+            AudioFile::create("assets/sound/comboplease.mp3"),
+            AudioFile::create("assets/sound/informasjones.mp3"),
         };
 
         WindowSpecification spec;
@@ -54,9 +56,11 @@ namespace SoundStation
             shader->bind();
             shader->setInt("tex", 0);
             shader->setMat4("projection", proj);
+        
+            audioDevice->setAudioBuffer(audioFiles[rand() % audioFiles.size()]->audioBuffer());
 
             auto startTime = Time::systemTimeSeconds();
-            while (Time::systemTimeSeconds() - startTime < 4.0f)
+            while (Time::systemTimeSeconds() - startTime < 20.0f)
             {
                 RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
                 RenderCommand::clear();
