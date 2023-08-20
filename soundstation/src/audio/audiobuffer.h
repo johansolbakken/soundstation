@@ -33,6 +33,8 @@ namespace SoundStation
         size_t channels() const { return m_channels; }
         size_t size() const { return m_size; }
 
+        double duration() const { return double(m_size) / double(m_sampleRate) / double(m_channels); }
+
     private:
         float *m_data = nullptr;
         size_t m_size = 0;

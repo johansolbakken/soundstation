@@ -15,6 +15,7 @@ namespace SoundStation
         std::shared_ptr<AudioBuffer> audioBuffer() const { return m_buffer; }
 
         const std::string& filename() const { return m_filename; }
+        double duration() const { return m_buffer->duration(); }
 
         static std::shared_ptr<AudioFile> create(const std::string &filename);
 

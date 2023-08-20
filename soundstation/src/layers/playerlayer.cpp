@@ -31,6 +31,10 @@ namespace SoundStation
         if (m_audioFile != nullptr)
         {
             ImGui::Text("File: %s", m_audioFile->filename().c_str());
+            auto duration = m_audioFile->duration();
+            auto minutes = int(duration / 60.0f);
+            auto seconds = int(duration - minutes * 60.0f);
+            ImGui::Text("Duration: %02d:%02d", minutes, seconds);
         }
         else
         {
@@ -55,8 +59,10 @@ namespace SoundStation
         {
             if (Application::instance().currentAudioDevice() != nullptr)
             {
-                if (!m_playing) play();
-                else pause();
+                if (!m_playing)
+                    play();
+                else
+                    pause();
             }
         }
 
@@ -73,7 +79,8 @@ namespace SoundStation
     void PlayerLayer::play()
     {
         auto audioDevice = Application::instance().currentAudioDevice();
-        if (audioDevice) {
+        if (audioDevice)
+        {
             audioDevice->setAudioBuffer(m_audioFile->audioBuffer());
         }
         m_playing = true;
@@ -81,9 +88,10 @@ namespace SoundStation
 
     void PlayerLayer::pause()
     {
-        
+
         auto audioDevice = Application::instance().currentAudioDevice();
-        if (audioDevice) {
+        if (audioDevice)
+        {
             audioDevice->setAudioBuffer(nullptr);
         }
         m_playing = false;
