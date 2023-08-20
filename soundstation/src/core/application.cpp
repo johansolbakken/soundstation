@@ -100,7 +100,7 @@ namespace SoundStation
 
     Layer * Application::getLayer(const std::string &name)
     {
-        for (auto*layer : m_layerStack)
+        for (auto layer : m_layerStack)
         {
             if (layer->name() == name)
             {

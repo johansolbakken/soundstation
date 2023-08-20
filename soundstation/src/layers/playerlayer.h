@@ -11,12 +11,15 @@ namespace SoundStation
     {
     public:
         PlayerLayer();
-        ~PlayerLayer() override;
+        ~PlayerLayer() override = default;
 
-        void onAttach() override;
-        void onDetach() override;
-        void onUpdate(Timestep step) override;
         void onUIRender() override;
+
+        void setAudioFile(const std::shared_ptr<AudioFile>& file);
+
+    private:
+        void play();
+        void pause();
 
     private:
         bool m_playing = false;
