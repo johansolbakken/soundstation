@@ -19,7 +19,7 @@ namespace SoundStation
 
     void PlayerLayer::onUIRender()
     {
-        ImGui::SetNextWindowSize({300, 400});
+        ImGui::SetNextWindowSize({300, 450});
         ImGui::Begin("Player", nullptr, ImGuiWindowFlags_NoResize);
 
         uint32_t viewportWidth = ImGui::GetContentRegionAvail().x;

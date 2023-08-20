@@ -6,7 +6,8 @@
 
 #include "serializer/serializer.h"
 
-#include "audiolibrarylayer.h"
+#include "layers/audiolibrarylayer.h"
+#include "layers/audiodevicemanagerlayer.h"
 
 namespace SoundStation
 {
@@ -44,8 +45,9 @@ namespace SoundStation
                 {
                     Serializer serializer;
 
-                    auto audioLibrary = static_cast<AudioLibraryLayer*>(Application::instance().getLayer("AudioLibraryLayer"));
-                    if (audioLibrary) {
+                    auto audioLibrary = static_cast<AudioLibraryLayer *>(Application::instance().getLayer("AudioLibraryLayer"));
+                    if (audioLibrary)
+                    {
                         serializer.setAudioFiles(audioLibrary->audioFiles());
                     }
 
@@ -59,6 +61,21 @@ namespace SoundStation
 
                 ImGui::EndMenu();
             }
+
+            if (ImGui::BeginMenu("View"))
+            {
+                if (ImGui::MenuItem("Audio Device Manager"))
+                {
+                    auto audioDeviceManager = static_cast<AudioDeviceManagerLayer *>(Application::instance().getLayer("AudioDeviceManagerLayer"));
+                    if (audioDeviceManager)
+                    {
+                        audioDeviceManager->showAudioDeviceManager(true);
+                    }
+                }
+
+                ImGui::EndMenu();
+            }
+
             ImGui::EndMainMenuBar();
         }
     }

@@ -18,11 +18,18 @@ namespace SoundStation {
 
         std::shared_ptr<AudioDevice> getAudioDevice() const { return m_audioDevice; }
 
+        void showAudioDeviceManager(bool show) { m_showAudioDeviceManager = show; }
+
+    private:
+        void selectOutputDevice(uint32_t id);
+
     private:
         std::shared_ptr<AudioDevice> m_audioDevice = nullptr;
         std::shared_ptr<AudioDeviceList> m_audioDeviceList = nullptr;
         uint32_t m_selectedOutputDevice = -1;
         uint32_t m_activeOutputDevice = -1;
         std::string m_activeOutputDeviceName = "";
+
+        bool m_showAudioDeviceManager = false;
     };
 }

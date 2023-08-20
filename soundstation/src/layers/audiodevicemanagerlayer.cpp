@@ -15,6 +15,7 @@ namespace SoundStation
     void AudioDeviceManagerLayer::onAttach()
     {
         m_audioDeviceList->onUpdate();
+        selectOutputDevice(m_audioDeviceList->defaultOutputDeviceId());
     }
 
     void AudioDeviceManagerLayer::onDetach()
@@ -27,6 +28,9 @@ namespace SoundStation
 
     void AudioDeviceManagerLayer::onUIRender()
     {
+        if (!m_showAudioDeviceManager)
+            return;
+
         if (m_audioDevice != nullptr)
         {
             ImGui::Begin("Audio Device");
@@ -37,7 +41,7 @@ namespace SoundStation
             ImGui::End();
         }
 
-        ImGui::Begin("Audio Device Manager");
+        ImGui::Begin("Audio Device Manager", &m_showAudioDeviceManager);
 
         if (m_activeOutputDevice != -1)
         {
@@ -57,9 +61,6 @@ namespace SoundStation
 
         auto outputDevices = m_audioDeviceList->outputDevices();
 
-        // Use a separate flag variable for tracking selection
-        bool deviceSelected = false;
-
         for (auto &device : outputDevices)
         {
             // Use an identifier for each selectable item to avoid conflicts
@@ -67,31 +68,27 @@ namespace SoundStation
             std::string deviceName = device.second.c_str();
 
             ImGui::PushID(id.c_str());
-
             if (ImGui::Selectable(deviceName.c_str(), m_selectedOutputDevice == device.first))
-            {
-                // Update the selected device when it's clicked
                 m_selectedOutputDevice = device.first;
-                deviceSelected = true;
-            }
             ImGui::PopID();
         }
 
-        // only clickable if devices are available
-
         if (ImGui::Button("Select"))
-        {
-            m_activeOutputDevice = m_selectedOutputDevice;
-            m_activeOutputDeviceName = outputDevices[m_activeOutputDevice];
-            m_audioDevice = nullptr;
-            m_audioDevice = AudioDevice::create(m_activeOutputDevice);
-        }
+            selectOutputDevice(m_selectedOutputDevice);
 
         if (ImGui::Button("Refresh"))
-        {
             m_audioDeviceList->onUpdate();
-        }
 
         ImGui::End();
+    }
+
+    void AudioDeviceManagerLayer::selectOutputDevice(uint32_t id)
+    {
+        m_audioDevice = nullptr;
+
+        auto outputDevices = m_audioDeviceList->outputDevices();
+        m_activeOutputDevice = id;
+        m_activeOutputDeviceName = outputDevices[id];
+        m_audioDevice = AudioDevice::create(id);
     }
 }
