@@ -7,7 +7,7 @@ namespace SoundStation
     Image::Image(const std::filesystem::path &path)
         : m_path(path)
     {
-        SS_LOG_INFO(fmt::format("Loading image: {}", path.string()));
+        // SS_LOG_INFO(fmt::format("Loading image: {}", path.string()));
         SS_ASSERT(std::filesystem::exists(path), "Image does not exist!");
 
         m_texture = Texture::create();

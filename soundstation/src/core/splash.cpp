@@ -43,28 +43,28 @@ namespace SoundStation
         {
             float aspectRatio = float(spec.width) / float(spec.height);
             float scale = 0.4;
-            glm::mat4 proj = glm::mat4(1.0f);
-            proj = glm::translate(proj, glm::vec3(0.0f, 0.3f, 0.0f));
-            proj = glm::scale(proj, glm::vec3(scale, scale, 1.0f));
-            proj = proj * glm::ortho(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+            glm::mat4 imageProj = glm::mat4(1.0f);
+            imageProj = glm::translate(imageProj, glm::vec3(0.0f, 0.3f, 0.0f));
+            imageProj = glm::scale(imageProj, glm::vec3(scale, scale, 1.0f));
+            imageProj = imageProj * glm::ortho(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
             auto ogre = Texture::create();
             ogre->load("assets/images/ogre.png");
-            ogre->bind();
-
             auto shader = Shader::create("assets/shaders/texture.vert", "assets/shaders/texture.frag");
-            shader->bind();
-            shader->setInt("tex", 0);
-            shader->setMat4("projection", proj);
 
-            audioDevice->setAudioBuffer(audioFiles[rand() % audioFiles.size()]->audioBuffer());
+            // audioDevice->setAudioBuffer(audioFiles[rand() % audioFiles.size()]->audioBuffer());
 
             auto startTime = Time::systemTimeSeconds();
-            while (Time::systemTimeSeconds() - startTime < 20.0f)
+            while (Time::systemTimeSeconds() - startTime < 3.0f)
             {
                 RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
                 RenderCommand::clear();
 
+                // Draw ogerface
+                ogre->bind();
+                shader->bind();
+                shader->setInt("tex", 0);
+                shader->setMat4("projection", imageProj);
                 RenderCommand::drawArrays(6);
 
                 {

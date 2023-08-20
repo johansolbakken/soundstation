@@ -109,7 +109,19 @@ namespace SoundStation
         GL_CALL(glUniform1i(location, value));
     }
 
-    void OpenGLShader::setMat4(const std::string& name, const glm::mat4& value) {
+    void OpenGLShader::setVec3(const std::string &name, const glm::vec3 &value)
+    {
+        auto location = glGetUniformLocation(m_rendererID, name.c_str());
+        if (location == -1)
+        {
+            SS_LOG_WARN(fmt::format("Uniform {} does not exist", name));
+            return;
+        }
+        GL_CALL(glUniform3fv(location, 1, glm::value_ptr(value)));
+    }
+
+    void OpenGLShader::setMat4(const std::string &name, const glm::mat4 &value)
+    {
         auto location = glGetUniformLocation(m_rendererID, name.c_str());
         if (location == -1)
         {
