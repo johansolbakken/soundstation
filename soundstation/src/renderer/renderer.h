@@ -1,6 +1,7 @@
 #pragma once
 
 #include "renderer/rendercommand.h"
+#include "renderer/textrenderer.h"
 
 namespace SoundStation
 {

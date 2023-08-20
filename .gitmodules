@@ -16,3 +16,6 @@
 [submodule "soundstation/vendor/json"]
 	path = soundstation/vendor/json
 	url = git@github.com:nlohmann/json.git
+[submodule "soundstation/vendor/freetype"]
+	path = soundstation/vendor/freetype
+	url = git@github.com:freetype/freetype.git

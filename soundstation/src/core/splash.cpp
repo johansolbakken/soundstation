@@ -56,7 +56,7 @@ namespace SoundStation
             shader->bind();
             shader->setInt("tex", 0);
             shader->setMat4("projection", proj);
-        
+
             audioDevice->setAudioBuffer(audioFiles[rand() % audioFiles.size()]->audioBuffer());
 
             auto startTime = Time::systemTimeSeconds();
@@ -67,6 +67,21 @@ namespace SoundStation
 
                 RenderCommand::drawArrays(6);
 
+                {
+                    std::string title = "Sound Station";
+                    float fontSize = 36.0f;
+                    glm::vec3 color = {1.0f, 1.0f, 1.0f};
+                    glm::vec2 position = {0.0f, 0.0f};
+                    TextRenderer::drawText(title, fontSize, color, position);
+                }
+
+                {
+                    std::string version = "v.0.0.1";
+                    float fontSize = 24.0f;
+                    glm::vec3 color = {0.6f, 0.6f, 0.6f};
+                    glm::vec2 position = {0.0f, -0.2f};
+                    TextRenderer::drawText(version, fontSize, color, position);
+                }
                 // Draw text
 
                 m_window->onUpdate();

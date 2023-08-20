@@ -31,6 +31,7 @@ add_executable(soundstation
     src/renderer/texture.h 
     src/renderer/shader.h
     src/renderer/framebuffer.h
+    src/renderer/textrenderer.h src/renderer/textrenderer.cpp
     
     src/audio/audiofile.h src/audio/audiofile.cpp
     src/audio/audiobuffer.h src/audio/audiobuffer.cpp
@@ -68,7 +69,8 @@ target_include_directories(soundstation
         vendor/glm
         vendor/stb
         vendor/libsndfile/include
-        vendor/json/include)
+        vendor/json/include
+        vendor/freetype/include)
 
 target_link_libraries(soundstation 
     PUBLIC 
@@ -79,6 +81,7 @@ target_link_libraries(soundstation
         stb
         sndfile
         nlohmann_json::nlohmann_json
+        freetype
         ${PLATFORM_LIBS}
         )
 
