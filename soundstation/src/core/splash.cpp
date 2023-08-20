@@ -23,15 +23,6 @@ namespace SoundStation
 {
     SplashScreen::SplashScreen()
     {
-        auto audioDeviceList = AudioDeviceList::create();
-        audioDeviceList->onUpdate();
-        auto audioDevice = AudioDevice::create(audioDeviceList->defaultOutputDeviceId());
-
-        std::vector<std::shared_ptr<AudioFile>> audioFiles = {
-            AudioFile::create("assets/sound/comboplease.mp3"),
-            AudioFile::create("assets/sound/informasjones.mp3"),
-        };
-
         WindowSpecification spec;
         spec.title = "Splash Screen";
         spec.width = 300;
@@ -48,6 +39,15 @@ namespace SoundStation
         Renderer::init();
 
         {
+            auto audioDeviceList = AudioDeviceList::create();
+            audioDeviceList->onUpdate();
+            auto audioDevice = AudioDevice::create(audioDeviceList->defaultOutputDeviceId());
+
+            std::vector<std::string> audioFiles = {
+                "assets/sound/comboplease.mp3",
+                "assets/sound/informasjones.mp3",
+            };
+
             float aspectRatio = float(m_window->width()) / float(m_window->height());
             float scale = 0.4;
             glm::mat4 imageProj = glm::mat4(1.0f);
@@ -59,12 +59,21 @@ namespace SoundStation
             ogre->load("assets/images/ogre.png");
             auto shader = Shader::create("assets/shaders/texture.vert", "assets/shaders/texture.frag");
 
-            // audioDevice->setAudioBuffer(audioFiles[rand() % audioFiles.size()]->audioBuffer());
+            srand(Time::systemTimeSeconds());
+            auto audioFile = AudioFile::create(audioFiles[rand() % audioFiles.size()]);
+            auto buffer = audioFile->audioBuffer()->convertSampleRate(audioDevice->sampleRate());
+            audioDevice->setAudioBuffer(buffer);
+            audioDevice->play();
+
+            // remove path from filename
+            std::string filename = audioFile->filename();
+            auto lastSlash = filename.find_last_of('/');
+            if (lastSlash != std::string::npos)
+                filename = filename.substr(lastSlash + 1);
 
             ImGuiLayer layer;
 
-            auto startTime = Time::systemTimeSeconds();
-            while (Time::systemTimeSeconds() - startTime < 3.0f)
+            while (audioDevice->isPlaying())
             {
                 RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
                 RenderCommand::clear();
@@ -84,17 +93,22 @@ namespace SoundStation
                 ImGui::SetNextWindowPos(ImVec2(windowX + 20, windowY + 250));
 
                 ImGui::Begin("Splash Screen", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoBackground);
-                
+
                 ImGui::PushFont(ImGui::GetIO().Fonts->Fonts[0]);
-                ImGui::Text("SoundStation");
+                ImGui::Text("Sound Station");
                 ImGui::PopFont();
                 ImGui::Text("Version 0.0.1");
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0));
+                ImGui::Text("Playing %s", filename.c_str());
+                ImGui::PopStyleColor();
                 ImGui::End();
 
                 layer.end();
 
                 m_window->onUpdate();
             }
+
+            audioDevice->stop();
         }
 
         Renderer::shutdown();
