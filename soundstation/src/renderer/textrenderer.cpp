@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "textrenderer.h"
 
 #include "renderer/shader.h"
@@ -7,11 +8,6 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
-
-#include "core/log.h"
-
-#include <map>
-#include <string>
 
 namespace SoundStation
 {

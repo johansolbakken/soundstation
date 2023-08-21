@@ -4,11 +4,8 @@
 
 #include "audio/audiofile.h"
 
-#include <vector>
-
 namespace SoundStation
 {
-
     class Serializer
     {
     public:
@@ -28,5 +25,4 @@ namespace SoundStation
         std::vector<std::string> m_audioFiles;
         Project m_project;
     };
-
 }

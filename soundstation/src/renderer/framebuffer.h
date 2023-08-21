@@ -1,9 +1,9 @@
 #pragma once
 
-#include <memory>
-
-namespace SoundStation {
-    class Framebuffer {
+namespace SoundStation
+{
+    class Framebuffer
+    {
     public:
         virtual ~Framebuffer() = default;
 

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <memory>
-#include <string>
-#include <vector>
-
 namespace SoundStation
 {
     enum class BufferType : uint8_t
@@ -53,7 +49,7 @@ namespace SoundStation
         virtual const BufferLayout &layout() const = 0;
         virtual void setLayout(const BufferLayout &layout) = 0;
         virtual void enableLayout() = 0;
-        virtual void disableLayout() = 0;   
+        virtual void disableLayout() = 0;
 
         virtual uint32_t rendererId() const = 0;
 

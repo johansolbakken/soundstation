@@ -33,11 +33,11 @@ add_executable(soundstation
     
     src/renderer/renderer.h src/renderer/renderer.cpp
     src/renderer/rendercommand.h src/renderer/rendercommand.cpp
-    src/renderer/texture.h 
-    src/renderer/shader.h
-    src/renderer/framebuffer.h
+    src/renderer/texture.h src/renderer/texture.cpp
+    src/renderer/shader.h src/renderer/shader.cpp
+    src/renderer/framebuffer.h src/renderer/framebuffer.cpp
     src/renderer/textrenderer.h src/renderer/textrenderer.cpp
-    src/renderer/buffer.h
+    src/renderer/buffer.h src/renderer/buffer.cpp
     
     src/audio/audiofile.h src/audio/audiofile.cpp
     src/audio/audiobuffer.h src/audio/audiobuffer.cpp

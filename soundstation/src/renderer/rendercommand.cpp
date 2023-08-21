@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "rendercommand.h"
 
 #include "platform/opengl/openglrenderapi.h"
