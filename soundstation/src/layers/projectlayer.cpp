@@ -6,6 +6,7 @@
 #include "serializer/serializer.h"
 
 #include "layers/audiolibrarylayer.h"
+#include "layers/playerlayer.h"
 
 #include <imgui.h>
 
@@ -13,7 +14,7 @@ namespace SoundStation
 {
 
     ProjectLayer::ProjectLayer()
-        : Layer("ProjectLayer")
+        : Layer(staticName())
     {
     }
 
@@ -59,6 +60,9 @@ namespace SoundStation
 
         if (auto audioLibrary = Application::instance().getLayer<AudioLibraryLayer>())
             audioLibrary->clearAudioFiles();
+
+        if (auto playerLayer = Application::instance().getLayer<PlayerLayer>())
+            playerLayer->clearAudioFile();
     }
 
     void ProjectLayer::saveProject()

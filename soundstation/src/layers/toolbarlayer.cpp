@@ -5,21 +5,9 @@
 namespace SoundStation
 {
     ToolbarLayer::ToolbarLayer()
-        : Layer("ToolbarLayer"),
+        : Layer(staticName()),
           m_playImage("assets/images/play.png"),
           m_pauseImage("assets/images/pause.png")
-    {
-    }
-
-    void ToolbarLayer::onAttach()
-    {
-    }
-
-    void ToolbarLayer::onDetach()
-    {
-    }
-
-    void ToolbarLayer::onUpdate(Timestep step)
     {
     }
 

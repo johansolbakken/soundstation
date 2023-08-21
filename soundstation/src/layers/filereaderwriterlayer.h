@@ -14,9 +14,6 @@ namespace SoundStation
         FileReaderWriterLayer();
         ~FileReaderWriterLayer() override = default;
 
-        void onAttach() override;
-        void onDetach() override;
-        void onUpdate(Timestep t) override;
         void onUIRender() override;
 
         void show() { m_open = true; }

@@ -11,10 +11,9 @@ namespace SoundStation
         ToolbarLayer();
         ~ToolbarLayer() override = default;
 
-        void onAttach() override;
-        void onDetach() override;
-        void onUpdate(Timestep step) override;
         void onUIRender() override;
+
+        static std::string staticName() { return "ToolbarLayer"; }
 
     private:
         Image m_playImage;
@@ -22,4 +21,3 @@ namespace SoundStation
         bool m_playing = false;
     };
 }
-

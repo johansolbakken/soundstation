@@ -16,6 +16,7 @@ namespace SoundStation
         void onUIRender() override;
 
         void setAudioFile(const std::shared_ptr<AudioFile>& file);
+        void clearAudioFile();
 
         static std::string staticName() { return "PlayerLayer"; }
 

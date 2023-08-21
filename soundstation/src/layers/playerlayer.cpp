@@ -128,4 +128,11 @@ namespace SoundStation
         if (audioDevice)
             audioDevice->pause();
     }
+
+    void PlayerLayer::clearAudioFile()
+    {
+        m_audioFile = nullptr;
+        m_seeking = false;
+        m_seekPosition = 0.0;
+    }
 }

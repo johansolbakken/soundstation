@@ -34,7 +34,7 @@ namespace SoundStation
 
         void close();
 
-        std::shared_ptr<AudioDevice> currentAudioDevice() const { return m_audioDeviceManagerLayer->getAudioDevice(); }
+        std::shared_ptr<AudioDevice> currentAudioDevice() const { return m_audioDeviceManagerLayer->audioDevice(); }
         const Project &currentProject() const { return m_projectLayer->project(); }
 
         void pushLayer(Layer *layer);

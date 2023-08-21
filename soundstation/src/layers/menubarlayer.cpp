@@ -11,21 +11,8 @@
 
 namespace SoundStation
 {
-
     MenuBarLayer::MenuBarLayer()
         : Layer(staticName())
-    {
-    }
-
-    void MenuBarLayer::onAttach()
-    {
-    }
-
-    void MenuBarLayer::onDetach()
-    {
-    }
-
-    void MenuBarLayer::onUpdate(Timestep t)
     {
     }
 
@@ -98,5 +85,4 @@ namespace SoundStation
             ImGui::EndMainMenuBar();
         }
     }
-
 }

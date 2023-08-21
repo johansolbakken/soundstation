@@ -13,19 +13,7 @@ namespace SoundStation
     {
         memset(m_filename, 0, 1024);
     }
-
-    void FileReaderWriterLayer::onAttach()
-    {
-    }
-
-    void FileReaderWriterLayer::onDetach()
-    {
-    }
-
-    void FileReaderWriterLayer::onUpdate(Timestep t)
-    {
-    }
-
+    
     void FileReaderWriterLayer::onUIRender()
     {
         if (!m_open)
