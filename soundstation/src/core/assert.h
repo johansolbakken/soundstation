@@ -2,8 +2,6 @@
 
 #include "core/log.h"
 
-// breakpoint on assert is __debugbreak() on windows, __builtin_trap() on linux
-
 #ifdef __APPLE__ 
     #define DEBUG_BREAK __builtin_trap()
 #elif __linux__

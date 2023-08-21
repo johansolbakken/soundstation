@@ -2,8 +2,6 @@
 
 #include "core/layer.h"
 
-#include <vector>
-
 namespace SoundStation
 {
     class LayerStack

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "log.h"
 
 #include <fmt/core.h>

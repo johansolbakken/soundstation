@@ -1,8 +1,6 @@
+#include "pch.h"
 #include "application.h"
 
-#include "core/log.h"
-#include "core/assert.h"
-#include "core/time.h"
 #include "core/splash.h"
 
 #include "renderer/renderer.h"
@@ -10,12 +8,10 @@
 #include <imgui.h>
 
 #include "layers/playerlayer.h"
-#include "layers/audiodevicemanagerlayer.h"
 #include "layers/filereaderwriterlayer.h"
 #include "layers/toolbarlayer.h"
 #include "layers/audiolibrarylayer.h"
 #include "layers/menubarlayer.h"
-#include "layers/projectlayer.h"
 
 namespace SoundStation
 {

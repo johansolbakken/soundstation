@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-
-#include "core/time.h"
-
 namespace SoundStation
 {
     class Layer

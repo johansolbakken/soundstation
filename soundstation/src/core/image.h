@@ -1,7 +1,5 @@
 #pragma once
 
-#include <filesystem>
-
 #include "renderer/texture.h"
 
 namespace SoundStation

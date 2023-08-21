@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "image.h"
-
-#include "core/assert.h"
 
 namespace SoundStation
 {

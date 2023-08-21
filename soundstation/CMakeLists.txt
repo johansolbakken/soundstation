@@ -20,7 +20,7 @@ add_executable(soundstation
     src/pch.cpp
     
     src/core/log.h src/core/log.cpp
-    src/core/assert.h
+    src/core/assert.h src/core/assert.cpp
     src/core/application.h src/core/application.cpp
     src/core/layer.h src/core/layer.cpp
     src/core/layerstack.h src/core/layerstack.cpp
@@ -29,7 +29,7 @@ add_executable(soundstation
     src/core/time.h src/core/time.cpp
     src/core/splash.h src/core/splash.cpp
     src/core/project.h src/core/project.cpp
-    src/core/platform.h
+    src/core/platform.h src/core/platform.cpp
     
     src/renderer/renderer.h src/renderer/renderer.cpp
     src/renderer/rendercommand.h src/renderer/rendercommand.cpp

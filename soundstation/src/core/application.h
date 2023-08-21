@@ -9,8 +9,6 @@
 #include "layers/audiodevicemanagerlayer.h"
 #include "layers/projectlayer.h"
 
-#include <memory>
-
 template <typename T>
 concept HasStaticName = requires {
     {

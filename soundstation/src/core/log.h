@@ -2,8 +2,6 @@
 
 #include <fmt/color.h>
 
-#include <string>
-
 namespace SoundStation
 {
     class Log

@@ -1,7 +1,6 @@
+#include "pch.h"
 #include "window.h"
 
-#include "core/assert.h"
-#include "core/log.h"
 #include "core/application.h"
 
 #include <GLFW/glfw3.h>

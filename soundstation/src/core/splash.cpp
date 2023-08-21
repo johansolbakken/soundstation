@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "splash.h"
-
-#include "core/time.h"
 
 #include "renderer/renderer.h"
 #include "renderer/texture.h"
@@ -12,12 +11,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <vector>
-
 #include <imgui.h>
 #include "imgui/imguilayer.h"
-
-#include <stdlib.h>
 
 namespace SoundStation
 {
