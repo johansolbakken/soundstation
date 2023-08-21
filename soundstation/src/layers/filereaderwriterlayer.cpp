@@ -1,10 +1,9 @@
+#include "pch.h"
 #include "filereaderwriterlayer.h"
 
 #include <imgui.h>
 
 #include "audio/audiofilewriter.h"
-
-#include <filesystem>
 
 namespace SoundStation
 {
@@ -13,7 +12,7 @@ namespace SoundStation
     {
         memset(m_filename, 0, 1024);
     }
-    
+
     void FileReaderWriterLayer::onUIRender()
     {
         if (!m_open)

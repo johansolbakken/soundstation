@@ -4,8 +4,6 @@
 
 #include "audio/audiobuffer.h"
 
-#include <string>
-
 namespace SoundStation
 {
     class FileReaderWriterLayer : public Layer

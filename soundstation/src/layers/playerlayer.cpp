@@ -1,13 +1,11 @@
+#include "pch.h"
 #include "playerlayer.h"
 
 #include <imgui.h>
 
-#include "core/assert.h"
 #include "core/application.h"
 
 #include "audio/audiofilewriter.h"
-
-#include <sstream>
 
 namespace SoundStation
 {
