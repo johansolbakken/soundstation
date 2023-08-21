@@ -22,6 +22,7 @@ namespace SoundStation
         void setData(float *data) { m_data = data; }
 
         const float *data() const { return m_data; }
+        float* data() { return m_data; }
         float sampleRate() const { return m_sampleRate; }
         AudioBufferFormat format() const { return m_format; }
         size_t channels() const { return m_channels; }
@@ -31,6 +32,13 @@ namespace SoundStation
         double duration() const { return double(m_size) / double(m_sampleRate) / double(m_channels); }
 
         std::shared_ptr<AudioBuffer> convertSampleRate(float newSampleRate) const;
+
+        static std::shared_ptr<AudioBuffer> create(
+            float *data,
+            size_t size,
+            float sampleRate,
+            AudioBufferFormat format,
+            size_t channels);
 
     private:
         float *m_data = nullptr;

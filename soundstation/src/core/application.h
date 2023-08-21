@@ -8,6 +8,7 @@
 
 #include "layers/audiodevicemanagerlayer.h"
 #include "layers/projectlayer.h"
+#include "layers/mixerlayer.h"
 
 template <typename T>
 concept HasStaticName = requires {
@@ -55,5 +56,6 @@ namespace SoundStation
 
         AudioDeviceManagerLayer *m_audioDeviceManagerLayer = nullptr;
         ProjectLayer *m_projectLayer = nullptr;
+        MixerLayer *m_mixerLayer = nullptr;
     };
 }

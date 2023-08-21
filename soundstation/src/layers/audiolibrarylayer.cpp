@@ -35,6 +35,12 @@ namespace SoundStation
                         playerLayer->setAudioFile(file);
                 }
 
+                if (ImGui::Selectable("Set as mixer source"))
+                {
+                    if (auto mixerLayer = Application::getLayer<MixerLayer>())
+                        mixerLayer->setAudioFile(file);
+                }
+
                 ImGui::EndPopup();
             }
         }

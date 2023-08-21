@@ -52,6 +52,9 @@ namespace SoundStation
         m_projectLayer = new ProjectLayer();
         pushLayer(m_projectLayer);
 
+        m_mixerLayer = new MixerLayer();
+        pushLayer(m_mixerLayer);
+
         pushLayer(new PlayerLayer());
         pushLayer(new AudioLibraryLayer());
         pushLayer(new FileReaderWriterLayer());

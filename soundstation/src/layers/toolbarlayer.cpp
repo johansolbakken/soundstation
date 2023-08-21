@@ -3,6 +3,10 @@
 
 #include <imgui.h>
 
+#include "core/application.h"
+
+#include "layers/projectlayer.h"
+
 namespace SoundStation
 {
     ToolbarLayer::ToolbarLayer()
@@ -12,8 +16,26 @@ namespace SoundStation
     {
     }
 
+    static std::string minSecString(float seconds)
+    {
+        int minutes = int(seconds / 60.0f);
+        int secs = int(seconds - minutes * 60.0f);
+        std::stringstream ss;
+        if (minutes < 10)
+            ss << "0";
+        ss << minutes << ":";
+        if (secs < 10)
+            ss << "0";
+        ss << secs;
+        return ss.str();
+    }
+
     void ToolbarLayer::onUIRender()
     {
+        int sampleRate = 0;
+        if (auto projectLayer = Application::getLayer<ProjectLayer>())
+            sampleRate = projectLayer->project().sampleRate();
+
         ImGui::Begin("Toolbar", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar);
         float buttonWidth = 30.0f;
         ImGui::SetCursorPosX((ImGui::GetWindowSize().x - buttonWidth) / 2);
@@ -23,6 +45,9 @@ namespace SoundStation
             m_playing = !m_playing;
         }
         ImGui::PopStyleColor();
+        ImGui::SameLine();
+        auto cursor = minSecString(m_cursor / float(sampleRate));
+        ImGui::Text("%s", cursor.c_str());
         ImGui::End();
     }
 }

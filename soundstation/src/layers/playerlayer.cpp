@@ -33,7 +33,7 @@ namespace SoundStation
 
     void PlayerLayer::onUIRender()
     {
-        ImGui::SetNextWindowSize({300, 450});
+        /*ImGui::SetNextWindowSize({300, 450});
         ImGui::Begin("Player", nullptr, ImGuiWindowFlags_NoResize);
 
         uint32_t viewportWidth = ImGui::GetContentRegionAvail().x;
@@ -88,7 +88,7 @@ namespace SoundStation
 
         float buttonXPos = (viewportWidth - buttonWidth) / 2.0f;
         ImGui::SetCursorPosX(buttonXPos);
-        auto playing = audioDevice && audioDevice->isPlaying();
+        auto playing = false && audioDevice && audioDevice->isPlaying();
         auto texture = playing ? m_pauseImage.texture()->rendererId() : m_playImage.texture()->rendererId();
         if (ImGui::ImageButton(reinterpret_cast<void *>(texture), {buttonWidth, buttonWidth}) && m_audioFile != nullptr)
         {
@@ -98,33 +98,33 @@ namespace SoundStation
                 play();
         }
 
-        ImGui::End();
+        ImGui::End();*/
     }
 
     void PlayerLayer::setAudioFile(const std::shared_ptr<AudioFile> &file)
     {
-        auto audioDevice = Application::instance().currentAudioDevice();
-        if (audioDevice)
-        {
-            if (audioDevice->isPlaying())
-                audioDevice->stop();
-            audioDevice->setAudioBuffer(file->audioBuffer());
-            m_audioFile = file;
-        }
+        // auto audioDevice = Application::instance().currentAudioDevice();
+        // if (audioDevice)
+        // {
+        //     if (audioDevice->isPlaying())
+        //         audioDevice->stop();
+        //     audioDevice->setAudioBuffer(file->audioBuffer());
+        //     m_audioFile = file;
+        // }
     }
 
     void PlayerLayer::play()
     {
-        auto audioDevice = Application::instance().currentAudioDevice();
-        if (audioDevice)
-            audioDevice->play();
+        // auto audioDevice = Application::instance().currentAudioDevice();
+        // if (audioDevice)
+        //     audioDevice->play();
     }
 
     void PlayerLayer::pause()
     {
-        auto audioDevice = Application::instance().currentAudioDevice();
-        if (audioDevice)
-            audioDevice->pause();
+        // auto audioDevice = Application::instance().currentAudioDevice();
+        // if (audioDevice)
+        //     audioDevice->pause();
     }
 
     void PlayerLayer::clearAudioFile()

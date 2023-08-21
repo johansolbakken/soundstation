@@ -5,9 +5,9 @@
 #include "renderer/texture.h"
 #include "renderer/shader.h"
 
-#include "audio/audiodevicelist.h"
-#include "audio/audiodevice.h"
-#include "audio/audiofile.h"
+//#include "audio/audiodevicelist.h"
+//#include "audio/audiodevice.h"
+//#include "audio/audiofile.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -34,9 +34,9 @@ namespace SoundStation
         Renderer::init();
 
         {
-            auto audioDeviceList = AudioDeviceList::create();
-            audioDeviceList->onUpdate();
-            auto audioDevice = AudioDevice::create(audioDeviceList->defaultOutputDeviceId());
+            //auto audioDeviceList = AudioDeviceList::create();
+            //audioDeviceList->onUpdate();
+            //auto audioDevice = AudioDevice::create(audioDeviceList->defaultOutputDeviceId());
 
             std::vector<std::string> audioFiles = {
                 "assets/sound/comboplease.mp3",
@@ -55,22 +55,22 @@ namespace SoundStation
             auto shader = Shader::create("assets/shaders/texture.vert", "assets/shaders/texture.frag");
 
             srand(Time::systemTimeSeconds());
-            auto audioFile = AudioFile::create(audioFiles[rand() % audioFiles.size()]);
-            auto buffer = audioFile->audioBuffer()->convertSampleRate(audioDevice->sampleRate());
-            audioDevice->setAudioBuffer(buffer);
-            audioDevice->play();
+            //auto audioFile = AudioFile::create(audioFiles[rand() % audioFiles.size()]);
+            //auto buffer = audioFile->audioBuffer()->convertSampleRate(audioDevice->sampleRate());
+            //audioDevice->setAudioBuffer(buffer);
+            //audioDevice->play();
 
             // remove path from filename
-            std::string filename = audioFile->filename();
-            auto lastSlash = filename.find_last_of('/');
-            if (lastSlash != std::string::npos)
-                filename = filename.substr(lastSlash + 1);
+            //std::string filename = audioFile->filename();
+            //auto lastSlash = filename.find_last_of('/');
+            //if (lastSlash != std::string::npos)
+            //    filename = filename.substr(lastSlash + 1);
 
             ImGuiLayer layer;
 
             bool escapePressed = false;
 
-            while (audioDevice->isPlaying() && !m_window->shouldClose() && !escapePressed)
+            while (/*audioDevice->isPlaying() &&*/ !m_window->shouldClose() && !escapePressed)
             {
                 RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
                 RenderCommand::clear();
@@ -95,9 +95,9 @@ namespace SoundStation
                 ImGui::Text("Sound Station");
                 ImGui::PopFont();
                 ImGui::Text("Version 0.0.1");
-                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0));
-                ImGui::Text("Playing %s", filename.c_str());
-                ImGui::PopStyleColor();
+                //ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0));
+                //ImGui::Text("Playing %s", filename.c_str());
+                //ImGui::PopStyleColor();
 
                 if (ImGui::IsKeyPressed(ImGuiKey_Escape))
                 {
@@ -111,7 +111,9 @@ namespace SoundStation
                 m_window->onUpdate();
             }
 
-            audioDevice->stop();
+            //audioDevice->setAudioBuffer(nullptr);
+
+            //audioDevice->stop();
         }
 
         Renderer::shutdown();

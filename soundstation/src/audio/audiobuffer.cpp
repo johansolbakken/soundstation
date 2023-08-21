@@ -37,4 +37,14 @@ namespace SoundStation
 
         return std::make_shared<AudioBuffer>(newData, newSize, newSampleRate, m_format, m_channels);
     }
+
+    std::shared_ptr<AudioBuffer> AudioBuffer::create(
+        float *data,
+        size_t size,
+        float sampleRate,
+        AudioBufferFormat format,
+        size_t channels)
+    {
+        return std::make_shared<AudioBuffer>(data, size, sampleRate, format, channels);
+    }
 }

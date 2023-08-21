@@ -3,8 +3,8 @@
 
 namespace SoundStation
 {
-    Fader::Fader(float gain)
-        : m_gain(gain)
+    Fader::Fader(float level)
+        : m_level(level)
     {
     }
 
@@ -12,26 +12,28 @@ namespace SoundStation
     {
     }
 
-    void Fader::setGain(float gain)
+    void Fader::setLevel(float level)
     {
-        m_gain = gain;
+        m_level = level;
     }
 
-    float Fader::gain() const
+    float Fader::level() const
     {
-        return m_gain;
+        return m_level;
     }
 
     void Fader::process(float *buffer, int numSamples)
     {
+        auto data = reinterpret_cast<float(*)[2]>(buffer);
         for (int i = 0; i < numSamples; ++i)
         {
-            buffer[i] *= m_gain;
+            data[i][0] *= m_level;
+            data[i][1] *= m_level;
         }
     }
 
-    std::shared_ptr<Fader> Fader::create(float gain)
+    std::shared_ptr<Fader> Fader::create(float level)
     {
-        return std::make_shared<Fader>(gain);
+        return std::make_shared<Fader>(level);
     }
 }
