@@ -14,18 +14,6 @@ namespace SoundStation{
     {
     }
 
-    void AudioLibraryLayer::onUpdate(Timestep t)
-    {
-        auto audioDevice = Application::instance().currentAudioDevice();
-        if (audioDevice && audioDevice->sampleRate() != m_cachedSampleRate) {
-            m_cachedSampleRate = audioDevice->sampleRate();
-            for (auto& file : m_audioFiles) {
-                auto newBuffer = file->audioBuffer()->convertSampleRate(m_cachedSampleRate);
-                file->setAudioBuffer(newBuffer);
-            }
-        }
-    }
-
     void AudioLibraryLayer::onUIRender()
     {
         ImGui::Begin("Audio Library");

@@ -85,9 +85,7 @@ namespace SoundStation
                 {
                     auto audioDeviceManager = static_cast<AudioDeviceManagerLayer *>(Application::instance().getLayer("AudioDeviceManagerLayer"));
                     if (audioDeviceManager)
-                    {
-                        audioDeviceManager->showAudioDeviceManager(true);
-                    }
+                        audioDeviceManager->show();
                 }
 
                 ImGui::EndMenu();
@@ -99,9 +97,7 @@ namespace SoundStation
                 {
                     auto fileReaderWriter = static_cast<FileReaderWriterLayer *>(Application::instance().getLayer("FileReaderWriterLayer"));
                     if (fileReaderWriter)
-                    {
                         fileReaderWriter->show();
-                    }
                 }
 
                 ImGui::EndMenu();

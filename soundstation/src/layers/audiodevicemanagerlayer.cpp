@@ -18,21 +18,12 @@ namespace SoundStation
     void AudioDeviceManagerLayer::onAttach()
     {
         m_audioDeviceList->onUpdate();
-        SS_LOG_INFO(fmt::format("Default Output Device: {}", m_audioDeviceList->defaultOutputDeviceId()));
         selectOutputDevice(m_audioDeviceList->defaultOutputDeviceId());
-    }
-
-    void AudioDeviceManagerLayer::onDetach()
-    {
-    }
-
-    void AudioDeviceManagerLayer::onUpdate(Timestep step)
-    {
     }
 
     void AudioDeviceManagerLayer::onUIRender()
     {
-        if (!m_showAudioDeviceManager)
+        if (!m_open)
             return;
 
         if (m_audioDevice != nullptr)
@@ -45,7 +36,7 @@ namespace SoundStation
             ImGui::End();
         }
 
-        ImGui::Begin("Audio Device Manager", &m_showAudioDeviceManager);
+        ImGui::Begin("Audio Device Manager", &m_open);
 
         if (m_activeOutputDevice != -1)
         {

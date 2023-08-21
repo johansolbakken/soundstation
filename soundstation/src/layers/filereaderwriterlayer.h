@@ -8,7 +8,6 @@
 
 namespace SoundStation
 {
-
     class FileReaderWriterLayer : public Layer
     {
     public:
@@ -29,5 +28,4 @@ namespace SoundStation
 
         bool m_open = false;
     };
-
 }

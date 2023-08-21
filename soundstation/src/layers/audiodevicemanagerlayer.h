@@ -12,13 +12,11 @@ namespace SoundStation {
         ~AudioDeviceManagerLayer() override = default;
 
         void onAttach() override;
-        void onDetach() override;
-        void onUpdate(Timestep step) override;
         void onUIRender() override;
 
         std::shared_ptr<AudioDevice> getAudioDevice() const { return m_audioDevice; }
 
-        void showAudioDeviceManager(bool show) { m_showAudioDeviceManager = show; }
+        void show() { m_open = true; }
 
     private:
         void selectOutputDevice(uint32_t id);
@@ -30,6 +28,6 @@ namespace SoundStation {
         uint32_t m_activeOutputDevice = -1;
         std::string m_activeOutputDeviceName = "";
 
-        bool m_showAudioDeviceManager = false;
+        bool m_open = false;
     };
 }
