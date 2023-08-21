@@ -5,6 +5,8 @@
 #include <memory>
 #include <functional>
 #include <map>
+#include <fstream>
+#include <sstream>
 
 #include "core/time.h"
 #include "core/log.h"

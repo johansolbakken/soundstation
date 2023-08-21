@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "audiobuffer.h"
 
 namespace SoundStation

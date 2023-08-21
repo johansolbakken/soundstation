@@ -1,11 +1,7 @@
+#include "pch.h"
 #include "audiofilewriter.h"
 
-#include <fstream>
-
 #include <sndfile.h>
-
-#include "core/log.h"
-#include "core/assert.h"
 
 namespace SoundStation
 {

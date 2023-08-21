@@ -1,12 +1,6 @@
 #pragma once
 
-#include <memory>
-#include <string>
-
 #include "audio/audiobuffer.h"
-
-#include "core/time.h"
-
 namespace SoundStation
 {
     class AudioDevice

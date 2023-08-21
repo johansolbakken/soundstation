@@ -1,3 +1,11 @@
+#include <string>
+#include <vector>
+#include <memory>
+#include <map>
+
+#include "core/time.h"
+#include "core/log.h"
+
 #include "core/platform.h"
 
 #include <Foundation/Foundation.h>

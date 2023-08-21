@@ -1,5 +1,13 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include <memory>
+#include <map>
+
+#include "core/time.h"
+#include "core/log.h"
+
 #include "audio/audiodevicelist.h"
 
 namespace SoundStation
