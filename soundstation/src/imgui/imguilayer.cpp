@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "imguilayer.h"
 
 #include <imgui.h>
@@ -10,10 +11,6 @@
 #include <GLFW/glfw3.h>
 
 #include "core/application.h"
-#include "core/log.h"
-
-#include <filesystem>
-#include <fstream>
 
 namespace SoundStation
 {
