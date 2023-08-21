@@ -37,7 +37,7 @@ namespace SoundStation
             {
                 if (ImGui::MenuItem("Open", "Ctrl+O/Command+O"))
                 {
-                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
                     if (projectLayer)
                     {
                         projectLayer->openProject();
@@ -46,7 +46,7 @@ namespace SoundStation
 
                 if (ImGui::MenuItem("Save", "Ctrl+S/Command+S"))
                 {
-                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
                     if (projectLayer)
                     {
                         projectLayer->saveProject();
@@ -55,7 +55,7 @@ namespace SoundStation
 
                 if (ImGui::MenuItem("Save As", "Ctrl+Shift+S/Command+Shift+S"))
                 {
-                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
                     if (projectLayer)
                     {
                         projectLayer->saveProjectAs();
@@ -64,7 +64,7 @@ namespace SoundStation
 
                 if (ImGui::MenuItem("Project Settings"))
                 {
-                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
                     if (projectLayer)
                     {
                         projectLayer->show();
@@ -83,7 +83,7 @@ namespace SoundStation
             {
                 if (ImGui::MenuItem("Audio Device Manager"))
                 {
-                    auto audioDeviceManager = static_cast<AudioDeviceManagerLayer *>(Application::instance().getLayer("AudioDeviceManagerLayer"));
+                    auto audioDeviceManager = Application::instance().getLayer<AudioDeviceManagerLayer>();
                     if (audioDeviceManager)
                         audioDeviceManager->show();
                 }
@@ -95,7 +95,7 @@ namespace SoundStation
             {
                 if (ImGui::MenuItem("File Reader Writer"))
                 {
-                    auto fileReaderWriter = static_cast<FileReaderWriterLayer *>(Application::instance().getLayer("FileReaderWriterLayer"));
+                    auto fileReaderWriter = Application::instance().getLayer<FileReaderWriterLayer>();
                     if (fileReaderWriter)
                         fileReaderWriter->show();
                 }

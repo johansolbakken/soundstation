@@ -11,6 +11,13 @@
 
 #include <memory>
 
+template <typename T>
+concept HasStaticName = requires {
+    {
+        T::staticName()
+    } -> std::convertible_to<std::string>;
+};
+
 namespace SoundStation
 {
     class Application
@@ -33,6 +40,13 @@ namespace SoundStation
         void pushLayer(Layer *layer);
 
         Layer *getLayer(const std::string &name);
+
+        template <typename T>
+        requires HasStaticName<T>
+        T *getLayer()
+        {
+            return static_cast<T *>(getLayer(T::staticName()));
+        }
 
     private:
         bool m_running = true;

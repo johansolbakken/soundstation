@@ -24,6 +24,8 @@ namespace SoundStation
 
         void show() { m_open = true; }
 
+        static std::string staticName() { return "ProjectLayer"; }
+
     private:
         char m_projectName[1024] = "Untitled";
         bool m_projectNameChanged = false;

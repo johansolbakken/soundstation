@@ -21,6 +21,8 @@ namespace SoundStation
 
         void show() { m_open = true; }
 
+        static std::string staticName() { return "FileReaderWriterLayer"; }
+
     private:
         std::shared_ptr<AudioBuffer> m_buffer;
         char m_filename[1024];

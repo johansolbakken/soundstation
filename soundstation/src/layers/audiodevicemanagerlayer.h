@@ -5,8 +5,10 @@
 #include "audio/audiodevice.h"
 #include "audio/audiodevicelist.h"
 
-namespace SoundStation {
-    class AudioDeviceManagerLayer : public Layer {
+namespace SoundStation
+{
+    class AudioDeviceManagerLayer : public Layer
+    {
     public:
         AudioDeviceManagerLayer();
         ~AudioDeviceManagerLayer() override = default;
@@ -17,6 +19,8 @@ namespace SoundStation {
         std::shared_ptr<AudioDevice> getAudioDevice() const { return m_audioDevice; }
 
         void show() { m_open = true; }
+
+        static std::string staticName() { return "AudioDeviceManagerLayer"; }
 
     private:
         void selectOutputDevice(uint32_t id);
