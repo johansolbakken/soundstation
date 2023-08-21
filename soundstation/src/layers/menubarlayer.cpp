@@ -4,11 +4,10 @@
 
 #include <imgui.h>
 
-#include "serializer/serializer.h"
-
 #include "layers/audiolibrarylayer.h"
 #include "layers/audiodevicemanagerlayer.h"
 #include "layers/filereaderwriterlayer.h"
+#include "layers/projectlayer.h"
 
 namespace SoundStation
 {
@@ -36,26 +35,43 @@ namespace SoundStation
         {
             if (ImGui::BeginMenu("File"))
             {
-                /*if (ImGui::MenuItem("Open"))
+                if (ImGui::MenuItem("Open", "Ctrl+O/Command+O"))
                 {
-                    Application::get().openFile();
-                }
-                */
-
-                if (ImGui::MenuItem("Save"))
-                {
-                    Serializer serializer;
-
-                    auto audioLibrary = static_cast<AudioLibraryLayer *>(Application::instance().getLayer("AudioLibraryLayer"));
-                    if (audioLibrary)
+                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    if (projectLayer)
                     {
-                        serializer.setAudioFiles(audioLibrary->audioFiles());
+                        projectLayer->openProject();
                     }
-
-                    serializer.serialize("test.soundstation");
                 }
 
-                if (ImGui::MenuItem("Quit"))
+                if (ImGui::MenuItem("Save", "Ctrl+S/Command+S"))
+                {
+                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    if (projectLayer)
+                    {
+                        projectLayer->saveProject();
+                    }
+                }
+
+                if (ImGui::MenuItem("Save As", "Ctrl+Shift+S/Command+Shift+S"))
+                {
+                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    if (projectLayer)
+                    {
+                        projectLayer->saveProjectAs();
+                    }
+                }
+
+                if (ImGui::MenuItem("Project Settings"))
+                {
+                    auto projectLayer = static_cast<ProjectLayer *>(Application::instance().getLayer("ProjectLayer"));
+                    if (projectLayer)
+                    {
+                        projectLayer->show();
+                    }
+                }
+
+                if (ImGui::MenuItem("Quit", "Ctrl+Q/Command+Q"))
                 {
                     Application::instance().close();
                 }
