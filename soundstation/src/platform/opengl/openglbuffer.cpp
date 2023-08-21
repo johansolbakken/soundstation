@@ -1,6 +1,5 @@
+#include "pch.h"
 #include "openglbuffer.h"
-
-#include "core/assert.h"
 
 #include "platform/opengl/openglerror.h"
 

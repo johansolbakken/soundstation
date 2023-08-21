@@ -1,11 +1,9 @@
+#include "pch.h"
 #include "openglshader.h"
 
 #include <glad/glad.h>
 
 #include "platform/opengl/openglerror.h"
-
-#include <fstream>
-#include <filesystem>
 
 #include <glm/gtc/type_ptr.hpp>
 

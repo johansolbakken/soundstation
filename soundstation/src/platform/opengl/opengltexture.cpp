@@ -1,9 +1,8 @@
+#include "pch.h"
 #include "opengltexture.h"
 
 #include <glad/glad.h>
 #include <stb_image.h>
-
-#include "core/assert.h"
 
 #include "platform/opengl/openglerror.h"
 

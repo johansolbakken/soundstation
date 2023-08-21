@@ -1,9 +1,8 @@
+#include "pch.h"
 #include "openglcontext.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-#include "core/assert.h"
 
 #include "platform/opengl/openglerror.h"
 
