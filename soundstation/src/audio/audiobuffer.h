@@ -4,12 +4,9 @@
 
 namespace SoundStation
 {
-
     enum class AudioBufferFormat
     {
-        Signed16Bit,	
-        Signed24Bit,
-        Signed32Bit,
+        Unknown,
         Float32Bit
     };
 
@@ -41,8 +38,7 @@ namespace SoundStation
         float *m_data = nullptr;
         size_t m_size = 0;
         float m_sampleRate = 0.0f;
-        AudioBufferFormat m_format = AudioBufferFormat::Float32Bit;
+        AudioBufferFormat m_format = AudioBufferFormat::Unknown;
         size_t m_channels = 0;
     };
-
 };

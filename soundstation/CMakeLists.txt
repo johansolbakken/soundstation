@@ -7,15 +7,17 @@ project(soundstation)
 set(CMAKE_CXX_STANDARD 23)
 
 if(APPLE)
-    set(PLATFORM_SOURCE 
+    add_library(soundstation_platform 
         src/platform/macos/macosaudiodevice.h src/platform/macos/macosaudiodevice.mm
         src/platform/macos/macosaudiodevicelist.h src/platform/macos/macosaudiodevicelist.mm
         src/platform/macos/macosplatform.mm)
-    set(PLATFORM_LIBS "-framework CoreAudio" "-framework AudioToolbox" "-framework AudioUnit" "-framework CoreServices")
+    target_include_directories(soundstation_platform PUBLIC src vendor/fmt/include)
+    target_link_libraries(soundstation_platform PUBLIC "-framework CoreAudio" "-framework AudioToolbox" "-framework AudioUnit" "-framework CoreServices")
 endif()
 
 add_executable(soundstation 
     src/main.cpp
+    src/pch.cpp
     
     src/core/log.h src/core/log.cpp
     src/core/assert.h
@@ -49,7 +51,6 @@ add_executable(soundstation
     src/platform/opengl/openglshader.h src/platform/opengl/openglshader.cpp
     src/platform/opengl/openglframebuffer.h src/platform/opengl/openglframebuffer.cpp
     src/platform/opengl/openglbuffer.h src/platform/opengl/openglbuffer.cpp
-    ${PLATFORM_SOURCE}
 
     src/layers/playerlayer.h src/layers/playerlayer.cpp
     src/layers/audiodevicemanagerlayer.h src/layers/audiodevicemanagerlayer.cpp
@@ -63,6 +64,8 @@ add_executable(soundstation
     
     src/imgui/buildimgui.cpp
     src/imgui/imguilayer.h src/imgui/imguilayer.cpp)
+
+target_precompile_headers(soundstation PUBLIC src/pch.h)
 
 target_include_directories(soundstation 
     PUBLIC 
@@ -88,7 +91,7 @@ target_link_libraries(soundstation
         sndfile
         nlohmann_json::nlohmann_json
         freetype
-        ${PLATFORM_LIBS}
+        soundstation_platform
         )
 
 if(APPLE)

@@ -1,7 +1,5 @@
 #include "audiobuffer.h"
 
-#include "core/log.h"
-
 namespace SoundStation
 {
     AudioBuffer::AudioBuffer(float *data, size_t size, float sampleRate, AudioBufferFormat format, size_t channels)
@@ -26,8 +24,6 @@ namespace SoundStation
             memcpy(data, m_data, m_size * sizeof(float));
             return std::make_shared<AudioBuffer>(data, size, sampleRate, format, channels);
         }
-
-        SS_LOG_INFO(fmt::format("Converting sample rate from {} to {}", m_sampleRate, newSampleRate));
 
         float ratio = m_sampleRate / newSampleRate;
         size_t newSize = size_t(m_size / ratio);
