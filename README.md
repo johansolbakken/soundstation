@@ -23,7 +23,7 @@ cd soundstation
 ./soundstation
 ~~~
 
-![](images/v3.png)
+![](images/v4fader.png)
 
 # Plan
 

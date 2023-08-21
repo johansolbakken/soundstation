@@ -31,7 +31,6 @@ namespace SoundStation
 
     private:
         std::shared_ptr<AudioBuffer> m_outputBuffer;
-        uint32_t m_currentFrame = 0;
         std::shared_ptr<Fader> m_fader;
         std::shared_ptr<AudioFile> m_audioFile;
     };

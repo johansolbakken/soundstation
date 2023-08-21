@@ -86,36 +86,37 @@ namespace SoundStation
 
     void MixerLayer::audioCallback(float *left, float *right, uint32_t frames)
     {
-        if (!m_audioFile)
+        for (int i = 0; i < frames; ++i)
         {
-            for (int i = 0; i < frames; ++i)
-            {
-                left[i] = 0.0f;
-                right[i] = 0.0f;
-            }
-            return;
+            left[i] = 0.0f;
+            right[i] = 0.0f;
         }
 
         // Input -> mixer
-        auto inputData = reinterpret_cast<float(*)[2]>(m_audioFile->audioBuffer()->data());
-        auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
-        for (int i = 0; i < frames; ++i)
+        auto toolbarLayer = Application::getLayer<ToolbarLayer>();
+        if (m_audioFile && toolbarLayer && toolbarLayer->isPlaying())
         {
-            if (m_currentFrame >= m_audioFile->audioBuffer()->frames())
+            auto inputData = reinterpret_cast<float(*)[2]>(m_audioFile->audioBuffer()->data());
+            auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
+            for (int i = 0; i < frames; ++i)
             {
-                outputData[i][0] = 0.0f;
-                outputData[i][1] = 0.0f;
-                continue;
-            }
+                if (toolbarLayer->cursor() >= m_audioFile->audioBuffer()->frames())
+                {
+                    outputData[i][0] = 0.0f;
+                    outputData[i][1] = 0.0f;
+                    continue;
+                }
 
-            outputData[i][0] = inputData[m_currentFrame][0];
-            outputData[i][1] = inputData[m_currentFrame][1];
-            m_currentFrame++;
+                outputData[i][0] = inputData[toolbarLayer->cursor()][0];
+                outputData[i][1] = inputData[toolbarLayer->cursor()][1];
+                toolbarLayer->incrementCursor();
+            }
         }
 
         m_fader->process(m_outputBuffer->data(), m_outputBuffer->size());
 
         // Output -> device
+        auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
         for (int i = 0; i < frames; ++i)
         {
             const float *sample = outputData[i];
