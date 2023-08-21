@@ -13,7 +13,6 @@ namespace SoundStation
         json["version"] = "0.0.1";
 
         json["project"]["name"] = m_project.name();
-        json["project"]["path"] = m_project.path();
         json["project"]["sampleRate"] = m_project.sampleRate();
 
         json["audioFiles"] = nlohmann::json::array();
@@ -37,7 +36,7 @@ namespace SoundStation
         file.close();
 
         m_project.setName(json["project"]["name"]);
-        m_project.setPath(json["project"]["path"]);
+        m_project.setPath(filename);
         m_project.setSampleRate(json["project"]["sampleRate"]);
 
         m_audioFiles.clear();
@@ -45,7 +44,7 @@ namespace SoundStation
             m_audioFiles.push_back(audioFile["filename"]);
     }
 
-    const std::vector<std::shared_ptr<AudioFile>> &Serializer::audioFiles() const
+    std::vector<std::shared_ptr<AudioFile>> Serializer::audioFiles() const
     {
         std::vector<std::shared_ptr<AudioFile>> audioFiles;
         for (auto &audioFile : m_audioFiles)

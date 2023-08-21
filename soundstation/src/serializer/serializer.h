@@ -18,7 +18,7 @@ namespace SoundStation
         void serialize(const std::string &filename);
         void deserialize(const std::string &filename);
 
-        const std::vector<std::shared_ptr<AudioFile>> &audioFiles() const;
+        std::vector<std::shared_ptr<AudioFile>> audioFiles() const;
         void setAudioFiles(const std::vector<std::shared_ptr<AudioFile>> &audioFiles);
 
         const Project &project() const { return m_project; }

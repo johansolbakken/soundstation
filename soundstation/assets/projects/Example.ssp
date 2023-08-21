@@ -1,0 +1,16 @@
+{
+    "audioFiles": [
+        {
+            "filename": "assets/sound/Lizza Bizzaz.aif"
+        },
+        {
+            "filename": "assets/sound/informasjones.mp3"
+        }
+    ],
+    "project": {
+        "name": "Example",
+        "sampleRate": 44100
+    },
+    "title": "Sound Station Project",
+    "version": "0.0.1"
+}
