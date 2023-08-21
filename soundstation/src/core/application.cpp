@@ -53,7 +53,9 @@ namespace SoundStation
         m_audioDeviceManagerLayer = new AudioDeviceManagerLayer();
         pushLayer(m_audioDeviceManagerLayer);
 
-        pushLayer(new ProjectLayer());
+        m_projectLayer = new ProjectLayer();
+        pushLayer(m_projectLayer);
+
         pushLayer(new PlayerLayer());
         pushLayer(new AudioLibraryLayer());
         pushLayer(new FileReaderWriterLayer());
