@@ -54,6 +54,7 @@ add_executable(soundstation
     src/layers/toolbarlayer.h src/layers/toolbarlayer.cpp
     src/layers/audiolibrarylayer.h src/layers/audiolibrarylayer.cpp
     src/layers/menubarlayer.h src/layers/menubarlayer.cpp
+    src/layers/projectlayer.h src/layers/projectlayer.cpp
 
     src/serializer/serializer.h src/serializer/serializer.cpp
     

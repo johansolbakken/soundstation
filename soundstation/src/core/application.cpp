@@ -15,6 +15,7 @@
 #include "layers/toolbarlayer.h"
 #include "layers/audiolibrarylayer.h"
 #include "layers/menubarlayer.h"
+#include "layers/projectlayer.h"
 
 namespace SoundStation
 {
@@ -52,6 +53,7 @@ namespace SoundStation
         m_audioDeviceManagerLayer = new AudioDeviceManagerLayer();
         pushLayer(m_audioDeviceManagerLayer);
 
+        pushLayer(new ProjectLayer());
         pushLayer(new PlayerLayer());
         pushLayer(new AudioLibraryLayer());
         pushLayer(new FileReaderWriterLayer());
