@@ -35,6 +35,8 @@ namespace SoundStation
         static void initSubsystem();
         static void shutdownSubsystem();
 
+        bool shouldClose() const;
+
     private:
         GLFWwindow *m_window;
         WindowSpecification m_spec;

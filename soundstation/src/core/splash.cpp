@@ -73,7 +73,9 @@ namespace SoundStation
 
             ImGuiLayer layer;
 
-            while (audioDevice->isPlaying())
+            bool escapePressed = false;
+
+            while (audioDevice->isPlaying() && !m_window->shouldClose() && !escapePressed)
             {
                 RenderCommand::setClearColor({0.1f, 0.1f, 0.1f, 1.0f});
                 RenderCommand::clear();
@@ -101,6 +103,12 @@ namespace SoundStation
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.5f, 0.5f, 0.5f, 1.0));
                 ImGui::Text("Playing %s", filename.c_str());
                 ImGui::PopStyleColor();
+
+                if (ImGui::IsKeyPressed(ImGuiKey_Escape))
+                {
+                    escapePressed = true;
+                }
+
                 ImGui::End();
 
                 layer.end();
@@ -112,5 +120,8 @@ namespace SoundStation
         }
 
         Renderer::shutdown();
+
+        if (m_window->shouldClose())
+            exit(0);
     }
 }
