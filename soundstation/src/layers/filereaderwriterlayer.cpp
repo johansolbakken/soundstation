@@ -9,7 +9,7 @@
 namespace SoundStation
 {
     FileReaderWriterLayer::FileReaderWriterLayer()
-        : Layer("FileReaderWriterLayer")
+        : Layer(staticName())
     {
         memset(m_filename, 0, 1024);
     }

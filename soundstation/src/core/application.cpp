@@ -121,7 +121,7 @@ namespace SoundStation
         layer->onAttach();
     }
 
-    Layer *Application::getLayer(const std::string &name)
+    Layer *Application::getLayerPtr(const std::string &name)
     {
         for (auto layer : m_layerStack)
         {

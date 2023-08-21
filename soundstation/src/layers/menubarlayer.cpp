@@ -13,7 +13,7 @@ namespace SoundStation
 {
 
     MenuBarLayer::MenuBarLayer()
-        : Layer("MenuBarLayer")
+        : Layer(staticName())
     {
     }
 
@@ -35,43 +35,37 @@ namespace SoundStation
         {
             if (ImGui::BeginMenu("File"))
             {
-                if (ImGui::MenuItem("Open", "Ctrl+O/Command+O"))
+                if (ImGui::MenuItem("New", "Cmd+N"))
                 {
-                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
-                    if (projectLayer)
-                    {
+                    if (auto projectLayer = Application::getLayer<ProjectLayer>())
+                        projectLayer->newProject();
+                }
+
+                if (ImGui::MenuItem("Open", "Cmd+O"))
+                {
+                    if (auto projectLayer = Application::getLayer<ProjectLayer>())
                         projectLayer->openProject();
-                    }
                 }
 
-                if (ImGui::MenuItem("Save", "Ctrl+S/Command+S"))
+                if (ImGui::MenuItem("Save", "Cmd+S"))
                 {
-                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
-                    if (projectLayer)
-                    {
+                    if (auto projectLayer = Application::getLayer<ProjectLayer>())
                         projectLayer->saveProject();
-                    }
                 }
 
-                if (ImGui::MenuItem("Save As", "Ctrl+Shift+S/Command+Shift+S"))
+                if (ImGui::MenuItem("Save As", "Cmd+Shift+S"))
                 {
-                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
-                    if (projectLayer)
-                    {
+                    if (auto projectLayer = Application::getLayer<ProjectLayer>())
                         projectLayer->saveProjectAs();
-                    }
                 }
 
                 if (ImGui::MenuItem("Project Settings"))
                 {
-                    auto projectLayer = Application::instance().getLayer<ProjectLayer>();
-                    if (projectLayer)
-                    {
+                    if (auto projectLayer = Application::getLayer<ProjectLayer>())
                         projectLayer->show();
-                    }
                 }
 
-                if (ImGui::MenuItem("Quit", "Ctrl+Q/Command+Q"))
+                if (ImGui::MenuItem("Quit", "Cmd+Q"))
                 {
                     Application::instance().close();
                 }
@@ -83,8 +77,7 @@ namespace SoundStation
             {
                 if (ImGui::MenuItem("Audio Device Manager"))
                 {
-                    auto audioDeviceManager = Application::instance().getLayer<AudioDeviceManagerLayer>();
-                    if (audioDeviceManager)
+                    if (auto audioDeviceManager = Application::getLayer<AudioDeviceManagerLayer>())
                         audioDeviceManager->show();
                 }
 
@@ -95,8 +88,7 @@ namespace SoundStation
             {
                 if (ImGui::MenuItem("File Reader Writer"))
                 {
-                    auto fileReaderWriter = Application::instance().getLayer<FileReaderWriterLayer>();
-                    if (fileReaderWriter)
+                    if (auto fileReaderWriter = Application::getLayer<FileReaderWriterLayer>())
                         fileReaderWriter->show();
                 }
 

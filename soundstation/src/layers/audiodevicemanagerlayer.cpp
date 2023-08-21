@@ -5,12 +5,13 @@
 #include "core/log.h"
 #include "core/application.h"
 
+// todo: maybe delete?
 #include "layers/audiolibrarylayer.h"
 
 namespace SoundStation
 {
     AudioDeviceManagerLayer::AudioDeviceManagerLayer()
-        : Layer(AudioDeviceManagerLayer::staticName())
+        : Layer(staticName())
     {
         m_audioDeviceList = AudioDeviceList::create();
     }

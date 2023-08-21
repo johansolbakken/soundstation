@@ -39,13 +39,13 @@ namespace SoundStation
 
         void pushLayer(Layer *layer);
 
-        Layer *getLayer(const std::string &name);
+        Layer *getLayerPtr(const std::string &name);
 
         template <typename T>
-        requires HasStaticName<T>
-        T *getLayer()
+            requires HasStaticName<T>
+        static T *getLayer()
         {
-            return static_cast<T *>(getLayer(T::staticName()));
+            return static_cast<T *>(instance().getLayerPtr(T::staticName()));
         }
 
     private:

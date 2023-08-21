@@ -7,10 +7,11 @@
 
 #include "layers/playerlayer.h"
 
-namespace SoundStation{
+namespace SoundStation
+{
 
     AudioLibraryLayer::AudioLibraryLayer()
-    : Layer("AudioLibraryLayer")
+        : Layer(staticName())
     {
     }
 
@@ -20,23 +21,18 @@ namespace SoundStation{
         ImGui::Text("Audio Library");
         ImGui::Separator();
 
-        for (auto& file : m_audioFiles)
+        for (auto &file : m_audioFiles)
         {
             if (ImGui::Selectable(file->filename().c_str()))
             {
-                
             }
 
             if (ImGui::BeginPopupContextItem())
             {
                 if (ImGui::Selectable("Open in Player"))
                 {
-                    auto playerLayer = static_cast<PlayerLayer*>(Application::instance().getLayer("PlayerLayer"));
-                    if (playerLayer) {
+                    if (auto playerLayer = Application::getLayer<PlayerLayer>())
                         playerLayer->setAudioFile(file);
-                    } else {
-                        SS_LOG_ERROR("Could not find PlayerLayer");
-                    }
                 }
 
                 ImGui::EndPopup();

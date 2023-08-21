@@ -11,13 +11,11 @@ namespace SoundStation
         ProjectLayer();
         ~ProjectLayer() = default;
 
-        void onAttach() override;
-        void onDetach() override;
-        void onUpdate(Timestep t) override;
         void onUIRender() override;
 
         const Project &project() const { return m_project; }
 
+        void newProject();
         void saveProject();
         void saveProjectAs();
         void openProject();

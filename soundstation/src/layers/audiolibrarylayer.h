@@ -19,6 +19,9 @@ namespace SoundStation
 
         std::vector<std::shared_ptr<AudioFile>> audioFiles() const { return m_audioFiles; }
         void setAudioFiles(const std::vector<std::shared_ptr<AudioFile>> &audioFiles) { m_audioFiles = audioFiles; }
+        void clearAudioFiles() { m_audioFiles.clear(); }
+
+        static std::string staticName() { return "AudioLibraryLayer"; }
 
     private:
         std::vector<std::shared_ptr<AudioFile>> m_audioFiles;

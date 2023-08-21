@@ -17,18 +17,6 @@ namespace SoundStation
     {
     }
 
-    void ProjectLayer::onAttach()
-    {
-    }
-
-    void ProjectLayer::onDetach()
-    {
-    }
-
-    void ProjectLayer::onUpdate(Timestep t)
-    {
-    }
-
     void ProjectLayer::onUIRender()
     {
         if (!m_open)
@@ -61,6 +49,18 @@ namespace SoundStation
         ImGui::End();
     }
 
+    void ProjectLayer::newProject()
+    {
+        m_project = Project();
+        memset(m_projectName, 0, sizeof(m_projectName));
+        strcpy(m_projectName, m_project.name().c_str());
+
+        m_sampleRate = m_project.sampleRate();
+
+        if (auto audioLibrary = Application::instance().getLayer<AudioLibraryLayer>())
+            audioLibrary->clearAudioFiles();
+    }
+
     void ProjectLayer::saveProject()
     {
         if (m_project.path().empty())
@@ -73,11 +73,8 @@ namespace SoundStation
 
         serializer.setProject(m_project);
 
-        auto audioLibrary = static_cast<AudioLibraryLayer *>(Application::instance().getLayer("AudioLibraryLayer"));
-        if (audioLibrary)
-        {
+        if (auto audioLibrary = Application::instance().getLayer<AudioLibraryLayer>())
             serializer.setAudioFiles(audioLibrary->audioFiles());
-        }
 
         serializer.serialize(m_project.path());
     }
@@ -107,11 +104,7 @@ namespace SoundStation
 
         m_sampleRate = m_project.sampleRate();
 
-        auto audioLibrary = static_cast<AudioLibraryLayer *>(Application::instance().getLayer("AudioLibraryLayer"));
-        if (audioLibrary)
-        {
+        if (auto audioLibrary = Application::getLayer<AudioLibraryLayer>())
             audioLibrary->setAudioFiles(serializer.audioFiles());
-        }
     }
-
 }

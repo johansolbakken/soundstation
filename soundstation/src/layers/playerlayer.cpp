@@ -12,7 +12,7 @@
 namespace SoundStation
 {
     PlayerLayer::PlayerLayer()
-        : Layer("PlayerLayer"),
+        : Layer(staticName()),
           m_noteImage("assets/images/note.jpeg"),
           m_playImage("assets/images/play.png"),
           m_pauseImage("assets/images/pause.png")

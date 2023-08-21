@@ -17,6 +17,8 @@ namespace SoundStation
 
         void setAudioFile(const std::shared_ptr<AudioFile>& file);
 
+        static std::string staticName() { return "PlayerLayer"; }
+
     private:
         void play();
         void pause();
