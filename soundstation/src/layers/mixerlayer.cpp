@@ -55,8 +55,18 @@ namespace SoundStation
         ImGui::BeginGroup();
 
         float level = m_fader->level();
-        std::string levelStr = level == 0 ? "-inf db" : std::to_string(levelToDB(level)) + " dB";
-        if (ImGui::VSliderFloat("Level", {40, 300}, &level, 0.0f, 1.0f, levelStr.c_str()))
+        std::stringstream ss;
+        if (level == 0.0f)
+        {
+            ss << "-inf dB";
+        }
+        else
+        {
+            ss << std::fixed << std::setprecision(1);
+            ss << levelToDB(level) << " dB";
+        }
+        std::string levelString = ss.str();
+        if (ImGui::VSliderFloat("Level", {50, 300}, &level, 0.0f, 1.0f, levelString.c_str()))
             m_fader->setLevel(level);
         ImGui::Text("Main Out");
 
