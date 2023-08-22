@@ -19,10 +19,9 @@ namespace SoundStation
         m_audioFile = AudioFile::create("assets/sound/Lizza Bizzaz.aif");
         m_fader = Fader::create(1.0f);
 
+        float sampleRate = Application::instance().currentProject().sampleRate();
         auto audioDevice = Application::instance().currentAudioDevice();
-
         size_t size = audioDevice->bufferSize();
-        float sampleRate = audioDevice->sampleRate();
         uint32_t channels = 2;
         AudioBufferFormat format = AudioBufferFormat::Float32Bit;
         float *data = new float[size * channels];
@@ -117,9 +116,19 @@ namespace SoundStation
         m_fader->process(m_outputBuffer->data(), int(m_outputBuffer->size()));
 
         // Output -> device
-        for (int i = 0; i < frames; ++i)
+        auto audioDevice = Application::instance().currentAudioDevice();
+        auto adSampleRate = audioDevice->sampleRate();
+        auto bufferSampleRate = m_outputBuffer->sampleRate();
+        /*for (int i = 0; i < frames; ++i)
         {
             const float *sample = outputData[i];
+            left[i] = sample[0];
+            right[i] = sample[1];
+        }*/
+        for (int i = 0; i < frames; ++i)
+        {
+            float convertedFrame = (float)i * (bufferSampleRate / adSampleRate);
+            const float *sample = outputData[int(convertedFrame)];
             left[i] = sample[0];
             right[i] = sample[1];
         }
