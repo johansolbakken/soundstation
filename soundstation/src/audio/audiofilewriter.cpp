@@ -10,7 +10,7 @@ namespace SoundStation
         SS_LOG_INFO(fmt::format("Writing to {}", filename));
 
         SF_INFO info;
-        info.channels = buffer->channels();
+        info.channels = int(buffer->channels());
         info.samplerate = buffer->sampleRate();
         info.format = static_cast<int>(format) | SF_FORMAT_FLOAT;
 

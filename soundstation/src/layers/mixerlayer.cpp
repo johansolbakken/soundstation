@@ -113,7 +113,7 @@ namespace SoundStation
             }
         }
 
-        m_fader->process(m_outputBuffer->data(), m_outputBuffer->size());
+        m_fader->process(m_outputBuffer->data(), int(m_outputBuffer->size()));
 
         // Output -> device
         auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());

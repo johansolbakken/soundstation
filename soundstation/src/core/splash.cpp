@@ -54,7 +54,7 @@ namespace SoundStation
             ogre->load("assets/images/ogre.png");
             auto shader = Shader::create("assets/shaders/texture.vert", "assets/shaders/texture.frag");
 
-            srand(Time::systemTimeSeconds());
+            srand(int(Time::systemTimeSeconds()));
             //auto audioFile = AudioFile::create(audioFiles[rand() % audioFiles.size()]);
             //auto buffer = audioFile->audioBuffer()->convertSampleRate(audioDevice->sampleRate());
             //audioDevice->setAudioBuffer(buffer);
