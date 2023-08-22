@@ -86,10 +86,11 @@ namespace SoundStation
 
     void MixerLayer::audioCallback(float *left, float *right, uint32_t frames)
     {
+        auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
         for (int i = 0; i < frames; ++i)
         {
-            left[i] = 0.0f;
-            right[i] = 0.0f;
+            outputData[i][0] = 0.0f;
+            outputData[i][1] = 0.0f;
         }
 
         // Input -> mixer
@@ -116,7 +117,6 @@ namespace SoundStation
         m_fader->process(m_outputBuffer->data(), int(m_outputBuffer->size()));
 
         // Output -> device
-        auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
         for (int i = 0; i < frames; ++i)
         {
             const float *sample = outputData[i];
