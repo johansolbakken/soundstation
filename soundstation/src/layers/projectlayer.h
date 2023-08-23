@@ -28,8 +28,11 @@ namespace SoundStation
         char m_projectName[1024] = "Untitled";
         bool m_projectNameChanged = false;
 
-        uint32_t m_sampleRate = 44100;
+        uint32_t m_sampleRate = 48000;
         bool m_sampleRateChanged = false;
+
+        uint32_t m_bufferSize = 1024;
+        bool m_bufferSizeChanged = false;
 
         Project m_project;
         bool m_open = false;

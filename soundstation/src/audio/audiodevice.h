@@ -2,7 +2,8 @@
 
 namespace SoundStation
 {
-    using AudioCallback = std::function<void(float *left, float *right, uint32_t frames)>;
+    // dataSize = frames * channels
+    using AudioCallback = std::function<void(float *data, uint32_t frames, uint32_t channels, float sampleRate)>;
 
     class AudioDevice
     {

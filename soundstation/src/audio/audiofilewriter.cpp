@@ -40,8 +40,6 @@ namespace SoundStation
 
         float *data = new float[info.frames * info.channels];
         sf_count_t count = sf_read_float(file, data, info.frames * info.channels);
-        SS_LOG_INFO(fmt::format("Read {} frames compared to {} frames in file with {} channels becomes {}", count, info.frames, info.channels, info.frames * info.channels));
-        //SS_ASSERT(count == info.frames * info.channels, "Failed to read from file");
 
         size_t bufferSize = info.frames * info.channels;
 

@@ -22,7 +22,17 @@ namespace SoundStation
 
         const std::string &name() const override { return m_name; }
         float sampleRate() const override { return m_sampleRate; }
-        size_t channels() const override { return m_channels; }
+        size_t channels() const override
+        {
+            static bool first = true;
+            if (first)
+            {
+                SS_LOG_INFO("MacOSAudioDevice::channels() returning 2 hardcoded");
+                first = false;
+            }
+
+            return m_channels;
+        }
         float bufferSize() const override { return m_bufferSize; }
 
         uint32_t id() const override { return m_deviceID; }
@@ -34,7 +44,7 @@ namespace SoundStation
 
         std::string m_name = "Uninitialized";
         float m_sampleRate = 0;
-        size_t m_channels = 0;
+        size_t m_channels = 2;
         float m_bufferSize = 0;
 
         AudioDeviceID m_deviceID = 0;

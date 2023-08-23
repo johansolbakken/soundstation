@@ -27,7 +27,7 @@ namespace SoundStation
     private:
         void renderFader(const std::string &name, std::shared_ptr<Fader> fader);
 
-        void audioCallback(float *left, float *right, uint32_t frames);
+        void audioCallback(float *data, uint32_t frames, uint32_t channels, float sampleRate);
 
     private:
         std::shared_ptr<AudioBuffer> m_outputBuffer;

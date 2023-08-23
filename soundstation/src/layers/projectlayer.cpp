@@ -48,6 +48,16 @@ namespace SoundStation
             m_project.setSampleRate(m_sampleRate);
         }
 
+        if (ImGui::InputInt("Buffer Size", (int *)&m_bufferSize, 1, 1024))
+        {
+            m_bufferSizeChanged = true;
+        }
+        else if (m_bufferSizeChanged && ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Enter)))
+        {
+            m_bufferSizeChanged = false;
+            m_project.setBufferSize(m_bufferSize);
+        }
+
         ImGui::End();
     }
 

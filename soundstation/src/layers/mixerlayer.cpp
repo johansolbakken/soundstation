@@ -16,12 +16,11 @@ namespace SoundStation
 
     void MixerLayer::onAttach()
     {
-        m_audioFile = AudioFile::create("assets/sound/Lizza Bizzaz.aif");
         m_fader = Fader::create(1.0f);
 
-        float sampleRate = Application::instance().currentProject().sampleRate();
-        auto audioDevice = Application::instance().currentAudioDevice();
-        size_t size = audioDevice->bufferSize();
+        auto project = Application::instance().currentProject();
+        uint32_t sampleRate = project.sampleRate();
+        size_t size = project.bufferSize();
         uint32_t channels = 2;
         AudioBufferFormat format = AudioBufferFormat::Float32Bit;
         float *data = new float[size * channels];
@@ -29,10 +28,10 @@ namespace SoundStation
             data[i] = 0.0f;
         m_outputBuffer = AudioBuffer::create(data, size, sampleRate, format, channels);
 
-        auto newBuffer = m_audioFile->audioBuffer()->convertSampleRate(sampleRate);
-        m_audioFile->setAudioBuffer(newBuffer);
+        // TODO: import audio in project sample rate
+        m_audioFile = AudioFile::create("assets/sound/Lizza Bizzaz.aif");
 
-        Application::instance().currentAudioDevice()->setAudioCallback(std::bind(&MixerLayer::audioCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+        Application::instance().currentAudioDevice()->setAudioCallback(std::bind(&MixerLayer::audioCallback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
     }
 
     void MixerLayer::onDetach()
@@ -83,22 +82,67 @@ namespace SoundStation
         ImGui::End();
     }
 
-    void MixerLayer::audioCallback(float *left, float *right, uint32_t frames)
+    void MixerLayer::audioCallback(float *data, uint32_t frames, uint32_t channels, float sampleRate)
     {
-        auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
-        for (int i = 0; i < frames; ++i)
+        SS_ASSERT(channels == 2, "Only stereo supported");
+        SS_ASSERT(m_outputBuffer->channels() == 2, "Only stereo supported");
+
+        // bufferSize = frames * channels
+
+        // Clear output buffer
         {
-            outputData[i][0] = 0.0f;
-            outputData[i][1] = 0.0f;
+            for (int i = 0; i < m_outputBuffer->size(); i++)
+                m_outputBuffer->data()[i] = 0.0f;
         }
 
+        // Adding audio file to output buffer
+        {
+            auto toolbarLayer = Application::getLayer<ToolbarLayer>();
+            if (m_audioFile && toolbarLayer && toolbarLayer->isPlaying())
+            {
+                SS_ASSERT(m_audioFile->audioBuffer()->channels() == 2, "Only stereo supported");
+
+                auto bufferData = m_outputBuffer->data();
+                auto bufferFrames = m_outputBuffer->frames();
+                auto bufferChannels = m_outputBuffer->channels();
+                auto bufferSampleRate = m_outputBuffer->sampleRate();
+
+                auto audioData = m_audioFile->audioBuffer()->data();
+                auto audioFrames = m_audioFile->audioBuffer()->frames();
+                auto audioChannels = m_audioFile->audioBuffer()->channels();
+                auto audioSampleRate = m_audioFile->audioBuffer()->sampleRate();
+
+                for (int i = 0; i < bufferFrames; i++)
+                {
+                    if (toolbarLayer->cursor() >= audioFrames)
+                        break;
+                    bufferData[i] += audioData[toolbarLayer->cursor()];
+                    toolbarLayer->incrementCursor();
+                }
+            }
+        }
+
+        // Resample output buffer to data
+        {
+            SS_ASSERT(frames == m_outputBuffer->frames(), "Frames must be equal");
+
+            auto bufferData = m_outputBuffer->data();
+            auto bufferFrames = m_outputBuffer->frames();
+            auto bufferChannels = m_outputBuffer->channels();
+            auto bufferSampleRate = m_outputBuffer->sampleRate();
+            for (int i = 0; i < frames * channels; i++)
+            {   
+                data[i] = bufferData[i];
+            }
+        }
+
+        /*
         // Input -> mixer
         auto toolbarLayer = Application::getLayer<ToolbarLayer>();
         if (m_audioFile && toolbarLayer && toolbarLayer->isPlaying())
         {
             auto inputData = reinterpret_cast<float(*)[2]>(m_audioFile->audioBuffer()->data());
-            auto outputData = reinterpret_cast<float(*)[2]>(m_outputBuffer->data());
-            for (int i = 0; i < frames; ++i)
+            for (int i = 0; i < outputDataFrames; ++i)
             {
                 if (toolbarLayer->cursor() >= m_audioFile->audioBuffer()->frames())
                 {
@@ -117,20 +161,26 @@ namespace SoundStation
 
         // Output -> device
         auto audioDevice = Application::instance().currentAudioDevice();
-        auto adSampleRate = audioDevice->sampleRate();
-        auto bufferSampleRate = m_outputBuffer->sampleRate();
-        /*for (int i = 0; i < frames; ++i)
-        {
-            const float *sample = outputData[i];
-            left[i] = sample[0];
-            right[i] = sample[1];
-        }*/
+        auto deviceSampleRate = audioDevice->sampleRate();
+
+        auto sizeRatio = static_cast<float>(m_outputBuffer->frames()) / static_cast<float>(frames);
+
         for (int i = 0; i < frames; ++i)
         {
-            float convertedFrame = (float)i * (bufferSampleRate / adSampleRate);
-            const float *sample = outputData[int(convertedFrame)];
-            left[i] = sample[0];
-            right[i] = sample[1];
-        }
+            // Calculate the position in the output buffer
+            float position = static_cast<float>(i) * sizeRatio;
+
+            // Linear interpolation (you can use more advanced techniques)
+            int floorPos = static_cast<int>(std::floor(position));
+            int ceilPos = static_cast<int>(std::ceil(position));
+            float fraction = position - floorPos;
+
+            // Interpolate between two samples in the output buffer
+            const float *sample1 = outputData[floorPos];
+            const float *sample2 = outputData[ceilPos];
+
+            left[i] = (1.0f - fraction) * sample1[0] + fraction * sample2[0];
+            right[i] = (1.0f - fraction) * sample1[1] + fraction * sample2[1];
+        }*/
     }
 }

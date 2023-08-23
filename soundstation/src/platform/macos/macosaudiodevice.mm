@@ -14,6 +14,7 @@ namespace SoundStation {
                              UInt32 inNumberFrames,
                              AudioBufferList* ioData) {
         MacOSAudioDevice* audioDevice = static_cast<MacOSAudioDevice*>(inRefCon);
+
         float* outputBufferLeft = static_cast<float*>(ioData->mBuffers[0].mData);
         float* outputBufferRight = static_cast<float*>(ioData->mBuffers[1].mData);
 
@@ -26,16 +27,24 @@ namespace SoundStation {
             return noErr;
         }
 
-        audioDevice->m_callback(outputBufferLeft, outputBufferRight, inNumberFrames);
+        float* buffer = new float[inNumberFrames * ioData->mNumberBuffers];
+        memset(buffer, 0, sizeof(float) * inNumberFrames * ioData->mNumberBuffers);
+        audioDevice->m_callback(buffer, inNumberFrames, ioData->mNumberBuffers, audioDevice->m_sampleRate);
+        for (UInt32 frame = 0; frame < inNumberFrames; ++frame) {
+            for (uint32_t channel = 0; channel < ioData->mNumberBuffers; ++channel) {
+                float* outputBuffer = static_cast<float*>(ioData->mBuffers[channel].mData);
+                outputBuffer[frame] = buffer[frame * ioData->mNumberBuffers + channel];
+            }
+        }
+
         return noErr;
     }
 
 
     MacOSAudioDevice::MacOSAudioDevice(uint32_t deviceId) {
-        m_callback = [](float *left, float *right, uint32_t frames) { 
-            for (uint32_t i = 0; i < frames; ++i) {
-                left[i] = 0.0f;
-                right[i] = 0.0f;
+        m_callback = [](float *data, uint32_t frames, uint32_t channels, float sampleRate) { 
+            for (uint32_t i = 0; i < frames * channels; ++i) {
+                data[i] = 0.0f;
             }
         };
 
