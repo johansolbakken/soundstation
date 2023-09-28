@@ -13,6 +13,7 @@ namespace SoundStation {
                              UInt32 inBusNumber,
                              UInt32 inNumberFrames,
                              AudioBufferList* ioData) {
+        SS_ASSERT(ioData->mNumberBuffers == 2, "Expected 2 buffers");
         MacOSAudioDevice* audioDevice = static_cast<MacOSAudioDevice*>(inRefCon);
 
         float* outputBufferLeft = static_cast<float*>(ioData->mBuffers[0].mData);

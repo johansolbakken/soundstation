@@ -112,18 +112,21 @@ namespace SoundStation
                 auto audioChannels = m_audioFile->audioBuffer()->channels();
                 auto audioSampleRate = m_audioFile->audioBuffer()->sampleRate();
 
+                auto sampleRatio = static_cast<float>(audioSampleRate) / static_cast<float>(bufferSampleRate);
+
                 for (int i = 0; i < bufferFrames; i++)
                 {
-                    if (toolbarLayer->cursor() >= audioFrames)
-                        break;
-                    bufferData[i] += audioData[toolbarLayer->cursor()];
-                    toolbarLayer->incrementCursor();
+                    // if (toolbarLayer->cursor() >= audioFrames)
+                    //     break;
+                    // bufferData[i] += audioData[toolbarLayer->cursor()];
+                    // toolbarLayer->incrementCursor();
                 }
             }
         }
 
         // Resample output buffer to data
         {
+            SS_LOG_DEBUG(fmt::format("frames={}, m_outputBuffer->frames()={}", frames, m_outputBuffer->frames()));
             SS_ASSERT(frames == m_outputBuffer->frames(), "Frames must be equal");
 
             auto bufferData = m_outputBuffer->data();
@@ -131,7 +134,7 @@ namespace SoundStation
             auto bufferChannels = m_outputBuffer->channels();
             auto bufferSampleRate = m_outputBuffer->sampleRate();
             for (int i = 0; i < frames * channels; i++)
-            {   
+            {
                 data[i] = bufferData[i];
             }
         }
