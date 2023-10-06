@@ -7,6 +7,8 @@
 
 #include "layers/toolbarlayer.h"
 
+#include <glm/glm.hpp>
+
 namespace SoundStation
 {
     MixerLayer::MixerLayer()
@@ -45,7 +47,7 @@ namespace SoundStation
     // -inf to 10 dB
     float levelToDB(float level)
     {
-        return 20.0f * std::log10(std::clamp(level, 0.0001f, 1.0f));
+        return 20.0f * std::log10(glm::clamp(level, 0.0001f, 1.0f));
     }
 
     void MixerLayer::renderFader(const std::string &name, std::shared_ptr<Fader> fader)

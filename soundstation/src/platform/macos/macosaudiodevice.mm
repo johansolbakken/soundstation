@@ -1,9 +1,12 @@
 #include "macosaudiodevice.h"
 
+#include <memory>
+
 #include <AudioToolbox/AudioToolbox.h>
 
 #include "core/log.h"
 #include "core/assert.h"
+
 
 namespace SoundStation {
 

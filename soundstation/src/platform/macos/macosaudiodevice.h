@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include <map>
+#include <functional>
 
 #include "core/time.h"
 #include "core/log.h"
