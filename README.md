@@ -1,5 +1,7 @@
 # soundstation
 
+![](https://flat.badgen.net/github/license/johansolbakken/soundstation/?label=LICENSE)
+
 A simple DAW made by Johan Solbakken.
 
 ## Dependencies
